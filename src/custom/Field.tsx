@@ -4,8 +4,13 @@ import DraggableCus from "./Draggable";
 import DroppableCus from "./Droppable";
 import { products } from "../api/products";
 import { dropPoints } from "../api/points";
+import { useState } from "react";
 
 const Field = () => {
+  const [annotations, setAnnotations] = useState<{
+    [id: string]: { name: string };
+  }>();
+
   function handleDragEnd(event: DragEndEvent) {
     console.log("event", event.over);
   }
@@ -32,7 +37,11 @@ const Field = () => {
                   }}
                 >
                   <DroppableComp id={idx.toString()}>
-                    <DroppableCus idx={idx} />
+                    <DroppableCus
+                      idx={idx}
+                      annotations={annotations}
+                      setAnnotations={setAnnotations}
+                    />
                   </DroppableComp>
                 </div>
               ))}

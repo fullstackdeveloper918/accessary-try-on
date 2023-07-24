@@ -49,7 +49,7 @@ const DragDropContext = () => {
 
   return (
     <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-      <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+      <div className="flex justify-center gap-3">
         {items.map((item, idx) => (
           <DraggableComp
             key={item.id}
@@ -60,7 +60,7 @@ const DragDropContext = () => {
         ))}
       </div>
 
-      <div style={{ display: "flex" }}>
+      <div className="flex">
         {containers.map((id) => (
           <DroppableComp key={id} id={id}>
             {/* {parent === id ? item : "Drop here"} */}

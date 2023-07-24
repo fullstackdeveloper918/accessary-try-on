@@ -13,15 +13,10 @@ const DroppableComp = ({ id, children }: DroppableProps) => {
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 150,
-        height: 150,
         border: "1px solid",
-        margin: 20,
         borderColor: isOver ? "#4c9ffe" : "#EEE",
       }}
+      className="flex items-center justify-center w-60 h-60 m-5"
       ref={setNodeRef}
     >
       {children}

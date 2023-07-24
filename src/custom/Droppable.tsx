@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
+import DraggableComp from "../components/DraggableComp";
 
-const DroppableCus = ({ idx }: { idx: number }) => {
-  const [place, setPlace] = useState("");
+const DroppableCus = ({
+  idx,
+  annotations,
+  setAnnotations,
+}: {
+  idx: number;
+  annotations: { [id: string]: { name: string } } | undefined;
+  setAnnotations: Dispatch<
+    SetStateAction<{ [id: string]: { name: string } } | undefined>
+  >;
+}) => {
   return (
     <div
       className="h-16 w-16"
       style={{ border: "2px dashed gray" }}
       onDrop={(e) => {
         const data = JSON.parse(e.dataTransfer.getData("application/json"));
-        setPlace(data.name);
+        setAnnotations((prev) => ({
+          ...prev,
+          [idx]: data,
+        }));
         console.log(idx);
       }}
       onDragOver={(e) => {
@@ -16,7 +29,9 @@ const DroppableCus = ({ idx }: { idx: number }) => {
         e.stopPropagation();
       }}
     >
-      {place}
+      {annotations !== undefined && annotations[idx] !== undefined && (
+        <DraggableComp idx={idx} name={annotations[idx].name} id={idx} />
+      )}
     </div>
   );
 };

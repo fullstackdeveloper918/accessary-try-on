@@ -14,8 +14,8 @@ const DroppableCus = ({
 }) => {
   return (
     <div
-      className="h-16 w-16"
-      style={{ border: "2px dashed gray" }}
+      className="h-16 w-16 border border-dashed"
+      style={{ borderColor: "#ffffff70" }}
       onDrop={(e) => {
         const data = JSON.parse(e.dataTransfer.getData("application/json"));
         setAnnotations((prev) => ({

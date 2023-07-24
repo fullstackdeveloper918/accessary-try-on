@@ -23,18 +23,18 @@ const Field = () => {
           <DndContext onDragEnd={handleDragEnd}>
             <div className="relative">
               {dropPoints.map((p, idx) => (
-                <DroppableComp id={idx.toString()}>
-                  <div
-                    key={idx}
-                    style={{
-                      position: "absolute",
-                      top: `${p.y}`,
-                      left: `${p.x}`,
-                    }}
-                  >
+                <div
+                  key={idx}
+                  style={{
+                    position: "absolute",
+                    top: `${p.y}`,
+                    left: `${p.x}`,
+                  }}
+                >
+                  <DroppableComp id={idx.toString()}>
                     <DroppableCus idx={idx} />
-                  </div>
-                </DroppableComp>
+                  </DroppableComp>
+                </div>
               ))}
             </div>
           </DndContext>

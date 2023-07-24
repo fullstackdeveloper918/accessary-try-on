@@ -16,7 +16,6 @@ const DroppableComp = ({ id, children }: DroppableProps) => {
         border: "1px solid",
         borderColor: isOver ? "#4c9ffe" : "#EEE",
       }}
-      className="flex items-center justify-center w-60 h-60 m-5"
       ref={setNodeRef}
     >
       {children}

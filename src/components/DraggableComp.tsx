@@ -1,26 +1,25 @@
 import { UniqueIdentifier, useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
+import { useEffect } from "react";
+import { useMyDragDropContext } from "../context/MyDragDropContext";
 
 const DraggableComp = ({
   name,
   id,
-  idx,
 }: {
   id: number | UniqueIdentifier;
-  name: string;
-  idx: number;
+  name: string | undefined;
 }) => {
   const { attributes, isDragging, transform, setNodeRef, listeners } =
     useDraggable({
       id: id.toString(),
-      data: {
-        name,
-        idx,
-      },
     });
-  // console.log("attributes", name, attributes);
-  // console.log("isDragging", name, isDragging);
-  // console.log("transform", name, transform);
+  const { setCurrentDragging } = useMyDragDropContext();
+  useEffect(() => {
+    if (isDragging) {
+      setCurrentDragging("" + id);
+    }
+  }, [isDragging]);
   return (
     <button
       ref={setNodeRef}

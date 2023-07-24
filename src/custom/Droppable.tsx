@@ -6,10 +6,10 @@ const DroppableCus = ({
   annotations,
   setAnnotations,
 }: {
-  idx: number;
-  annotations: { [id: string]: { name: string } } | undefined;
+  idx: string;
+  annotations: { [id: string]: { name: string } | undefined } | undefined;
   setAnnotations: Dispatch<
-    SetStateAction<{ [id: string]: { name: string } } | undefined>
+    SetStateAction<{ [id: string]: { name: string } | undefined } | undefined>
   >;
 }) => {
   return (
@@ -22,7 +22,6 @@ const DroppableCus = ({
           ...prev,
           [idx]: data,
         }));
-        console.log(idx);
       }}
       onDragOver={(e) => {
         e.preventDefault();
@@ -30,7 +29,7 @@ const DroppableCus = ({
       }}
     >
       {annotations !== undefined && annotations[idx] !== undefined && (
-        <DraggableComp idx={idx} name={annotations[idx].name} id={idx} />
+        <DraggableComp name={annotations[idx]?.name} id={idx} />
       )}
     </div>
   );

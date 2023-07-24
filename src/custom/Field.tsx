@@ -1,18 +1,27 @@
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { useState } from "react";
+import { dropPoints } from "../api/points";
+import { products } from "../api/products";
 import DroppableComp from "../components/DroppableComp";
 import DraggableCus from "./Draggable";
 import DroppableCus from "./Droppable";
-import { products } from "../api/products";
-import { dropPoints } from "../api/points";
-import { useState } from "react";
+import { useMyDragDropContext } from "../context/MyDragDropContext";
 
 const Field = () => {
   const [annotations, setAnnotations] = useState<{
-    [id: string]: { name: string };
+    [id: string]: { name: string } | undefined;
   }>();
+  const { currentDragging } = useMyDragDropContext();
 
   function handleDragEnd(event: DragEndEvent) {
-    console.log("event", event.over);
+    const { over } = event;
+    if (over && over.id) {
+      setAnnotations((prev) => ({
+        ...prev,
+        [over.id]: prev![currentDragging],
+        [currentDragging]: undefined,
+      }));
+    }
   }
   return (
     <>
@@ -34,7 +43,7 @@ const Field = () => {
                 backgroundSize: "contain",
               }}
             >
-              {dropPoints.map((p, idx) => (
+              {dropPoints.map((p) => (
                 <div
                   key={p.id}
                   style={{
@@ -45,7 +54,7 @@ const Field = () => {
                 >
                   <DroppableComp id={p.id}>
                     <DroppableCus
-                      idx={idx}
+                      idx={p.id}
                       annotations={annotations}
                       setAnnotations={setAnnotations}
                     />

@@ -6,7 +6,8 @@ const DroppableCus = ({ idx }: { idx: number }) => {
   const [place, setPlace] = useState<{ id: number; name: string }>();
   return (
     <div
-      style={{ border: "1px dashed gray", height: "100px", width: "100px" }}
+      className="h-16 w-16"
+      style={{ border: "2px dashed gray" }}
       onDrop={(e) => {
         const data = JSON.parse(e.dataTransfer.getData("application/json"));
         setPlace(data);

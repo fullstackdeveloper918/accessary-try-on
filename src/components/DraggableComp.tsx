@@ -4,11 +4,20 @@ import { useEffect } from "react";
 import { useMyDragDropContext } from "../context/MyDragDropContext";
 
 const DraggableComp = ({
-  name,
   id,
+  info,
 }: {
   id: number | UniqueIdentifier;
-  name: string | undefined;
+  info:
+    | {
+        name: string;
+        variants: {
+          [position: string]: {
+            image: string;
+          };
+        };
+      }
+    | undefined;
 }) => {
   const { attributes, isDragging, transform, setNodeRef, listeners } =
     useDraggable({
@@ -32,7 +41,12 @@ const DraggableComp = ({
       {...attributes}
       {...listeners}
     >
-      <div>{name}</div>
+      {info ? (
+        <>
+          <div>{info?.name}</div>
+          <p>{info?.variants[id].image}</p>
+        </>
+      ) : null}
     </button>
   );
 };

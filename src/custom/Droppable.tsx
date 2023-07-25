@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import DraggableComp from "../components/DraggableComp";
+import { IAnnotation } from "../types/annotations.types";
 
 const DroppableCus = ({
   idx,
@@ -7,10 +8,8 @@ const DroppableCus = ({
   setAnnotations,
 }: {
   idx: string;
-  annotations: { [id: string]: { name: string } | undefined } | undefined;
-  setAnnotations: Dispatch<
-    SetStateAction<{ [id: string]: { name: string } | undefined } | undefined>
-  >;
+  annotations: IAnnotation | undefined;
+  setAnnotations: Dispatch<SetStateAction<IAnnotation | undefined>>;
 }) => {
   return (
     <div
@@ -29,7 +28,7 @@ const DroppableCus = ({
       }}
     >
       {annotations !== undefined && annotations[idx] !== undefined && (
-        <DraggableComp name={annotations[idx]?.name} id={idx} />
+        <DraggableComp info={annotations[idx]} id={idx} />
       )}
     </div>
   );

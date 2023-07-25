@@ -6,11 +6,10 @@ import DroppableComp from "../components/DroppableComp";
 import DraggableCus from "./Draggable";
 import DroppableCus from "./Droppable";
 import { useMyDragDropContext } from "../context/MyDragDropContext";
+import { IAnnotation } from "../types/annotations.types";
 
 const Field = () => {
-  const [annotations, setAnnotations] = useState<{
-    [id: string]: { name: string } | undefined;
-  }>();
+  const [annotations, setAnnotations] = useState<IAnnotation>();
   const { currentDragging } = useMyDragDropContext();
 
   function handleDragEnd(event: DragEndEvent) {

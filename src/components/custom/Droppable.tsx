@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import DraggableComp from "../components/DraggableComp";
-import { IAnnotation } from "../types/annotations.types";
+import DraggableComp from "../dnd/DraggableComp";
+import { IAnnotation } from "../../types/annotations.types";
 
 const DroppableCus = ({
   idx,

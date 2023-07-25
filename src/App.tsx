@@ -1,12 +1,12 @@
 import "./App.css";
 import MyDragDropContextProvider from "./context/MyDragDropContext";
-import Field from "./custom/Field";
+import View from "./components/View";
 
 function App() {
   return (
     <>
       <MyDragDropContextProvider>
-        <Field />
+        <View />
       </MyDragDropContextProvider>
     </>
   );

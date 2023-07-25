@@ -11,6 +11,7 @@ const DraggableComp = ({
   info:
     | {
         name: string;
+        img: string;
         variants: {
           [position: string]: {
             image: string;
@@ -49,14 +50,18 @@ const DraggableComp = ({
     //   ) : null}
     // </button>
     <img
-      src="firstRingEdited.png"
+      src={info?.img}
       ref={setNodeRef}
       style={{
         transform: CSS.Translate.toString(transform),
         boxShadow: isDragging
           ? "-1px 0 15px 0 rgba(34, 33, 81, 0.01), 0px 15px 15px 0 rgba(34, 33, 81, 0.25)"
           : undefined,
-        height: "100px",
+        height: "120px",
+        width: "120px",
+        objectFit: "cover",
+        // -webkit-clip-path: polygon(33% 0, 0% 100%, 100% 100%);
+        clipPath: "polygon(25% 0, 0% 100%, 100% 100%)",
       }}
       {...attributes}
       {...listeners}

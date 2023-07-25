@@ -1,7 +1,7 @@
 export const dropPoints = [
   {
     id: "A",
-    x: 120,
+    x: 160,
     y: 40,
     width: 60,
     height: 60,
@@ -9,7 +9,7 @@ export const dropPoints = [
   },
   {
     id: "B",
-    x: 220,
+    x: 260,
     y: 40,
     width: 60,
     height: 60,
@@ -17,16 +17,16 @@ export const dropPoints = [
   },
   {
     id: "C",
-    x: 220,
-    y: 160,
+    x: 260,
+    y: 200,
     width: 60,
     height: 60,
     rotate: 60,
   },
   {
     id: "D",
-    x: 110,
-    y: 280,
+    x: 120,
+    y: 300,
     width: 60,
     height: 60,
     rotate: 60,
@@ -34,15 +34,15 @@ export const dropPoints = [
   {
     id: "E",
     x: 90,
-    y: 160,
+    y: 200,
     width: 60,
     height: 60,
     rotate: 90,
   },
   {
     id: "F",
-    x: 160,
-    y: 100,
+    x: 180,
+    y: 120,
     width: 60,
     height: 60,
     rotate: 60,

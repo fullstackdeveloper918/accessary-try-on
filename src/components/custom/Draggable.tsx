@@ -1,4 +1,8 @@
-const DraggableCus = ({ data }: { data: { name: string; id: number } }) => {
+const DraggableCus = ({
+  data,
+}: {
+  data: { name: string; id: number; img: string };
+}) => {
   return (
     <div
       draggable={true}
@@ -7,7 +11,7 @@ const DraggableCus = ({ data }: { data: { name: string; id: number } }) => {
         e.dataTransfer.setData("application/json", JSON.stringify(data));
       }}
     >
-      {data.name}
+      <img className="w-16 h16 object-cover" src={data?.img} alt="" />
     </div>
   );
 };

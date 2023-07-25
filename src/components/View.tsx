@@ -25,17 +25,10 @@ const Field = () => {
     <>
       <div className="flex gap-4 flex-wrap">
         {/* These are the points where products can be dropped */}
-        <div className="flex justify-center items-center relative w-96 h-96 ">
+        <div className="flex justify-center items-center relative w-[425px] h-[425px] ">
           <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
             <DndContext onDragEnd={handleDragEnd}>
-              <div
-                className="h-full w-full"
-                // style={{
-                //   backgroundImage: "url(test.png)",
-                //   backgroundRepeat: "no-repeat",
-                //   backgroundSize: "contain",
-                // }}
-              >
+              <div className="h-full w-full">
                 {dropPoints.map((p) => (
                   <div
                     key={p.id}

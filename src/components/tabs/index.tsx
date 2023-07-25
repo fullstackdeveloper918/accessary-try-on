@@ -24,7 +24,6 @@ const Tabs = () => {
       component: <div>My Looks</div>,
     },
   };
-  console.log("currentTab", currentTab);
   return (
     <div>
       <ul className="flex gap-6 mb-4">

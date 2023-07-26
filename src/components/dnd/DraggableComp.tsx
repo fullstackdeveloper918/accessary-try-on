@@ -21,24 +21,31 @@ const DraggableComp = ({
       setCurrentDragging("" + id);
     }
   }, [isDragging]);
+  // const lookup={}
+
   return (
-    <img
-      src={info?.img}
+    <div
       ref={setNodeRef}
       style={{
         transform: CSS.Translate.toString(transform),
-        boxShadow: isDragging
-          ? "-1px 0 15px 0 rgba(34, 33, 81, 0.01), 0px 15px 15px 0 rgba(34, 33, 81, 0.25)"
-          : undefined,
-        height: "120px",
-        width: "120px",
-        objectFit: "cover",
-        clipPath:
-          "polygon(0 0, 49% 0, 56% 43%, 100% 37%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
       }}
       {...attributes}
       {...listeners}
-    />
+    >
+      <img
+        src={info?.img}
+        alt=""
+        style={{
+          height: "120px",
+          width: "120px",
+          objectFit: "cover",
+          clipPath:
+            "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
+          ...(id == "C" ? { transform: "rotate(300deg)" } : {}),
+          ...(id == "E" ? { transform: "rotate(300deg) rotateY(46deg)" } : {}),
+        }}
+      />
+    </div>
   );
 };
 export default DraggableComp;

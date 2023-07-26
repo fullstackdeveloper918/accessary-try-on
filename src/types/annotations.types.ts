@@ -3,6 +3,8 @@ export interface IAnnotation {
     | {
         name: string;
         img: string;
+        id: number;
+        type: "circle" | "dot";
         variants: {
           [position: string]: {
             image: string;

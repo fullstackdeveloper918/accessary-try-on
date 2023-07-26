@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { IAnnotation } from "../../types/annotations.types";
 import DraggableComp from "../dnd/DraggableComp";
@@ -12,24 +12,35 @@ const DroppableCus = ({
   annotations: IAnnotation | undefined;
   setAnnotations: Dispatch<SetStateAction<IAnnotation | undefined>>;
 }) => {
+  const droppableRef = useRef<HTMLDivElement>(null);
   return (
     <div
+      ref={droppableRef}
       className="h-16 w-16 border border-dashed group"
-      style={{ borderColor: "#ffffff40" }}
+      style={{ borderColor: "#ffffff10" }}
       onDrop={(e) => {
         const data = JSON.parse(e.dataTransfer.getData("application/json"));
         setAnnotations((prev) => ({
           ...prev,
           [idx]: data,
         }));
+        if (droppableRef.current) {
+          droppableRef.current.style.borderColor = "#ffffff10";
+        }
       }}
       onDragOver={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (droppableRef.current) {
+          droppableRef.current.style.borderColor = "#ffffff80";
+        }
       }}
       onDragLeave={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (droppableRef.current) {
+          droppableRef.current.style.borderColor = "#ffffff10";
+        }
       }}
     >
       {annotations !== undefined && annotations[idx] !== undefined && (

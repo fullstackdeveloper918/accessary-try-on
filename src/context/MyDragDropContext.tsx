@@ -22,6 +22,7 @@ const MyDragDropContextProvider = ({ children }: PropsWithChildren) => {
   );
 };
 export default MyDragDropContextProvider;
+// eslint-disable-next-line react-refresh/only-export-components
 export const useMyDragDropContext = () => {
   const context = useContext(MyDragDropContext);
 

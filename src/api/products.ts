@@ -3,6 +3,7 @@ export const products = [
     name: "abc",
     id: 123,
     img: "third.png",
+    type: "circle",
     variants: {
       A: { image: "vA" },
       B: { image: "vB" },
@@ -16,7 +17,8 @@ export const products = [
   {
     name: "def",
     id: 456,
-    img: "secondRingEdited.png",
+    type: "dot",
+    img: "dotOne.png",
     variants: {
       A: { image: "vA" },
       B: { image: "vB" },
@@ -30,6 +32,7 @@ export const products = [
   {
     name: "ghi",
     id: 789,
+    type: "circle",
     img: "firstRingEdited.png",
     variants: {
       A: { image: "vA" },

@@ -20,7 +20,7 @@ const DraggableComp = ({
     if (isDragging) {
       setCurrentDragging("" + id);
     }
-  }, [isDragging]);
+  }, [id, isDragging, setCurrentDragging]);
   // const lookup={}
 
   return (
@@ -32,19 +32,33 @@ const DraggableComp = ({
       {...attributes}
       {...listeners}
     >
-      <img
-        src={info?.img}
-        alt=""
-        style={{
-          height: "120px",
-          width: "120px",
-          objectFit: "cover",
-          clipPath:
-            "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
-          ...(id == "C" ? { transform: "rotate(300deg)" } : {}),
-          ...(id == "E" ? { transform: "rotate(300deg) rotateY(46deg)" } : {}),
-        }}
-      />
+      {info?.type == "circle" ? (
+        <img
+          src={info?.img}
+          alt=""
+          style={{
+            height: "120px",
+            width: "120px",
+            objectFit: "cover",
+            clipPath:
+              "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
+            ...(id == "C" ? { transform: "rotate(300deg)" } : {}),
+            ...(id == "E"
+              ? { transform: "rotate(300deg) rotateY(46deg)" }
+              : {}),
+          }}
+        />
+      ) : (
+        <img
+          src={info?.img}
+          alt=""
+          style={{
+            height: "90px",
+            width: "90px",
+            objectFit: "cover",
+          }}
+        />
+      )}
     </div>
   );
 };

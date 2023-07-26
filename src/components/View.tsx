@@ -13,7 +13,7 @@ const Field = () => {
 
   function handleDragEnd(event: DragEndEvent) {
     const { over } = event;
-    if (over && over.id) {
+    if (over && over.id && currentDragging !== over.id) {
       setAnnotations((prev) => ({
         ...prev,
         [over.id]: prev![currentDragging],

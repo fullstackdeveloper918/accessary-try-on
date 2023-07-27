@@ -1,6 +1,7 @@
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 import { FormEvent, useState } from "react";
 import { products } from "../../api/products";
-import DraggableCus from "../custom/Draggable";
 
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
@@ -40,10 +41,60 @@ const ExploreTab = () => {
       {/* These are the products that will be dragged */}
       <div className="flex gap-3 flex-wrap">
         {products.map((product) => (
-          <DraggableCus data={product} key={product.id} />
+          // <DraggableCus data={product} key={product.id} />
+          // <DraggableComp
+          //   id={product.id.toString()}
+          //   key={product.id}
+          //   info={product}
+          // />
+          <DraggableTest
+            id={product.id.toString()}
+            data={product}
+            key={product.id}
+          />
         ))}
       </div>
     </>
   );
 };
 export default ExploreTab;
+
+const DraggableTest = ({
+  id,
+  data,
+}: {
+  id: string;
+  data: {
+    name: string;
+    img: string;
+    id: number;
+    type: "circle" | "dot";
+    variants: {
+      [position: string]: {
+        image: string;
+      };
+    };
+  };
+}) => {
+  const { attributes, transform, setNodeRef, listeners } = useDraggable({
+    id: id.toString(),
+  });
+  return (
+    <>
+      <div className="w-24 h-24 py-3 cursor-pointer border border-slate-500 rounded-md px-6">
+        <img
+          draggable="false"
+          ref={setNodeRef}
+          style={{
+            transform: CSS.Translate.toString(transform),
+          }}
+          {...attributes}
+          {...listeners}
+          className="w-full h-full object-cover"
+          src={data?.img}
+          alt=""
+        />
+      </div>
+    </>
+  );
+};

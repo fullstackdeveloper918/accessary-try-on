@@ -1,4 +1,10 @@
-export const products = [
+export const products: {
+  name: string;
+  img: string;
+  id: number;
+  type: "circle" | "dot";
+  variants: { [position: string]: { image: string } };
+}[] = [
   {
     name: "abc",
     id: 123,

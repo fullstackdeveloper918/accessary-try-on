@@ -19,27 +19,30 @@ const DroppableCus = ({
       className="h-16 w-16 border border-dashed group"
       style={{ borderColor: "#ffffff10" }}
       onDrop={(e) => {
-        const data = JSON.parse(e.dataTransfer.getData("application/json"));
-        setAnnotations((prev) => ({
-          ...prev,
-          [idx]: data,
-        }));
-        if (droppableRef.current) {
-          droppableRef.current.style.borderColor = "#ffffff10";
-        }
+        console.log("dropped");
+        // const data = JSON.parse(e.dataTransfer.getData("application/json"));
+        // setAnnotations((prev) => ({
+        //   ...prev,
+        //   [idx]: data,
+        // }));
+        // if (droppableRef.current) {
+        //   droppableRef.current.style.borderColor = "#ffffff10";
+        // }
       }}
       onDragOver={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (droppableRef.current) {
-          droppableRef.current.style.borderColor = "#ffffff80";
-        }
       }}
       onDragLeave={(e) => {
         e.preventDefault();
         e.stopPropagation();
         if (droppableRef.current) {
           droppableRef.current.style.borderColor = "#ffffff10";
+        }
+      }}
+      onDragEnter={() => {
+        if (droppableRef.current) {
+          droppableRef.current.style.borderColor = "#ffffff80";
         }
       }}
     >

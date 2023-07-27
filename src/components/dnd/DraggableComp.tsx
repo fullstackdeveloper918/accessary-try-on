@@ -1,65 +1,43 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { useEffect } from "react";
-import { useMyDragDropContext } from "../../context/MyDragDropContext";
-import { IAnnotation } from "../../types/annotations.types";
 
 const DraggableComp = ({
   id,
-  info,
+  data,
 }: {
   id: string;
-  info: IAnnotation[number] | undefined;
+  data: {
+    name: string;
+    img: string;
+    id: number;
+    type: "circle" | "dot";
+    variants: {
+      [position: string]: {
+        image: string;
+      };
+    };
+  };
 }) => {
-  const { attributes, isDragging, transform, setNodeRef, listeners } =
-    useDraggable({
-      id: id.toString(),
-    });
-  const { setCurrentDragging } = useMyDragDropContext();
-  useEffect(() => {
-    if (isDragging) {
-      setCurrentDragging("" + id);
-    }
-  }, [id, isDragging, setCurrentDragging]);
-  // const lookup={}
-
+  const { attributes, transform, setNodeRef, listeners } = useDraggable({
+    id: id.toString(),
+  });
   return (
-    <div
-      ref={setNodeRef}
-      style={{
-        transform: CSS.Translate.toString(transform),
-      }}
-      {...attributes}
-      {...listeners}
-    >
-      {info?.type == "circle" ? (
+    <>
+      <div className="w-24 h-24 py-3 cursor-pointer border border-slate-500 rounded-md px-6">
         <img
-          src={info?.img}
-          alt=""
+          draggable="false"
+          ref={setNodeRef}
           style={{
-            height: "120px",
-            width: "120px",
-            objectFit: "cover",
-            clipPath:
-              "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
-            ...(id == "C" ? { transform: "rotate(300deg)" } : {}),
-            ...(id == "E"
-              ? { transform: "rotate(300deg) rotateY(46deg)" }
-              : {}),
+            transform: CSS.Translate.toString(transform),
           }}
-        />
-      ) : (
-        <img
-          src={info?.img}
+          {...attributes}
+          {...listeners}
+          className="w-full h-full object-cover"
+          src={data?.img}
           alt=""
-          style={{
-            height: "90px",
-            width: "90px",
-            objectFit: "cover",
-          }}
         />
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 export default DraggableComp;

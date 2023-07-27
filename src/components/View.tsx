@@ -4,10 +4,12 @@ import {
   KeyboardSensor,
   MouseSensor,
   TouchSensor,
+  useDraggable,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useState } from "react";
+import { CSS } from "@dnd-kit/utilities";
+import { PropsWithChildren, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { dropPoints } from "../api/points";
 import { products } from "../api/products";
@@ -19,17 +21,26 @@ const Field = () => {
   const [annotations, setAnnotations] = useState<IAnnotation>();
 
   function handleDragEnd(event: DragEndEvent) {
+    console.log("dropped", event);
     const {
       over,
       active: { id },
     } = event;
     if (over && over.id) {
-      const data = products.find((p) => p.id == id);
-      if (data) {
+      if (["A", "B", "C", "D", "E", "F", "G"].includes(id.toString())) {
         setAnnotations((prev) => ({
           ...prev,
-          [over.id]: data,
+          [over.id]: prev ? prev[id] : undefined,
+          [id]: undefined,
         }));
+      } else {
+        const data = products.find((p) => p.id == id);
+        if (data) {
+          setAnnotations((prev) => ({
+            ...prev,
+            [over.id]: data,
+          }));
+        }
       }
     }
   }
@@ -65,55 +76,62 @@ const Field = () => {
                       left: `${p.x}px`,
                     }}
                   >
-                    <DroppableComp id={p.id}>
+                    <DroppableComp id={p.id} key={p.id}>
+                      {/* <DndContext
+                        onDragEnd={handleDragEndInside}
+                        sensors={sensors}
+                      > */}
                       {annotations !== undefined &&
                         annotations[p.id] !== undefined && (
-                          <div className="group">
-                            {annotations[p.id]?.type == "circle" ? (
-                              <img
-                                src={annotations[p.id]?.img}
-                                alt=""
-                                style={{
-                                  height: "120px",
-                                  width: "120px",
-                                  objectFit: "cover",
-                                  clipPath:
-                                    "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
-                                  ...(p.id == "C"
-                                    ? { transform: "rotate(300deg)" }
-                                    : {}),
-                                  ...(p.id == "E"
-                                    ? {
-                                        transform:
-                                          "rotate(300deg) rotateY(46deg)",
-                                      }
-                                    : {}),
+                          <DraggbleCompNesed id={p.id}>
+                            <div className="group">
+                              {annotations[p.id]?.type == "circle" ? (
+                                <img
+                                  src={annotations[p.id]?.img}
+                                  alt=""
+                                  style={{
+                                    height: "120px",
+                                    width: "120px",
+                                    objectFit: "cover",
+                                    clipPath:
+                                      "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
+                                    ...(p.id == "C"
+                                      ? { transform: "rotate(300deg)" }
+                                      : {}),
+                                    ...(p.id == "E"
+                                      ? {
+                                          transform:
+                                            "rotate(300deg) rotateY(46deg)",
+                                        }
+                                      : {}),
+                                  }}
+                                />
+                              ) : (
+                                <img
+                                  src={annotations[p.id]?.img}
+                                  alt=""
+                                  style={{
+                                    height: "90px",
+                                    width: "90px",
+                                    objectFit: "cover",
+                                  }}
+                                />
+                              )}
+                              <span
+                                className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
+                                onClick={() => {
+                                  setAnnotations((prev) => ({
+                                    ...prev,
+                                    [p.id]: undefined,
+                                  }));
                                 }}
-                              />
-                            ) : (
-                              <img
-                                src={annotations[p.id]?.img}
-                                alt=""
-                                style={{
-                                  height: "90px",
-                                  width: "90px",
-                                  objectFit: "cover",
-                                }}
-                              />
-                            )}
-                            <span
-                              className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
-                              onClick={() => {
-                                setAnnotations((prev) => ({
-                                  ...prev,
-                                  [p.id]: undefined,
-                                }));
-                              }}
-                            >
-                              <RxCross2 color="red" />
-                            </span>
-                          </div>
+                              >
+                                <RxCross2 color="red" />
+                              </span>
+                            </div>
+                          </DraggbleCompNesed>
                         )}
+                      {/* </DndContext> */}
                     </DroppableComp>
                   </div>
                 ))}
@@ -135,3 +153,24 @@ const Field = () => {
   );
 };
 export default Field;
+
+const DraggbleCompNesed = ({
+  id,
+  children,
+}: { id: string } & PropsWithChildren) => {
+  const { attributes, transform, setNodeRef, listeners } = useDraggable({
+    id: id.toString(),
+  });
+  return (
+    <div
+      {...attributes}
+      {...listeners}
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Translate.toString(transform),
+      }}
+    >
+      {children}
+    </div>
+  );
+};

@@ -6,17 +6,19 @@ const DraggableComp = ({
   data,
 }: {
   id: string;
-  data: {
-    name: string;
-    img: string;
-    id: number;
-    type: "circle" | "dot";
-    variants: {
-      [position: string]: {
-        image: string;
-      };
-    };
-  };
+  data:
+    | {
+        name: string;
+        img: string;
+        id: number;
+        type: "circle" | "dot";
+        variants: {
+          [position: string]: {
+            image: string;
+          };
+        };
+      }
+    | undefined;
 }) => {
   const { attributes, transform, setNodeRef, listeners } = useDraggable({
     id: id.toString(),

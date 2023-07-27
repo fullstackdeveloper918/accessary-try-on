@@ -47,7 +47,11 @@ const ExploreTab = () => {
           //   key={product.id}
           //   info={product}
           // />
-          <DraggableTest id={product.id.toString()} data={product} />
+          <DraggableTest
+            id={product.id.toString()}
+            data={product}
+            key={product.id}
+          />
         ))}
       </div>
     </>

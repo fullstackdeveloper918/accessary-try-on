@@ -39,7 +39,7 @@ export const products: {
     name: "ghi",
     id: 789,
     type: "circle",
-    img: "firstRingEdited.png",
+    img: "https://clickthemart.com/storage/firstRingEdited.png",
     variants: {
       A: { image: "vA" },
       B: { image: "vB" },

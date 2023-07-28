@@ -21,7 +21,6 @@ const Field = () => {
   const [annotations, setAnnotations] = useState<IAnnotation>();
 
   function handleDragEnd(event: DragEndEvent) {
-    console.log("dropped", event);
     const {
       over,
       active: { id },
@@ -74,17 +73,16 @@ const Field = () => {
                       position: "absolute",
                       top: `${p.y}px`,
                       left: `${p.x}px`,
+                      // height: "60px",
+                      // width: "60px",
+                      // border: "2px dashed gray",
                     }}
                   >
                     <DroppableComp id={p.id} key={p.id}>
-                      {/* <DndContext
-                        onDragEnd={handleDragEndInside}
-                        sensors={sensors}
-                      > */}
                       {annotations !== undefined &&
                         annotations[p.id] !== undefined && (
                           <DraggbleCompNesed id={p.id}>
-                            <div className="group">
+                            <div className="group relative h-full w-full">
                               {annotations[p.id]?.type == "circle" ? (
                                 <img
                                   src={annotations[p.id]?.img}
@@ -117,7 +115,7 @@ const Field = () => {
                                   }}
                                 />
                               )}
-                              <span
+                              <div
                                 className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
                                 onClick={() => {
                                   setAnnotations((prev) => ({
@@ -126,12 +124,13 @@ const Field = () => {
                                   }));
                                 }}
                               >
-                                <RxCross2 color="red" />
-                              </span>
+                                <span style={{ height: "100%", width: "100%" }}>
+                                  <RxCross2 color="red" />
+                                </span>
+                              </div>
                             </div>
                           </DraggbleCompNesed>
                         )}
-                      {/* </DndContext> */}
                     </DroppableComp>
                   </div>
                 ))}
@@ -139,7 +138,7 @@ const Field = () => {
             </div>
             {/* Drop Points */}
             <img
-              src="test.png"
+              src="https://clickthemart.com/storage/test.png"
               className="absolute top-0 left-0 w-full h-full object-contain"
             />
             {/* Drop area ie: Ear */}

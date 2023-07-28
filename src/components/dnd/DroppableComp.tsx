@@ -13,7 +13,7 @@ const DroppableComp = ({ id, children }: DroppableProps) => {
   return (
     <div
       style={{
-        border: "1px solid",
+        border: "1px solid gray",
         height: "60px",
         width: "60px",
         position: "relative",
@@ -21,7 +21,7 @@ const DroppableComp = ({ id, children }: DroppableProps) => {
       }}
       ref={setNodeRef}
     >
-      {children}
+      <div style={{ height: "100%", width: "100%" }}>{children}</div>
     </div>
   );
 };

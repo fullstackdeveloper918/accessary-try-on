@@ -18,7 +18,7 @@ const DroppableCus = ({
       ref={droppableRef}
       className="h-16 w-16 border border-dashed group"
       style={{ borderColor: "#ffffff10" }}
-      onDrop={(e) => {
+      onDrop={() => {
         console.log("dropped");
         // const data = JSON.parse(e.dataTransfer.getData("application/json"));
         // setAnnotations((prev) => ({
@@ -48,7 +48,7 @@ const DroppableCus = ({
     >
       {annotations !== undefined && annotations[idx] !== undefined && (
         <>
-          <DraggableComp info={annotations[idx]} id={idx} />
+          <DraggableComp data={annotations[idx]} id={idx} />
           <span
             className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
             onClick={() => {

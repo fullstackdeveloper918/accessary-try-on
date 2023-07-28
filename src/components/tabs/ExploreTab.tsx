@@ -5,6 +5,19 @@ import { products } from "../../api/products";
 
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
+  // const [allProducts, setAllProducts] = useState<
+  //   { images: { src: string | undefined }[] }[]
+  // >([]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await fetch(
+  //       "https://clickthemart.com/api/collectionsfineear"
+  //     );
+  //     const data = await response.json();
+  //     // setAllProducts(data?.data);
+  //     console.log("data", data?.data);
+  //   })();
+  // }, []);
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
@@ -25,7 +38,7 @@ const ExploreTab = () => {
       >
         <input
           type="search"
-          className="px-4 py-2 rounded-md"
+          className="px-4 py-2 rounded-md bg-white text-black"
           placeholder="search"
           onChange={(e) => {
             setSearchValue(e.target.value);
@@ -53,6 +66,19 @@ const ExploreTab = () => {
             key={product.id}
           />
         ))}
+        {/* {allProducts.map((product, idx) => (
+          <div
+            key={idx}
+            className="w-24 h-24 py-3 cursor-pointer border border-slate-500 rounded-md px-6"
+          >
+            <img
+              draggable="false"
+              className="w-full h-full object-cover"
+              src={product.images[0].src}
+              alt=""
+            />
+          </div>
+        ))} */}
       </div>
     </>
   );

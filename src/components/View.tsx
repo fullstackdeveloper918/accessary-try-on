@@ -4,20 +4,43 @@ import {
   KeyboardSensor,
   MouseSensor,
   TouchSensor,
+  UniqueIdentifier,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { dropPoints } from "../api/points";
 import { products } from "../api/products";
 import { IAnnotation } from "../types/annotations.types";
+import BuyButton from "./BuyButton";
 import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 
 const Field = () => {
   const [annotations, setAnnotations] = useState<IAnnotation>();
+  const [addedProducts, setAddedProducts] = useState<
+    { price: number | undefined }[]
+  >([]);
+
+  async function addProducts(variantId: UniqueIdentifier) {
+    // const variantResponse = await fetch(
+    //   "https://clickthemart.com/api/productsimages/" + variantId
+    // );
+    // if (variantResponse.ok) {
+    //   const variantData = await variantResponse.json();
+    //   setAddedProducts((prev) => [...prev, variantData]);
+    // }
+    console.log(variantId);
+  }
+  useEffect(() => {
+    if (annotations == undefined) return;
+    const data = Object.values(annotations).map((an) => ({
+      price: an?.price,
+    }));
+    setAddedProducts(data);
+  }, [annotations]);
 
   function handleDragEnd(event: DragEndEvent) {
     const {
@@ -25,6 +48,9 @@ const Field = () => {
       active: { id },
     } = event;
     if (over && over.id) {
+      // fetch the variantInfo based on variantId
+
+      addProducts(over.id);
       if (["A", "B", "C", "D", "E", "F", "G"].includes(id.toString())) {
         setAnnotations((prev) => ({
           ...prev,
@@ -42,9 +68,10 @@ const Field = () => {
       }
     }
   }
+  useEffect(() => {}, [annotations]);
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      delay: 250,
+      delay: 0,
       tolerance: 5,
     },
   });
@@ -57,7 +84,7 @@ const Field = () => {
   const keyboardSensor = useSensor(KeyboardSensor, {});
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
   return (
-    <>
+    <div>
       <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
         <div className="flex gap-4 flex-wrap m-6">
           {/* Drop area ie: Ear */}
@@ -140,35 +167,20 @@ const Field = () => {
               src="https://clickthemart.com/storage/test.png"
               className="absolute top-0 left-0 w-full h-full object-contain"
             />
+
             {/* Drop area ie: Ear */}
           </div>
           {/* Tabs */}
           <Tabs />
           {/* Tabs */}
         </div>
+        {/* Buy Button */}
+        <div className="flex justify-center w-[300px]">
+          <BuyButton addedProducts={addedProducts} />
+        </div>
+        {/* Buy Button */}
       </DndContext>
-    </>
+    </div>
   );
 };
 export default Field;
-
-// const DraggbleCompNesed = ({
-//   id,
-//   children,
-// }: { id: string } & PropsWithChildren) => {
-//   const { attributes, transform, setNodeRef, listeners } = useDraggable({
-//     id: id.toString(),
-//   });
-//   return (
-//     <div
-//       {...attributes}
-//       {...listeners}
-//       ref={setNodeRef}
-//       style={{
-//         transform: CSS.Translate.toString(transform),
-//       }}
-//     >
-//       {children}
-//     </div>
-//   );
-// };

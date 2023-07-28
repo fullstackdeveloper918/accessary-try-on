@@ -72,14 +72,15 @@ const ExploreTab = () => {
         {allProducts.map((product, idx) => (
           <div
             key={idx}
-            className="w-24 h-24 py-3 cursor-pointer border border-slate-500 rounded-md px-6"
+            className="w-36 h-36 cursor-pointer border border-slate-500 rounded-md p-2"
           >
             <img
               draggable="false"
-              className="w-full h-full object-cover"
+              className="w-full h-4/6 object-contain"
               src={product.images[0].src}
               alt=""
             />
+            <p className="h-2/6 text-sm truncate">{product.title}</p>
           </div>
         ))}
       </div>

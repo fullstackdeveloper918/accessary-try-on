@@ -7,14 +7,14 @@ export const dropPoints = [
     height: 60,
     rotate: 60,
   },
-  {
-    id: "B",
-    x: 270,
-    y: 40,
-    width: 60,
-    height: 60,
-    rotate: 60,
-  },
+  // {
+  //   id: "B",
+  //   x: 270,
+  //   y: 40,
+  //   width: 60,
+  //   height: 60,
+  //   rotate: 60,
+  // },
   {
     id: "C",
     x: 240,

@@ -25,7 +25,7 @@ const Tabs = () => {
     },
   };
   return (
-    <div>
+    <div style={{ maxWidth: "600px" }}>
       <ul className="flex gap-6 mb-4">
         {tabs.map((tab) => (
           <li

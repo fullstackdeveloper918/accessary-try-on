@@ -4,16 +4,15 @@ import {
   KeyboardSensor,
   MouseSensor,
   TouchSensor,
-  useDraggable,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
-import { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { dropPoints } from "../api/points";
 import { products } from "../api/products";
 import { IAnnotation } from "../types/annotations.types";
+import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 
@@ -81,7 +80,7 @@ const Field = () => {
                     <DroppableComp id={p.id} key={p.id}>
                       {annotations !== undefined &&
                         annotations[p.id] !== undefined && (
-                          <DraggbleCompNesed id={p.id}>
+                          <DraggbleComp id={p.id}>
                             <div className="group relative h-full w-full">
                               {annotations[p.id]?.type == "circle" ? (
                                 <img
@@ -129,7 +128,7 @@ const Field = () => {
                                 </span>
                               </div>
                             </div>
-                          </DraggbleCompNesed>
+                          </DraggbleComp>
                         )}
                     </DroppableComp>
                   </div>
@@ -153,23 +152,23 @@ const Field = () => {
 };
 export default Field;
 
-const DraggbleCompNesed = ({
-  id,
-  children,
-}: { id: string } & PropsWithChildren) => {
-  const { attributes, transform, setNodeRef, listeners } = useDraggable({
-    id: id.toString(),
-  });
-  return (
-    <div
-      {...attributes}
-      {...listeners}
-      ref={setNodeRef}
-      style={{
-        transform: CSS.Translate.toString(transform),
-      }}
-    >
-      {children}
-    </div>
-  );
-};
+// const DraggbleCompNesed = ({
+//   id,
+//   children,
+// }: { id: string } & PropsWithChildren) => {
+//   const { attributes, transform, setNodeRef, listeners } = useDraggable({
+//     id: id.toString(),
+//   });
+//   return (
+//     <div
+//       {...attributes}
+//       {...listeners}
+//       ref={setNodeRef}
+//       style={{
+//         transform: CSS.Translate.toString(transform),
+//       }}
+//     >
+//       {children}
+//     </div>
+//   );
+// };

@@ -29,8 +29,11 @@ const Field = () => {
     //   "https://clickthemart.com/api/productsimages/" + variantId
     // );
     // if (variantResponse.ok) {
-    //   const variantData = await variantResponse.json();
-    //   setAddedProducts((prev) => [...prev, variantData]);
+    //   const variantData: { data: IVariantData } = await variantResponse.json();
+    //   setAddedProducts((prev) => [
+    //     ...prev,
+    //     { price: +variantData.data.variant.price },
+    //   ]);
     // }
     console.log(variantId);
   }

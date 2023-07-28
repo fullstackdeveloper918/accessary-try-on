@@ -23,7 +23,7 @@ const DraggableNested = ({
   });
   return (
     <>
-      <div className="w-36 h-36 cursor-pointer border border-slate-500 rounded-md p-2">
+      <div className="w-44 h-44 cursor-pointer border border-slate-500 rounded-md p-2">
         <img
           draggable="false"
           ref={setNodeRef}
@@ -36,7 +36,7 @@ const DraggableNested = ({
           src={data?.img}
           alt=""
         />
-        <p className="h-2/6 text-sm truncate">{data.name}</p>
+        <p className="h-2/6 text-base truncate">{data.name}</p>
       </div>
     </>
   );

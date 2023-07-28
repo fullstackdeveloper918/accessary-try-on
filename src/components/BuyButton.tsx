@@ -15,6 +15,6 @@ const BuyButton = ({
     );
   }, [addedProducts]);
 
-  return totalPrice ? <button>Buy now ${totalPrice}</button> : null;
+  return totalPrice ? <button className="text-white">Buy now ${totalPrice}</button> : null;
 };
 export default BuyButton;

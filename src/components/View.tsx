@@ -8,7 +8,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { dropPoints } from "../api/points";
 import { dummyProducts } from "../api/products";
@@ -20,8 +20,10 @@ import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 
 const Field = () => {
+  const earRef = useRef<HTMLDivElement>(null);
   // const { annotations, setAnnotations } = useAnnotationsStore();
   const annotations = useAnnotationsStore((state) => state.annotations);
+  console.log("annotattion", annotations);
   const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
   const [addedProducts, setAddedProducts] = useState<
     { price: number | undefined; variantId: number | undefined }[]
@@ -31,6 +33,7 @@ const Field = () => {
     // const variantResponse = await fetch(
     //   "https://clickthemart.com/api/productsimages/" + variantId
     // );
+    // const variantResponse=await callApi(`productsimages/${variantId}`)
     // if (variantResponse.ok) {
     //   const variantData: { data: IVariantData } = await variantResponse.json();
     //   setAddedProducts((prev) => [
@@ -98,11 +101,14 @@ const Field = () => {
             <div className="flex justify-between mb-2">
               <h2 className="text-lg">Lark & Berry</h2>
               <div className="cursor-pointer">
-                <OptionsMenu />
+                <OptionsMenu earRef={earRef} />
               </div>
             </div>
             {/* Drop area ie: Ear */}
-            <div className="flex justify-center items-center relative w-[375px] h-[400px] ">
+            <div
+              ref={earRef}
+              className="flex justify-center items-center relative w-[375px] h-[400px] "
+            >
               {/* Drop Points */}
               <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
                 <div className="h-full w-full">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ExploreTab from "./ExploreTab";
 import { useProductstore } from "@/store/products";
 import { IProduct } from "./data.type";
+import { callApi } from "@/api/config";
 
 const Tabs = () => {
   const tabs = [
@@ -15,9 +16,10 @@ const Tabs = () => {
   const setProducts = useProductstore((state) => state.setProducts);
   useEffect(() => {
     (async () => {
-      const response = await fetch(
-        "https://clickthemart.com/api/collectionsfineear"
-      );
+      // const response = await fetch(
+      //   "https://clickthemart.com/api/collectionsfineear"
+      // );
+      const response = await callApi("collectionsfineear");
       const data: {
         data: Response;
       } = await response.json();

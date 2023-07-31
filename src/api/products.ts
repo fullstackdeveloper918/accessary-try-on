@@ -41,7 +41,8 @@ export const dummyProducts: {
     id: 789,
     type: "circle",
     price: 123,
-    img: "https://clickthemart.com/storage/firstRingEdited.png",
+    // img: "https://clickthemart.com/storage/firstRingEdited.png",
+    img: "firstRingEdited.png",
     variants: {
       A: { image: "vA" },
       B: { image: "vB" },

@@ -21,6 +21,7 @@ import Tabs from "./tabs";
 
 const Field = () => {
   const earRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
   // const { annotations, setAnnotations } = useAnnotationsStore();
   const annotations = useAnnotationsStore((state) => state.annotations);
   console.log("annotattion", annotations);
@@ -101,7 +102,7 @@ const Field = () => {
             <div className="flex justify-between mb-2">
               <h2 className="text-lg">Lark & Berry</h2>
               <div className="cursor-pointer">
-                <OptionsMenu earRef={earRef} />
+                <OptionsMenu earRef={earRef} imageRef={imageRef} />
               </div>
             </div>
             {/* Drop area ie: Ear */}
@@ -186,7 +187,9 @@ const Field = () => {
               </div>
               {/* Drop Points */}
               <img
-                src="https://clickthemart.com/storage/test.png"
+                ref={imageRef}
+                // src="https://clickthemart.com/storage/test.png"
+                src="test.png"
                 className="absolute top-0 left-0 w-full h-full object-contain"
               />
 

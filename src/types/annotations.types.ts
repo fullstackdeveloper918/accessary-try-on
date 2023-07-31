@@ -4,6 +4,7 @@ export interface IAnnotation {
         name: string;
         img: string;
         id: number;
+        price: number;
         type: "circle" | "dot";
         variants: {
           [position: string]: {

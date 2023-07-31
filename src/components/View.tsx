@@ -4,29 +4,56 @@ import {
   KeyboardSensor,
   MouseSensor,
   TouchSensor,
-  useDraggable,
+  UniqueIdentifier,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
-import { PropsWithChildren, useState } from "react";
+import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { dropPoints } from "../api/points";
 import { products } from "../api/products";
 import { IAnnotation } from "../types/annotations.types";
+import BuyButton from "./BuyButton";
+import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 
 const Field = () => {
   const [annotations, setAnnotations] = useState<IAnnotation>();
+  const [addedProducts, setAddedProducts] = useState<
+    { price: number | undefined }[]
+  >([]);
+
+  async function addProducts(variantId: UniqueIdentifier) {
+    // const variantResponse = await fetch(
+    //   "https://clickthemart.com/api/productsimages/" + variantId
+    // );
+    // if (variantResponse.ok) {
+    //   const variantData: { data: IVariantData } = await variantResponse.json();
+    //   setAddedProducts((prev) => [
+    //     ...prev,
+    //     { price: +variantData.data.variant.price },
+    //   ]);
+    // }
+    console.log(variantId);
+  }
+  useEffect(() => {
+    if (annotations == undefined) return;
+    const data = Object.values(annotations).map((an) => ({
+      price: an?.price,
+    }));
+    setAddedProducts(data);
+  }, [annotations]);
 
   function handleDragEnd(event: DragEndEvent) {
-    console.log("dropped", event);
     const {
       over,
       active: { id },
     } = event;
     if (over && over.id) {
+      // fetch the variantInfo based on variantId
+
+      addProducts(over.id);
       if (["A", "B", "C", "D", "E", "F", "G"].includes(id.toString())) {
         setAnnotations((prev) => ({
           ...prev,
@@ -44,9 +71,10 @@ const Field = () => {
       }
     }
   }
+  useEffect(() => {}, [annotations]);
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      delay: 250,
+      delay: 0,
       tolerance: 5,
     },
   });
@@ -59,7 +87,7 @@ const Field = () => {
   const keyboardSensor = useSensor(KeyboardSensor, {});
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
   return (
-    <>
+    <div>
       <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
         <div className="flex gap-4 flex-wrap m-6">
           {/* Drop area ie: Ear */}
@@ -74,17 +102,16 @@ const Field = () => {
                       position: "absolute",
                       top: `${p.y}px`,
                       left: `${p.x}px`,
+                      // height: "60px",
+                      // width: "60px",
+                      // border: "2px dashed gray",
                     }}
                   >
                     <DroppableComp id={p.id} key={p.id}>
-                      {/* <DndContext
-                        onDragEnd={handleDragEndInside}
-                        sensors={sensors}
-                      > */}
                       {annotations !== undefined &&
                         annotations[p.id] !== undefined && (
-                          <DraggbleCompNesed id={p.id}>
-                            <div className="group">
+                          <DraggbleComp id={p.id}>
+                            <div className="group relative h-full w-full">
                               {annotations[p.id]?.type == "circle" ? (
                                 <img
                                   src={annotations[p.id]?.img}
@@ -117,7 +144,7 @@ const Field = () => {
                                   }}
                                 />
                               )}
-                              <span
+                              <div
                                 className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
                                 onClick={() => {
                                   setAnnotations((prev) => ({
@@ -126,12 +153,13 @@ const Field = () => {
                                   }));
                                 }}
                               >
-                                <RxCross2 color="red" />
-                              </span>
+                                <span style={{ height: "100%", width: "100%" }}>
+                                  <RxCross2 color="red" />
+                                </span>
+                              </div>
                             </div>
-                          </DraggbleCompNesed>
+                          </DraggbleComp>
                         )}
-                      {/* </DndContext> */}
                     </DroppableComp>
                   </div>
                 ))}
@@ -139,38 +167,23 @@ const Field = () => {
             </div>
             {/* Drop Points */}
             <img
-              src="test.png"
+              src="https://clickthemart.com/storage/test.png"
               className="absolute top-0 left-0 w-full h-full object-contain"
             />
+
             {/* Drop area ie: Ear */}
           </div>
           {/* Tabs */}
           <Tabs />
           {/* Tabs */}
         </div>
+        {/* Buy Button */}
+        <div className="flex justify-center w-[300px]">
+          <BuyButton addedProducts={addedProducts} />
+        </div>
+        {/* Buy Button */}
       </DndContext>
-    </>
-  );
-};
-export default Field;
-
-const DraggbleCompNesed = ({
-  id,
-  children,
-}: { id: string } & PropsWithChildren) => {
-  const { attributes, transform, setNodeRef, listeners } = useDraggable({
-    id: id.toString(),
-  });
-  return (
-    <div
-      {...attributes}
-      {...listeners}
-      ref={setNodeRef}
-      style={{
-        transform: CSS.Translate.toString(transform),
-      }}
-    >
-      {children}
     </div>
   );
 };
+export default Field;

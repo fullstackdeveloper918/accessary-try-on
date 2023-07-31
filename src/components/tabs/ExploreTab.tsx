@@ -27,6 +27,7 @@ const ExploreTab = () => {
       setAllProducts(modified.flat());
     })();
   }, []);
+  console.log(allProducts);
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
@@ -69,7 +70,7 @@ const ExploreTab = () => {
             key={product.id}
           />
         ))}
-        {allProducts.map((product, idx) => (
+        {/* {allProducts.map((product, idx) => (
           <div
             key={idx}
             className="w-44 h-44 cursor-pointer border border-slate-500 rounded-md p-2"
@@ -82,7 +83,7 @@ const ExploreTab = () => {
             />
             <p className="h-2/6 text-base truncate">{product.title}</p>
           </div>
-        ))}
+        ))} */}
       </div>
     </>
   );

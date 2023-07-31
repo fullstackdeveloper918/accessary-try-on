@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExploreTab from "./ExploreTab";
+import { useProductstore } from "@/store/products";
+import { IProduct } from "./data.type";
 
 const Tabs = () => {
   const tabs = [
@@ -10,6 +12,29 @@ const Tabs = () => {
   ] as const;
   const [currentTab, setCurrentTab] =
     useState<(typeof tabs)[number]>("Explore");
+  const setProducts = useProductstore((state) => state.setProducts);
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        "https://clickthemart.com/api/collectionsfineear"
+      );
+      const data: {
+        data: Response;
+      } = await response.json();
+      const modified = Object.entries(data.data).reduce(
+        (acc: IProduct[], [key, value]) => {
+          const cur = value.products.map((val: IProduct) => ({
+            ...val,
+            shape: key,
+          }));
+          return [...acc, cur];
+        },
+        []
+      );
+      const modifiedProductsArray = modified.flat();
+      setProducts(modifiedProductsArray);
+    })();
+  }, [setProducts]);
   const lookup = {
     Explore: {
       component: <ExploreTab />,

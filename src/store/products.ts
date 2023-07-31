@@ -9,8 +9,8 @@ interface IProductsStore {
 export const useProductstore = create<IProductsStore>((set) => ({
   products: [],
   setProducts: (products: IProduct[]) => {
-    set((state) => ({
-      products: [...state.products, ...products],
-    }));
+    set({
+      products: [...products],
+    });
   },
 }));

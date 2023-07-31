@@ -14,6 +14,7 @@ import { dropPoints } from "../api/points";
 import { dummyProducts } from "../api/products";
 import { useAnnotationsStore } from "../store/annotations";
 import BuyButton from "./BuyButton";
+import OptionsMenu from "./OptionsMenu";
 import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
@@ -91,89 +92,100 @@ const Field = () => {
     <div>
       <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
         <div className="flex gap-4 flex-wrap m-6">
-          {/* Drop area ie: Ear */}
-          <div className="flex justify-center items-center relative w-[375px] h-[400px] ">
-            {/* Drop Points */}
-            <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
-              <div className="h-full w-full">
-                {dropPoints.map((p) => (
-                  <div
-                    key={p.id}
-                    style={{
-                      position: "absolute",
-                      top: `${p.y}px`,
-                      left: `${p.x}px`,
-                      // height: "60px",
-                      // width: "60px",
-                      // border: "2px dashed gray",
-                    }}
-                  >
-                    <DroppableComp id={p.id} key={p.id}>
-                      {annotations !== undefined &&
-                        annotations[p.id] !== undefined && (
-                          <DraggbleComp id={p.id}>
-                            <div className="group relative h-full w-full">
-                              {annotations[p.id]?.type == "circle" ? (
-                                <img
-                                  src={annotations[p.id]?.img}
-                                  alt=""
-                                  style={{
-                                    height: "120px",
-                                    width: "120px",
-                                    objectFit: "cover",
-                                    clipPath:
-                                      "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
-                                    ...(p.id == "C"
-                                      ? { transform: "rotate(300deg)" }
-                                      : {}),
-                                    ...(p.id == "E"
-                                      ? {
-                                          transform:
-                                            "rotate(300deg) rotateY(46deg)",
-                                        }
-                                      : {}),
-                                  }}
-                                />
-                              ) : (
-                                <img
-                                  src={annotations[p.id]?.img}
-                                  alt=""
-                                  style={{
-                                    height: "90px",
-                                    width: "90px",
-                                    objectFit: "cover",
-                                  }}
-                                />
-                              )}
-                              <div
-                                className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
-                                onClick={() => {
-                                  setAnnotations({
-                                    ...annotations,
-                                    [p.id]: undefined,
-                                  });
-                                }}
-                              >
-                                <span style={{ height: "100%", width: "100%" }}>
-                                  <RxCross2 color="red" />
-                                </span>
-                              </div>
-                            </div>
-                          </DraggbleComp>
-                        )}
-                    </DroppableComp>
-                  </div>
-                ))}
+          <div className="bg-gray-100 rounded-md shadow-lg p-2">
+            <div className="flex justify-between mb-2">
+              <h2 className="text-lg">Lark & Berry</h2>
+              <div className="cursor-pointer">
+                <OptionsMenu />
               </div>
             </div>
-            {/* Drop Points */}
-            <img
-              src="https://clickthemart.com/storage/test.png"
-              className="absolute top-0 left-0 w-full h-full object-contain"
-            />
-
             {/* Drop area ie: Ear */}
+            <div className="flex justify-center items-center relative w-[375px] h-[400px] ">
+              {/* Drop Points */}
+              <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
+                <div className="h-full w-full">
+                  {dropPoints.map((p) => (
+                    <div
+                      key={p.id}
+                      style={{
+                        position: "absolute",
+                        top: `${p.y}px`,
+                        left: `${p.x}px`,
+                        // height: "60px",
+                        // width: "60px",
+                        // border: "2px dashed gray",
+                      }}
+                    >
+                      <DroppableComp id={p.id} key={p.id}>
+                        {annotations !== undefined &&
+                          annotations[p.id] !== undefined && (
+                            <DraggbleComp id={p.id}>
+                              <div className="group relative h-full w-full">
+                                {annotations[p.id]?.type == "circle" ? (
+                                  <img
+                                    src={annotations[p.id]?.img}
+                                    alt=""
+                                    style={{
+                                      height: "120px",
+                                      width: "120px",
+                                      objectFit: "cover",
+                                      clipPath:
+                                        "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
+                                      ...(p.id == "C"
+                                        ? { transform: "rotate(300deg)" }
+                                        : {}),
+                                      ...(p.id == "E"
+                                        ? {
+                                            transform:
+                                              "rotate(300deg) rotateY(46deg)",
+                                          }
+                                        : {}),
+                                    }}
+                                  />
+                                ) : (
+                                  <img
+                                    src={annotations[p.id]?.img}
+                                    alt=""
+                                    style={{
+                                      height: "90px",
+                                      width: "90px",
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                )}
+                                <div
+                                  className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
+                                  onClick={() => {
+                                    setAnnotations({
+                                      ...annotations,
+                                      [p.id]: undefined,
+                                    });
+                                  }}
+                                >
+                                  <span
+                                    style={{ height: "100%", width: "100%" }}
+                                  >
+                                    <RxCross2 color="red" />
+                                  </span>
+                                </div>
+                              </div>
+                            </DraggbleComp>
+                          )}
+                      </DroppableComp>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Drop Points */}
+              <img
+                src="https://clickthemart.com/storage/test.png"
+                className="absolute top-0 left-0 w-full h-full object-contain"
+              />
+
+              {/* Drop area ie: Ear */}
+            </div>
           </div>
+
           {/* Tabs */}
           <Tabs />
           {/* Tabs */}

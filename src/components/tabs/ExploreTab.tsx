@@ -1,36 +1,13 @@
-import { FormEvent, useEffect, useState } from "react";
-import { useProductstore } from "../../store/products";
-import DraggableNested from "../dnd/DraggableNested";
-import { IProduct, Response } from "./data.type";
+import { useProductstore } from "@/store/products";
+import { FormEvent, useState } from "react";
 import { dummyProducts } from "../../api/products";
+import DraggableNested from "../dnd/DraggableNested";
 
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
   const products = useProductstore((state) => state.products);
-  const setProducts = useProductstore((state) => state.setProducts);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch(
-        "https://clickthemart.com/api/collectionsfineear"
-      );
-      const data: {
-        data: Response;
-      } = await response.json();
-      const modified = Object.entries(data.data).reduce(
-        (acc: IProduct[], [key, value]) => {
-          const cur = value.products.map((val: IProduct) => ({
-            ...val,
-            shape: key,
-          }));
-          return [...acc, cur];
-        },
-        []
-      );
-      const modifiedProductsArray = modified.flat();
-      setProducts(modifiedProductsArray);
-    })();
-  }, [setProducts]);
-  console.log(products);
+  console.log("products", products);
+
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (

@@ -9,8 +9,8 @@ interface IAnnotationStore {
 export const useAnnotationsStore = create<IAnnotationStore>((set) => ({
   annotations: {},
   setAnnotations: (annotation) => {
-    set((state) => ({
-      annotations: { ...state.annotations, ...annotation },
-    }));
+    set({
+      annotations: { ...annotation },
+    });
   },
 }));

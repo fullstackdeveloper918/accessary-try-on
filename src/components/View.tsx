@@ -20,7 +20,9 @@ import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 
 const Field = () => {
-  const { annotations, setAnnotations } = useAnnotationsStore();
+  // const { annotations, setAnnotations } = useAnnotationsStore();
+  const annotations = useAnnotationsStore((state) => state.annotations);
+  const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
   const [addedProducts, setAddedProducts] = useState<
     { price: number | undefined; variantId: number | undefined }[]
   >([]);

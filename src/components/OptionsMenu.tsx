@@ -8,8 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAnnotationsStore } from "@/store/annotations";
 
 export function OptionsMenu() {
+  const { setAnnotations } = useAnnotationsStore();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -24,7 +26,12 @@ export function OptionsMenu() {
         <DropdownMenuItem>
           <h3 className="px-4 py-2">Download</h3>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => {
+            setAnnotations({});
+          }}
+        >
           <h3 className="px-4 py-2">Clear</h3>
         </DropdownMenuItem>
         <DropdownMenuItem>

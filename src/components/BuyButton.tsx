@@ -50,7 +50,7 @@ const BuyButton = ({
 
   return totalPrice ? (
     <button
-      className="text-white"
+      className="bg-black text-white px-6 py-2 rounded-lg text-base"
       onClick={() => {
         callshopifyFunction();
       }}

@@ -1,23 +1,8 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
+import { IProduct } from "../tabs/data.type";
 
-const DraggableNested = ({
-  id,
-  data,
-}: {
-  id: string;
-  data: {
-    name: string;
-    img: string;
-    id: number;
-    type: "circle" | "dot";
-    variants: {
-      [position: string]: {
-        image: string;
-      };
-    };
-  };
-}) => {
+const DraggableNested = ({ id, data }: { id: string; data: IProduct }) => {
   const { attributes, transform, setNodeRef, listeners } = useDraggable({
     id: id.toString(),
   });
@@ -36,7 +21,7 @@ const DraggableNested = ({
           src={data?.img}
           alt=""
         />
-        <p className="h-2/6 text-base truncate">{data.name}</p>
+        <p className="h-2/6 text-base truncate">{data?.name}</p>
       </div>
     </>
   );

@@ -1,11 +1,13 @@
 import { FormEvent, useEffect, useState } from "react";
-import { products } from "../../api/products";
+import { useProductstore } from "../../store/products";
 import DraggableNested from "../dnd/DraggableNested";
-import { Product, Response } from "./data.type";
+import { IProduct, Response } from "./data.type";
+import { dummyProducts } from "../../api/products";
 
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const products = useProductstore((state) => state.products);
+  const setProducts = useProductstore((state) => state.setProducts);
   useEffect(() => {
     (async () => {
       const response = await fetch(
@@ -15,8 +17,8 @@ const ExploreTab = () => {
         data: Response;
       } = await response.json();
       const modified = Object.entries(data.data).reduce(
-        (acc: Product[], [key, value]) => {
-          const cur = value.products.map((val: Product) => ({
+        (acc: IProduct[], [key, value]) => {
+          const cur = value.products.map((val: IProduct) => ({
             ...val,
             shape: key,
           }));
@@ -24,10 +26,11 @@ const ExploreTab = () => {
         },
         []
       );
-      setAllProducts(modified.flat());
+      const modifiedProductsArray = modified.flat();
+      setProducts(modifiedProductsArray);
     })();
-  }, []);
-  console.log(allProducts);
+  }, [setProducts]);
+  console.log(products);
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
@@ -63,7 +66,7 @@ const ExploreTab = () => {
       </form>
       {/* These are the products that will be dragged */}
       <div className="flex gap-3 flex-wrap">
-        {products.map((product) => (
+        {dummyProducts?.map((product) => (
           <DraggableNested
             id={product.id.toString()}
             data={product}

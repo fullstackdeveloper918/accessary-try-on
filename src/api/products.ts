@@ -1,4 +1,4 @@
-export const products: {
+export const dummyProducts: {
   name: string;
   img: string;
   id: number;

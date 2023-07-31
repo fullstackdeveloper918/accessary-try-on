@@ -11,17 +11,17 @@ import {
 import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { dropPoints } from "../api/points";
-import { products } from "../api/products";
-import { IAnnotation } from "../types/annotations.types";
+import { dummyProducts } from "../api/products";
+import { useAnnotationsStore } from "../store/annotations";
 import BuyButton from "./BuyButton";
 import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 
 const Field = () => {
-  const [annotations, setAnnotations] = useState<IAnnotation>();
+  const { annotations, setAnnotations } = useAnnotationsStore();
   const [addedProducts, setAddedProducts] = useState<
-    { price: number | undefined }[]
+    { price: number | undefined; variantId: number | undefined }[]
   >([]);
 
   async function addProducts(variantId: UniqueIdentifier) {
@@ -41,6 +41,7 @@ const Field = () => {
     if (annotations == undefined) return;
     const data = Object.values(annotations).map((an) => ({
       price: an?.price,
+      variantId: an?.id,
     }));
     setAddedProducts(data);
   }, [annotations]);
@@ -55,18 +56,18 @@ const Field = () => {
 
       addProducts(over.id);
       if (["A", "B", "C", "D", "E", "F", "G"].includes(id.toString())) {
-        setAnnotations((prev) => ({
-          ...prev,
-          [over.id]: prev ? prev[id] : undefined,
+        setAnnotations({
+          ...annotations,
+          [over.id]: annotations ? annotations[id] : undefined,
           [id]: undefined,
-        }));
+        });
       } else {
-        const data = products.find((p) => p.id == id);
+        const data = dummyProducts.find((p) => p.id == id);
         if (data) {
-          setAnnotations((prev) => ({
-            ...prev,
+          setAnnotations({
+            ...annotations,
             [over.id]: data,
-          }));
+          });
         }
       }
     }
@@ -147,10 +148,10 @@ const Field = () => {
                               <div
                                 className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
                                 onClick={() => {
-                                  setAnnotations((prev) => ({
-                                    ...prev,
+                                  setAnnotations({
+                                    ...annotations,
                                     [p.id]: undefined,
-                                  }));
+                                  });
                                 }}
                               >
                                 <span style={{ height: "100%", width: "100%" }}>

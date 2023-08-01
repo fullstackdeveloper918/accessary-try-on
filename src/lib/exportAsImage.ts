@@ -3,7 +3,6 @@ export const exportAsImage = async (
   element: HTMLElement,
   imageElement: HTMLImageElement
 ) => {
-  debugger;
   const html = document.getElementsByTagName("html")[0];
   const body = document.getElementsByTagName("body")[0];
   // let htmlWidth = html.clientWidth;

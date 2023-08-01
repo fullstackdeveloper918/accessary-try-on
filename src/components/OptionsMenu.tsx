@@ -13,6 +13,7 @@ import { useAnnotationsStore } from "@/store/annotations";
 import { RefObject, useState } from "react";
 import { AlertMessage } from "./AlertMessage";
 import { exportAsImage } from "@/lib/exportAsImage";
+import toast from "react-hot-toast";
 
 export function OptionsMenu({
   earRef,
@@ -25,25 +26,32 @@ export function OptionsMenu({
   const { annotations, setAnnotations } = useAnnotationsStore();
   const saveLook = async () => {
     const input = document.querySelector("#customer_id") as HTMLInputElement;
-    // if (input?.value) {
-    const response = await callApi(`mylooks`, {
-      options: {
+    if (input?.value) {
+      const image = await exportAsImage(earRef.current!, imageRef.current!);
+      console.log("image", image);
+      const response = await callApi(`mylooks/${7113628778769}`, {
         method: "POST",
         body: JSON.stringify({
           customer_id: input.value,
+          // customer_id: "7113628778769",
           mylook_data: JSON.stringify(annotations),
           mylook_image: "shopify_test.png",
         }),
-      },
-    });
-    if (response.ok) {
+      });
       const data = await response.json();
-      console.log("data", data);
+      if (data.status === 201) {
+        toast("look saved successfully.");
+      } else {
+        let errorMsg = "";
+        Object.values(data.message).forEach((msg) => {
+          errorMsg += msg + "\n";
+        });
+        toast(errorMsg);
+      }
+    } else {
+      toast("you need to login first");
+      setIsLogInError(true);
     }
-    // } else {
-    // console.log("you need to login first");
-    // setIsLogInError(true);
-    // }
   };
   return (
     <>
@@ -55,7 +63,6 @@ export function OptionsMenu({
           <>
             <button
               onClick={() => {
-                console.log("Login");
                 window.location.href = window.location.host + "/account/login";
               }}
             >
@@ -90,13 +97,7 @@ export function OptionsMenu({
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={async () => {
-              console.log("earRef", earRef);
-              const image = await exportAsImage(
-                earRef.current!,
-                imageRef.current!
-              );
-              console.log("image", image);
-              // saveLook();
+              saveLook();
             }}
           >
             <h3 className="px-4 py-2">Save</h3>

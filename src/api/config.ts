@@ -1,10 +1,8 @@
 export const callApi = (
   endpoint: string = "",
   options?: {
-    options: {
-      method: "GET" | "POST" | "DELTE" | "PUT" | "PATCH";
-      body?: string;
-    };
+    method: "GET" | "POST" | "DELTE" | "PUT" | "PATCH";
+    body?: string;
   }
 ) => {
   const baseUrl = "https://clickthemart.com/api/";

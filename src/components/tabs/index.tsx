@@ -1,8 +1,10 @@
+import { callApi } from "@/api/config";
+import { useProductstore } from "@/store/products";
 import { useEffect, useState } from "react";
 import ExploreTab from "./ExploreTab";
-import { useProductstore } from "@/store/products";
+import MyLooksTab from "./MyLooksTab";
+import MySelectionsTab from "./MySelections";
 import { IProduct } from "./data.type";
-import { callApi } from "@/api/config";
 
 const Tabs = () => {
   const tabs = [
@@ -45,10 +47,10 @@ const Tabs = () => {
       component: <div>Curated Looks</div>,
     },
     "My Selections": {
-      component: <div>My Selections</div>,
+      component: <MySelectionsTab />,
     },
     "My Looks": {
-      component: <div>My Looks</div>,
+      component: <MyLooksTab />,
     },
   };
   return (

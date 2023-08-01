@@ -1,12 +1,9 @@
-import { useProductstore } from "@/store/products";
 import { FormEvent, useState } from "react";
 import { dummyProducts } from "../../api/products";
 import DraggableNested from "../dnd/DraggableNested";
 
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
-  const products = useProductstore((state) => state.products);
-  console.log("products", products);
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

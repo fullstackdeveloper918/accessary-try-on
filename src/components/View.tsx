@@ -24,7 +24,6 @@ const Field = () => {
   const imageRef = useRef<HTMLImageElement>(null);
   // const { annotations, setAnnotations } = useAnnotationsStore();
   const annotations = useAnnotationsStore((state) => state.annotations);
-  console.log("annotattion", annotations);
   const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
   const [addedProducts, setAddedProducts] = useState<
     { price: number | undefined; variantId: number | undefined }[]
@@ -188,8 +187,8 @@ const Field = () => {
               {/* Drop Points */}
               <img
                 ref={imageRef}
-                // src="https://clickthemart.com/storage/test.png"
-                src="test.png"
+                src="https://clickthemart.com/storage/test.png"
+                // src="test.png"
                 className="absolute top-0 left-0 w-full h-full object-contain"
               />
 

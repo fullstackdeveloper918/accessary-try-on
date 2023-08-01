@@ -5,27 +5,35 @@ export interface Response {
 }
 
 export interface Addon {
-  products: Product[];
+  products: IProduct[];
 }
 
-export interface Product {
+export interface IProduct {
   id: number;
-  title: string;
-  body_html: string;
-  vendor: Vendor;
-  product_type: ProductType;
-  created_at: Date;
-  handle: string;
-  updated_at: Date;
-  published_at: Date | null;
-  template_suffix: null;
-  status: Status;
-  published_scope: PublishedScope;
-  tags: string;
-  admin_graphql_api_id: string;
-  options: Option[];
-  images: Image[];
-  image: Image | null;
+  // title: string;
+  // body_html: string;
+  // vendor: Vendor;
+  // product_type: ProductType;
+  // created_at: Date;
+  // handle: string;
+  // updated_at: Date;
+  // published_at: Date | null;
+  // template_suffix: null;
+  // status: Status;
+  // published_scope: PublishedScope;
+  // tags: string;
+  // admin_graphql_api_id: string;
+  // options: Option[];
+  // images: Image[];
+  // image: Image | null;
+  name?: string;
+  img?: string;
+  type?: "circle" | "dot";
+  variants?: {
+    [position: string]: {
+      image: string;
+    };
+  };
 }
 
 export interface Image {

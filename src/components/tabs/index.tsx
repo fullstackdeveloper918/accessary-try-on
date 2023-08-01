@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { callApi } from "@/api/config";
+import { useProductstore } from "@/store/products";
+import { useEffect, useState } from "react";
 import ExploreTab from "./ExploreTab";
+import MyLooksTab from "./MyLooksTab";
+import MySelectionsTab from "./MySelections";
+import { IProduct } from "./data.type";
 
 const Tabs = () => {
   const tabs = [
@@ -10,6 +15,30 @@ const Tabs = () => {
   ] as const;
   const [currentTab, setCurrentTab] =
     useState<(typeof tabs)[number]>("Explore");
+  const setProducts = useProductstore((state) => state.setProducts);
+  useEffect(() => {
+    (async () => {
+      // const response = await fetch(
+      //   "https://clickthemart.com/api/collectionsfineear"
+      // );
+      const response = await callApi("collectionsfineear");
+      const data: {
+        data: Response;
+      } = await response.json();
+      const modified = Object.entries(data.data).reduce(
+        (acc: IProduct[], [key, value]) => {
+          const cur = value.products.map((val: IProduct) => ({
+            ...val,
+            shape: key,
+          }));
+          return [...acc, cur];
+        },
+        []
+      );
+      const modifiedProductsArray = modified.flat();
+      setProducts(modifiedProductsArray);
+    })();
+  }, [setProducts]);
   const lookup = {
     Explore: {
       component: <ExploreTab />,
@@ -18,10 +47,10 @@ const Tabs = () => {
       component: <div>Curated Looks</div>,
     },
     "My Selections": {
-      component: <div>My Selections</div>,
+      component: <MySelectionsTab />,
     },
     "My Looks": {
-      component: <div>My Looks</div>,
+      component: <MyLooksTab />,
     },
   };
   return (

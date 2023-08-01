@@ -1,4 +1,4 @@
-export const products: {
+export const dummyProducts: {
   name: string;
   img: string;
   id: number;
@@ -21,27 +21,30 @@ export const products: {
   //     G: { image: "vG" },
   //   },
   // },
-  // {
-  //   name: "def",
-  //   id: 456,
-  //   type: "dot",
-  //   img: "dotOne.png",
-  //   variants: {
-  //     A: { image: "vA" },
-  //     B: { image: "vB" },
-  //     C: { image: "vC" },
-  //     D: { image: "vD" },
-  //     E: { image: "vE" },
-  //     F: { image: "vF" },
-  //     G: { image: "vG" },
-  //   },
-  // },
+  {
+    name: "def",
+    id: 46169878135057,
+    type: "circle",
+    price: 586,
+    img: "https://clickthemart.com/storage/third.png",
+    // img: "third.png",
+    variants: {
+      A: { image: "vA" },
+      B: { image: "vB" },
+      C: { image: "vC" },
+      D: { image: "vD" },
+      E: { image: "vE" },
+      F: { image: "vF" },
+      G: { image: "vG" },
+    },
+  },
   {
     name: "ghi",
-    id: 789,
+    id: 46170031849745,
     type: "circle",
     price: 123,
     img: "https://clickthemart.com/storage/firstRingEdited.png",
+    // img: "firstRingEdited.png",
     variants: {
       A: { image: "vA" },
       B: { image: "vB" },

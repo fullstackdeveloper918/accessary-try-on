@@ -1,33 +1,10 @@
-import { FormEvent, useEffect, useState } from "react";
-import { products } from "../../api/products";
+import { FormEvent, useState } from "react";
+import { dummyProducts } from "../../api/products";
 import DraggableNested from "../dnd/DraggableNested";
-import { Product, Response } from "./data.type";
 
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch(
-        "https://clickthemart.com/api/collectionsfineear"
-      );
-      const data: {
-        data: Response;
-      } = await response.json();
-      const modified = Object.entries(data.data).reduce(
-        (acc: Product[], [key, value]) => {
-          const cur = value.products.map((val: Product) => ({
-            ...val,
-            shape: key,
-          }));
-          return [...acc, cur];
-        },
-        []
-      );
-      setAllProducts(modified.flat());
-    })();
-  }, []);
-  console.log(allProducts);
+
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
@@ -63,7 +40,7 @@ const ExploreTab = () => {
       </form>
       {/* These are the products that will be dragged */}
       <div className="flex gap-3 flex-wrap">
-        {products.map((product) => (
+        {dummyProducts?.map((product) => (
           <DraggableNested
             id={product.id.toString()}
             data={product}

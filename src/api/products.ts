@@ -23,7 +23,7 @@ export const dummyProducts: {
   // },
   {
     name: "def",
-    id: 456,
+    id: 46169878135057,
     type: "circle",
     price: 586,
     img: "https://clickthemart.com/storage/third.png",
@@ -40,7 +40,7 @@ export const dummyProducts: {
   },
   {
     name: "ghi",
-    id: 789,
+    id: 46170031849745,
     type: "circle",
     price: 123,
     img: "https://clickthemart.com/storage/firstRingEdited.png",

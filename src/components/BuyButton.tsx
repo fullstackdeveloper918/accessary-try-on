@@ -9,13 +9,13 @@ const BuyButton = ({
   const callshopifyFunction = () => {
     const allVariants = addedProducts.reduce(
       (
-        acc: { variantId: number; quantity: number }[],
+        acc: { id: number; quantity: number }[],
         cur: {
           price: number | undefined;
           variantId: number | undefined;
         }
       ) => {
-        const existingIdx = acc.findIndex((p) => p.variantId == cur.variantId);
+        const existingIdx = acc.findIndex((p) => p?.id == cur.variantId);
         if (existingIdx != -1) {
           acc = [
             ...acc.slice(0, existingIdx),
@@ -25,16 +25,14 @@ const BuyButton = ({
         } else {
           acc = [
             ...acc,
-            ...(cur.variantId
-              ? [{ variantId: cur.variantId, quantity: 1 }]
-              : []),
+            ...(cur.variantId ? [{ id: cur.variantId, quantity: 1 }] : []),
           ];
         }
         return acc;
       },
       []
     );
-    console.log("calling shopify function in react", allVariants);
+    console.log("add to cart multiple", allVariants);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     look_add_to_cart(allVariants);

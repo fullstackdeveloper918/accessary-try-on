@@ -107,7 +107,7 @@ const Field = () => {
             {/* Drop area ie: Ear */}
             <div
               ref={earRef}
-              className="flex justify-center items-center relative w-[375px] h-[400px] "
+              className="flex justify-center items-center relative w-[375px] h-[400px]"
             >
               {/* Drop Points */}
               <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
@@ -188,7 +188,7 @@ const Field = () => {
               <img
                 ref={imageRef}
                 src="https://clickthemart.com/storage/test.png"
-                // src="test.png"
+                // src="test2.png"
                 className="absolute top-0 left-0 w-full h-full object-contain"
               />
 

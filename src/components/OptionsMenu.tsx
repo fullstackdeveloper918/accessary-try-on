@@ -29,7 +29,7 @@ export function OptionsMenu({
     if (input?.value) {
       const image = await exportAsImage(earRef.current!, imageRef.current!);
       console.log("image", image);
-      const response = await callApi(`mylooks/${7113628778769}`, {
+      const response = await callApi(`mylooks/${input.value}`, {
         method: "POST",
         body: JSON.stringify({
           customer_id: input.value,
@@ -40,13 +40,13 @@ export function OptionsMenu({
       });
       const data = await response.json();
       if (data.status === 201) {
-        toast("look saved successfully.");
+        toast.success("look saved successfully.");
       } else {
         let errorMsg = "";
         Object.values(data.message).forEach((msg) => {
           errorMsg += msg + "\n";
         });
-        toast(errorMsg);
+        toast.error(errorMsg);
       }
     } else {
       toast("you need to login first");

@@ -188,7 +188,7 @@ const Field = () => {
               <img
                 ref={imageRef}
                 src="https://clickthemart.com/storage/test.png"
-                // src="test2.png"
+                // src="test.png"
                 className="absolute top-0 left-0 w-full h-full object-contain"
               />
 

@@ -35,7 +35,7 @@ export function OptionsMenu({
           customer_id: input.value,
           // customer_id: "7113628778769",
           mylook_data: JSON.stringify(annotations),
-          mylook_image: "shopify_test.png",
+          mylook_image: image,
         }),
       });
       const data = await response.json();

@@ -6,6 +6,7 @@ const MyLooksTab = () => {
     {
       mylook_data: string;
       customer_id: number;
+      mylook_image:string
     }[]
   >([]);
   const { setAnnotations } = useAnnotationsStore();
@@ -35,15 +36,15 @@ const MyLooksTab = () => {
     <div className="flex flex-wrap gap-4">
       {myLooks.map((look, idx) => (
         <div
-          className="w-44 h-44 border shadow-md"
+          className="w-52 h-52 border shadow-md"
           onClick={() => displayLook(idx)}
         >
           <img
-            src="https://picsum.photos/200/200/"
+            src={look?.mylook_image}
             alt=""
-            className="h-4/6 w-full"
+            className="h-full w-full "
           />
-          <h2>{look?.customer_id}</h2>
+          {/* <h2>{look?.customer_id}</h2> */}
         </div>
       ))}
     </div>

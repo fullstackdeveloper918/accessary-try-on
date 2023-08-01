@@ -84,11 +84,13 @@ export function OptionsMenu({
           <DropdownMenuLabel>Options</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem>
+          <DropdownMenuItem
+          className="cursor-pointer hover:bg-slate-100"
+          >
             <h3 className="px-4 py-2">Download</h3>
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="cursor-pointer"
+             className="cursor-pointer hover:bg-slate-100"
             onClick={() => {
               setAnnotations({});
             }}
@@ -96,13 +98,16 @@ export function OptionsMenu({
             <h3 className="px-4 py-2">Clear</h3>
           </DropdownMenuItem>
           <DropdownMenuItem
+           className="cursor-pointer hover:bg-slate-100"
             onClick={async () => {
               saveLook();
             }}
           >
             <h3 className="px-4 py-2">Save</h3>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+           className="cursor-pointer hover:bg-slate-100"
+          >
             <h3 className="px-4 py-2">help</h3>
           </DropdownMenuItem>
         </DropdownMenuContent>

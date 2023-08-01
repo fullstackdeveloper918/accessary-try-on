@@ -32,6 +32,7 @@ const MyLooksTab = () => {
   if (!customer_id?.value) {
     return <div>you need to login first</div>;
   }
+  if(myLooks.length==0)return <h2>No looks found for this user. <br/>Try saving some fresh looks.</h2>
   return (
     <div className="flex flex-wrap gap-4">
       {myLooks.map((look, idx) => (
@@ -44,7 +45,6 @@ const MyLooksTab = () => {
             alt=""
             className="h-full w-full "
           />
-          {/* <h2>{look?.customer_id}</h2> */}
         </div>
       ))}
     </div>

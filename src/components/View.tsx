@@ -97,8 +97,9 @@ const Field = () => {
     <div>
       <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
         <div className="flex gap-4 flex-wrap m-6">
-          <div className="bg-gray-100 rounded-md shadow-lg p-2">
-            <div className="flex justify-between mb-2">
+          <div>
+          <div className=" p-2">
+            <div className="flex justify-between bg-gray-100 rounded-lr-md p-2">
               <h2 className="text-lg">Lark & Berry</h2>
               <div className="cursor-pointer">
                 <OptionsMenu earRef={earRef} imageRef={imageRef} />
@@ -107,7 +108,7 @@ const Field = () => {
             {/* Drop area ie: Ear */}
             <div
               ref={earRef}
-              className="flex justify-center items-center relative w-[375px] h-[400px]"
+              className="bg-gray-100 rounded-md shadow-lg flex justify-center items-center relative w-[375px] h-[400px]"
             >
               {/* Drop Points */}
               <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
@@ -119,9 +120,6 @@ const Field = () => {
                         position: "absolute",
                         top: `${p.y}px`,
                         left: `${p.x}px`,
-                        // height: "60px",
-                        // width: "60px",
-                        // border: "2px dashed gray",
                       }}
                     >
                       <DroppableComp id={p.id} key={p.id}>
@@ -194,17 +192,19 @@ const Field = () => {
 
               {/* Drop area ie: Ear */}
             </div>
+ {/* Buy Button */}
+ <div className="flex justify-center w-[300px] my-12">
+          <BuyButton addedProducts={addedProducts} />
+        </div>
+        {/* Buy Button */}
+            </div>
           </div>
 
           {/* Tabs */}
           <Tabs />
           {/* Tabs */}
         </div>
-        {/* Buy Button */}
-        <div className="flex justify-center w-[300px]">
-          <BuyButton addedProducts={addedProducts} />
-        </div>
-        {/* Buy Button */}
+       
       </DndContext>
     </div>
   );

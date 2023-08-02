@@ -56,7 +56,7 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
           <>
             <button
               onClick={() => {
-                window.location.href = window.location.host + "/account/login";
+                window.location.href = window.location.host + "/account/login?from=custom-look";
               }}
             >
               Login

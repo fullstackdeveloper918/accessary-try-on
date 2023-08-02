@@ -23,17 +23,6 @@ const DraggableNested = ({ id, data }: { id: string; data: IProduct }) => {
         />
         <p className="h-2/6 text-base truncate">{data?.title}</p>
       </div>
-      {/* <button
-        className=" bg-black text-white p-2 rounded-md"
-        onClick={() => {
-          console.log("add to cart", id);
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          add_to_single_product(id);
-        }}
-      >
-        Add to Cart
-      </button> */}
     </div>
   );
 };

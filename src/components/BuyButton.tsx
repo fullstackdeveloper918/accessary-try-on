@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const BuyButton = ({
   addedProducts,
 }: {
-  addedProducts: { price: number | undefined; variantId: number | undefined }[];
+  addedProducts: { price: string; variantId: number | undefined }[];
 }) => {
   const [totalPrice, setTotalPrice] = useState<number>();
   const callshopifyFunction = () => {
@@ -11,7 +11,7 @@ const BuyButton = ({
       (
         acc: { id: number; quantity: number }[],
         cur: {
-          price: number | undefined;
+          price: string | undefined;
           variantId: number | undefined;
         }
       ) => {
@@ -32,7 +32,6 @@ const BuyButton = ({
       },
       []
     );
-    console.log("add to cart multiple", allVariants);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     look_add_to_cart(allVariants);
@@ -40,7 +39,7 @@ const BuyButton = ({
   useEffect(() => {
     setTotalPrice(
       addedProducts.reduce((acc, cur) => {
-        const sum = cur.price ? +acc + cur.price : acc;
+        const sum = +cur.price ? +acc + +cur.price : acc;
         return sum;
       }, 0)
     );

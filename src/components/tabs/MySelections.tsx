@@ -5,51 +5,46 @@ const MySelectionsTab = () => {
   const selectedProducts = Object.values(annotations)
     .reduce(
       (
-        acc:
+        acc: (
           | {
-              name: string;
-              img: string;
+              title: string;
               id: number;
-              price: number;
+              price: string;
               type: "circle" | "dot";
-              variants: { [position: string]: { image: string } };
-            }[]
-          | undefined,
+              image: string;
+            }
+          | undefined
+        )[],
         cur:
           | {
-              name: string;
-              img: string;
+              title: string;
               id: number;
-              price: number;
+              price: string;
               type: "circle" | "dot";
-              variants: { [position: string]: { image: string } };
+              image: string;
             }
           | undefined
       ) => {
         const exists = acc?.findIndex((p) => p?.id == cur?.id);
-        if (exists !== -1) {
-          return acc;
-        } else {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return [...acc, cur];
+        if (exists === -1) {
+          acc.push(cur);
         }
+        return acc;
       },
       []
     )
     ?.filter(Boolean);
   return (
     <div className="flex flex-wrap">
-      {selectedProducts?.map((annotation) => (
-        <div className="border shadow-md w-44 h-44 p-4">
+      {selectedProducts?.map((product) => (
+        <div className="border shadow-md w-44 h-44 p-4" key={product?.id}>
           <img
-            src={annotation?.img}
+            src={product?.image}
             alt=""
             className="h-5/6 object-contain w-full"
           />
           <div className="h-1/6">
-            <h2>{annotation?.name}</h2>
-            {/* <p>{annotation?.price}</p> */}
+            <h2>{product?.title}</h2>
           </div>
         </div>
       ))}

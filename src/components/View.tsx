@@ -45,8 +45,8 @@ const View = () => {
           id: product.id,
           price: normalized.price,
           type: product.type,
-          // here "A" is for just temprary pupose, this will be replaced with position
-          image: normalized.imagesAll["A"],
+          image:
+            normalized.imagesAll[position as "A" | "B" | "C" | "D" | "E" | "F"],
         },
       });
     }

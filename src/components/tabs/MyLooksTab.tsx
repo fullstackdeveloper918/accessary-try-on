@@ -10,12 +10,12 @@ const MyLooksTab = () => {
     }[]
   >([]);
   const { setAnnotations } = useAnnotationsStore();
-  //   const customer_id = document.querySelector(
-  //     "#customer_id"
-  //   ) as HTMLInputElement;
-  const customer_id = {
-    value: "7113628778769",
-  };
+  const customer_id = document.querySelector(
+    "#customer_id"
+  ) as HTMLInputElement;
+  // const customer_id = {
+  //   value: "7113628778769",
+  // };
   useEffect(() => {
     if (!customer_id?.value) return;
     (async () => {

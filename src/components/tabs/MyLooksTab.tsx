@@ -6,7 +6,7 @@ const MyLooksTab = () => {
     {
       mylook_data: string;
       customer_id: number;
-      mylook_image:string
+      mylook_image: string;
     }[]
   >([]);
   const { setAnnotations } = useAnnotationsStore();
@@ -32,19 +32,22 @@ const MyLooksTab = () => {
   if (!customer_id?.value) {
     return <div>you need to login first</div>;
   }
-  if(myLooks.length==0)return <h2>No looks found for this user. <br/>Try saving some fresh looks.</h2>
+  if (myLooks.length == 0)
+    return (
+      <h2>
+        No looks found for this user. <br />
+        Try saving some fresh looks.
+      </h2>
+    );
   return (
     <div className="flex flex-wrap gap-4">
       {myLooks.map((look, idx) => (
         <div
-          className="w-52 h-52 border shadow-md"
+          className="w-52 h-52 border shadow-md cursor-pointer"
           onClick={() => displayLook(idx)}
+          key={idx}
         >
-          <img
-            src={look?.mylook_image}
-            alt=""
-            className="h-full w-full "
-          />
+          <img src={look?.mylook_image} alt="" className="h-full w-full " />
         </div>
       ))}
     </div>

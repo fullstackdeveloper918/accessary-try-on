@@ -1,16 +1,11 @@
 export interface IAnnotation {
-  [id: string]:
+  [position: string]:
     | {
-        name: string;
-        img: string;
+        title: string;
         id: number;
-        price: number;
+        price: string;
         type: "circle" | "dot";
-        variants: {
-          [position: string]: {
-            image: string;
-          };
-        };
+        image: string;
       }
     | undefined;
 }

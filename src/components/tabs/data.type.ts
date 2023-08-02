@@ -10,7 +10,7 @@ export interface Addon {
 
 export interface IProduct {
   id: number;
-  // title: string;
+  title: string;
   // body_html: string;
   // vendor: Vendor;
   // product_type: ProductType;
@@ -25,29 +25,27 @@ export interface IProduct {
   // admin_graphql_api_id: string;
   // options: Option[];
   // images: Image[];
-  // image: Image | null;
-  name?: string;
-  img?: string;
-  type?: "circle" | "dot";
-  variants?: {
-    [position: string]: {
-      image: string;
-    };
-  };
+  image: Image;
+  type: "circle" | "dot";
+  // variants?: {
+  //   [position: string]: {
+  //     image: string;
+  //   };
+  // };
 }
 
 export interface Image {
-  id: number;
-  product_id: number;
-  position: number;
-  created_at: Date;
-  updated_at: Date;
-  alt: null | string;
-  width: number;
-  height: number;
+  // id: number;
+  // product_id: number;
+  // position: number;
+  // created_at: Date;
+  // updated_at: Date;
+  // alt: null | string;
+  // width: number;
+  // height: number;
   src: string;
-  variant_ids: number[];
-  admin_graphql_api_id: string;
+  // variant_ids: number[];
+  // admin_graphql_api_id: string;
 }
 
 export interface Option {

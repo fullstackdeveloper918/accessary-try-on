@@ -15,20 +15,13 @@ import { AlertMessage } from "./AlertMessage";
 import { exportAsImage } from "@/lib/exportAsImage";
 import toast from "react-hot-toast";
 
-export function OptionsMenu({
-  earRef,
-  imageRef,
-}: {
-  earRef: RefObject<HTMLDivElement>;
-  imageRef: RefObject<HTMLImageElement>;
-}) {
+export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
   const [IsLogInError, setIsLogInError] = useState<boolean>(false);
   const { annotations, setAnnotations } = useAnnotationsStore();
   const saveLook = async () => {
     const input = document.querySelector("#customer_id") as HTMLInputElement;
     if (input?.value) {
-      const image = await exportAsImage(earRef.current!, imageRef.current!);
-      console.log("image", image);
+      const image = await exportAsImage(earRef.current!);
       const response = await callApi(`mylooks/${input.value}`, {
         method: "POST",
         body: JSON.stringify({
@@ -84,13 +77,11 @@ export function OptionsMenu({
           <DropdownMenuLabel>Options</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-          className="cursor-pointer hover:bg-slate-100"
-          >
+          <DropdownMenuItem className="cursor-pointer hover:bg-slate-100">
             <h3 className="px-4 py-2">Download</h3>
           </DropdownMenuItem>
           <DropdownMenuItem
-             className="cursor-pointer hover:bg-slate-100"
+            className="cursor-pointer hover:bg-slate-100"
             onClick={() => {
               setAnnotations({});
             }}
@@ -98,16 +89,14 @@ export function OptionsMenu({
             <h3 className="px-4 py-2">Clear</h3>
           </DropdownMenuItem>
           <DropdownMenuItem
-           className="cursor-pointer hover:bg-slate-100"
+            className="cursor-pointer hover:bg-slate-100"
             onClick={async () => {
               saveLook();
             }}
           >
             <h3 className="px-4 py-2">Save</h3>
           </DropdownMenuItem>
-          <DropdownMenuItem
-           className="cursor-pointer hover:bg-slate-100"
-          >
+          <DropdownMenuItem className="cursor-pointer hover:bg-slate-100">
             <h3 className="px-4 py-2">help</h3>
           </DropdownMenuItem>
         </DropdownMenuContent>

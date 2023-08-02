@@ -1,18 +1,4 @@
-export interface IVariantData {
-  variant: Variant;
-  images: Images;
-}
-
-export interface Images {
-  postionA: string;
-  postionB: string;
-  postionC: string;
-  postionD: string;
-  postionE: string;
-  postionF: string;
-}
-
-export interface Variant {
+export interface IVariant {
   id: number;
   product_id: number;
   title: string;
@@ -20,12 +6,12 @@ export interface Variant {
   sku: string;
   position: number;
   inventory_policy: string;
-  compare_at_price: string;
+  compare_at_price: null;
   fulfillment_service: string;
   inventory_management: string;
   option1: string;
-  option2: null;
-  option3: null;
+  option2: string;
+  option3: string;
   created_at: Date;
   updated_at: Date;
   taxable: boolean;
@@ -39,4 +25,15 @@ export interface Variant {
   old_inventory_quantity: number;
   requires_shipping: boolean;
   admin_graphql_api_id: string;
+  mainImage: string;
+  imagesAll: ImagesAll;
+}
+
+export interface ImagesAll {
+  A: string;
+  B: string;
+  C: string;
+  D: string;
+  E: string;
+  F: string;
 }

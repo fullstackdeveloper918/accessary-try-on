@@ -6,6 +6,7 @@ import { useProductstore } from "@/store/products";
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
   const { products } = useProductstore();
+  console.log("products",products)
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,7 +50,7 @@ const ExploreTab = () => {
             key={product.id}
           />
         ))}
-        {products.map((product, idx) => (
+        {/* {products.map((product, idx) => (
           <div
             key={idx}
             className="w-44 h-44 cursor-pointer border border-slate-500 rounded-md p-2"
@@ -62,7 +63,7 @@ const ExploreTab = () => {
             />
             <p className="h-2/6 text-base truncate">{product?.title}</p>
           </div>
-        ))}
+        ))} */}
       </div>
     </>
   );

@@ -99,14 +99,14 @@ const ProductDetailsTab = () => {
           </button>
         </div>
         <div className="w-[200px]">
-          <p className="text-lg">${productDetails?.variants[0].price}</p>
+          <p className="text-lg">${productDetails?.variants[0]?.price}</p>
           <p className="text-base">Tax included.</p>
           <button
             className="px-4 py-2 bg-gray-900 text-white text-lg rounded-md"
             onClick={() => {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              add_to_single_product(productId);
+              add_to_single_product(productDetails?.variants[0]?.id);
             }}
           >
             Add to cart
@@ -159,6 +159,7 @@ interface IProduct {
   image: Image;
   type: "circle" | "dot";
   variants: {
+    id:number;
     price: string;
   }[];
 }

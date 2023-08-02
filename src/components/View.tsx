@@ -48,6 +48,7 @@ const View = () => {
           id: product.id,
           price: normalized.price,
           type: product.type,
+          variantId: normalized.id,
           image:
             normalized.imagesAll[position as "A" | "B" | "C" | "D" | "E" | "F"],
         },
@@ -58,7 +59,7 @@ const View = () => {
     if (annotations == undefined) return;
     const data = Object.values(annotations).map((an) => ({
       price: an?.price ?? "0",
-      variantId: an?.id,
+      variantId: an?.variantId,
     }));
     setAddedProducts(data);
   }, [annotations]);

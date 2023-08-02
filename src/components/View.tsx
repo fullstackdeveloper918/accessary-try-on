@@ -1,4 +1,5 @@
 import { callApi } from "@/api/config";
+import { useProductDetailsStore } from "@/store/productDetails";
 import { IVariant } from "@/types/variantData.types";
 import {
   DndContext,
@@ -23,8 +24,8 @@ import Tabs from "./tabs";
 import { IProduct } from "./tabs/data.type";
 
 const View = () => {
+  const { setProductId, setShowDetails } = useProductDetailsStore();
   const earRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
   // const { annotations, setAnnotations } = useAnnotationsStore();
   const annotations = useAnnotationsStore((state) => state.annotations);
   const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
@@ -35,6 +36,8 @@ const View = () => {
   async function addProducts(position: UniqueIdentifier, product: IProduct) {
     const productResponse = await callApi(`singleproducts/${product.id}`);
     if (productResponse.ok) {
+      setShowDetails(true);
+      setProductId(product.id);
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
       const normalized = variantData.data[0].variants[0];
@@ -186,7 +189,6 @@ const View = () => {
                 </div>
                 {/* Drop Points */}
                 <img
-                  ref={imageRef}
                   src="https://clickthemart.com/storage/test.png"
                   // src="test.png"
                   className="absolute top-0 left-0 w-full h-full object-contain"

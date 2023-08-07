@@ -1,5 +1,6 @@
 import { callApi } from "@/api/config";
 import { useProductDetailsStore } from "@/store/productDetails";
+import { useSideOfEar } from "@/store/sideOfEar";
 import { IVariant } from "@/types/variantData.types";
 import {
   DndContext,
@@ -11,9 +12,9 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-import { dropPoints } from "../api/points";
+import { dropPointsLeft, dropPointsRight } from "../api/points";
 import { dummyProducts } from "../api/products";
 import { useAnnotationsStore } from "../store/annotations";
 import BuyButton from "./BuyButton";
@@ -25,6 +26,11 @@ import { IProduct } from "./tabs/data.type";
 
 const View = () => {
   const { setProductId, setShowDetails } = useProductDetailsStore();
+  const side = useSideOfEar((state) => state.side);
+  const sideIndex = useMemo(
+    () => (side === "L" ? ("left" as const) : ("right" as const)),
+    [side]
+  );
   const earRef = useRef<HTMLDivElement>(null);
   // const { annotations, setAnnotations } = useAnnotationsStore();
   const annotations = useAnnotationsStore((state) => state.annotations);
@@ -32,7 +38,6 @@ const View = () => {
   const [addedProducts, setAddedProducts] = useState<
     { price: string; variantId: number | undefined }[]
   >([]);
-
   async function addProducts(position: UniqueIdentifier, product: IProduct) {
     const productResponse = await callApi(`singleproducts/${product.id}`);
     if (productResponse.ok) {
@@ -43,14 +48,20 @@ const View = () => {
       const normalized = variantData.data[0].variants[0];
       setAnnotations({
         ...annotations,
-        [position]: {
-          title: product.title,
-          id: product.id,
-          price: normalized.price,
-          type: product.type,
-          variantId: normalized.id,
-          image:
-            normalized.imagesAll[position as "A" | "B" | "C" | "D" | "E" | "F"],
+        [sideIndex]: {
+          ...annotations[sideIndex],
+          [position]: {
+            title: product.title,
+            id: product.id,
+            price: normalized.price,
+            type: product.type,
+            variantId: normalized.id,
+            side: side,
+            image:
+              normalized.imagesAll[
+                position as "A" | "B" | "C" | "D" | "E" | "F"
+              ],
+          },
         },
       });
     }
@@ -58,11 +69,11 @@ const View = () => {
   useEffect(() => {
     if (annotations == undefined) return;
     const data = Object.values(annotations).map((an) => ({
-      price: an?.price ?? "0",
-      variantId: an?.variantId,
+      price: an?.[sideIndex]?.price ?? "0",
+      variantId: an?.[sideIndex]?.variantId,
     }));
     setAddedProducts(data);
-  }, [annotations]);
+  }, [annotations, sideIndex]);
 
   function handleDragEnd(event: DragEndEvent) {
     const {
@@ -73,8 +84,14 @@ const View = () => {
       if (["A", "B", "C", "D", "E", "F", "G"].includes(id.toString())) {
         setAnnotations({
           ...annotations,
-          [over.id]: annotations ? annotations[id] : undefined,
-          [id]: undefined,
+          [sideIndex]: {
+            ...annotations[sideIndex],
+            [over.id]:
+              annotations && annotations[sideIndex]
+                ? annotations[sideIndex][id]
+                : undefined,
+            [id]: undefined,
+          },
         });
       } else {
         const data = dummyProducts.find((p) => p.id == id);
@@ -119,81 +136,114 @@ const View = () => {
                 {/* Drop Points */}
                 <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
                   <div className="h-full w-full">
-                    {dropPoints.map((p) => (
-                      <div
-                        key={p.id}
-                        style={{
-                          position: "absolute",
-                          top: `${p.y}px`,
-                          left: `${p.x}px`,
-                        }}
-                      >
-                        <DroppableComp id={p.id} key={p.id}>
-                          {annotations !== undefined &&
-                            annotations[p.id] !== undefined && (
-                              <DraggbleComp id={p.id}>
-                                <div className="group relative h-full w-full">
-                                  {annotations[p.id]?.type == "circle" ? (
-                                    <img
-                                      src={annotations[p.id]?.image}
-                                      alt=""
-                                      style={{
-                                        height: "120px",
-                                        width: "120px",
-                                        objectFit: "cover",
-                                        clipPath:
-                                          "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
-                                        ...(p.id == "C"
-                                          ? { transform: "rotate(300deg)" }
-                                          : {}),
-                                        ...(p.id == "E"
-                                          ? {
-                                              transform:
-                                                "rotate(300deg) rotateY(46deg)",
-                                            }
-                                          : {}),
+                    {(side === "R" ? dropPointsRight : dropPointsLeft).map(
+                      (p) => (
+                        <div
+                          key={p.id}
+                          style={{
+                            position: "absolute",
+                            top: `${p.y}px`,
+                            left: `${p.x}px`,
+                          }}
+                        >
+                          <DroppableComp id={p.id} key={p.id}>
+                            {annotations !== undefined &&
+                              annotations[sideIndex] !== undefined &&
+                              annotations[sideIndex][p.id] !== undefined && (
+                                <DraggbleComp id={p.id}>
+                                  <div className="group relative h-full w-full">
+                                    {annotations[sideIndex][p.id].type ==
+                                    "circle" ? (
+                                      <img
+                                        src={
+                                          annotations[sideIndex][p.id]?.image
+                                        }
+                                        alt=""
+                                        style={{
+                                          height: "120px",
+                                          width: "120px",
+                                          objectFit: "cover",
+                                          clipPath:
+                                            "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
+                                          ...(p.id == "C"
+                                            ? side === "L"
+                                              ? {
+                                                  transform: "rotate(300deg)",
+                                                }
+                                              : {
+                                                  transform: "rotate(75deg)",
+                                                }
+                                            : {}),
+                                          ...(p.id == "E"
+                                            ? side === "L"
+                                              ? {
+                                                  transform:
+                                                    "rotate(300deg) rotateY(46deg)",
+                                                }
+                                              : {
+                                                  transform:
+                                                    "rotate(90deg) rotateY(20deg)",
+                                                }
+                                            : {}),
+                                        }}
+                                      />
+                                    ) : (
+                                      <img
+                                        src={
+                                          annotations[sideIndex][p.id]?.image
+                                        }
+                                        alt=""
+                                        style={{
+                                          height: "90px",
+                                          width: "90px",
+                                          objectFit: "cover",
+                                        }}
+                                      />
+                                    )}
+                                    <div
+                                      className="z-10 cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
+                                      onClick={() => {
+                                        setAnnotations({
+                                          ...annotations,
+                                          [sideIndex]: {
+                                            ...annotations[sideIndex],
+                                            [p.id]: undefined,
+                                          },
+                                        });
                                       }}
-                                    />
-                                  ) : (
-                                    <img
-                                      src={annotations[p.id]?.image}
-                                      alt=""
-                                      style={{
-                                        height: "90px",
-                                        width: "90px",
-                                        objectFit: "cover",
-                                      }}
-                                    />
-                                  )}
-                                  <div
-                                    className="cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
-                                    onClick={() => {
-                                      setAnnotations({
-                                        ...annotations,
-                                        [p.id]: undefined,
-                                      });
-                                    }}
-                                  >
-                                    <span
-                                      style={{ height: "100%", width: "100%" }}
                                     >
-                                      <RxCross2 color="red" />
-                                    </span>
+                                      <span
+                                        style={{
+                                          height: "100%",
+                                          width: "100%",
+                                        }}
+                                      >
+                                        <RxCross2 color="red" />
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                              </DraggbleComp>
-                            )}
-                        </DroppableComp>
-                      </div>
-                    ))}
+                                </DraggbleComp>
+                              )}
+                          </DroppableComp>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
                 {/* Drop Points */}
-                <img
-                  src="https://clickthemart.com/storage/test.png"
-                  // src="test.png"
-                  className="absolute top-0 left-0 w-full h-full object-contain"
-                />
+                {side === "L" ? (
+                  <img
+                    src="https://clickthemart.com/storage/test.png"
+                    // src="test.png"
+                    className="absolute top-0 left-0 w-full h-full object-contain"
+                  />
+                ) : (
+                  <img
+                    src="rightEar.png"
+                    // src="test.png"
+                    className="absolute top-0 left-0 w-full h-full object-contain"
+                  />
+                )}
 
                 {/* Drop area ie: Ear */}
               </div>

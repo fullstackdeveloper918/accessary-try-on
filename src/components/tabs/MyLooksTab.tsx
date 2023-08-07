@@ -1,6 +1,7 @@
 import { callApi } from "@/api/config";
 import { useAnnotationsStore } from "@/store/annotations";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 const MyLooksTab = () => {
   const [myLooks, setMyLooks] = useState<
     {
@@ -30,7 +31,19 @@ const MyLooksTab = () => {
     setAnnotations(JSON.parse(myLooks[idx]?.mylook_data));
   };
   if (!customer_id?.value) {
-    return <div>you need to login first</div>;
+    return (
+      <div className="flex flex-col items-start">
+        <div>Oops, you are not logged In.</div>
+        <Button
+          onClick={() => {
+            window.location.href =
+              window.location.host + "/account/login?from=custom-look";
+          }}
+        >
+          Login
+        </Button>
+      </div>
+    );
   }
   if (myLooks.length == 0)
     return (

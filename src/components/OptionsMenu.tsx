@@ -9,15 +9,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAnnotationsStore } from "@/store/annotations";
-import { RefObject, useState } from "react";
-import { AlertMessage } from "./AlertMessage";
 import { exportAsImage } from "@/lib/exportAsImage";
+import { useAnnotationsStore } from "@/store/annotations";
+import { useSideOfEar } from "@/store/sideOfEar";
+import { RefObject, useMemo, useState } from "react";
 import toast from "react-hot-toast";
+import { AlertMessage } from "./AlertMessage";
 
 export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
   const [IsLogInError, setIsLogInError] = useState<boolean>(false);
   const { annotations, setAnnotations } = useAnnotationsStore();
+  const { side, setSide } = useSideOfEar();
+  const sideIndex = useMemo(
+    () => (side === "L" ? ("left" as const) : ("right" as const)),
+    [side]
+  );
   const saveLook = async () => {
     const input = document.querySelector("#customer_id") as HTMLInputElement;
     if (input?.value) {
@@ -56,7 +62,8 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
           <>
             <button
               onClick={() => {
-                window.location.href = window.location.host + "/account/login?from=custom-look";
+                window.location.href =
+                  window.location.host + "/account/login?from=custom-look";
               }}
             >
               Login
@@ -83,7 +90,20 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
           <DropdownMenuItem
             className="cursor-pointer hover:bg-slate-100"
             onClick={() => {
-              setAnnotations({});
+              setSide(side == "L" ? "R" : "L");
+            }}
+          >
+            <h3 className="px-4 py-2">
+              Show {side === "R" ? "Left" : "Right"} Ear
+            </h3>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer hover:bg-slate-100"
+            onClick={() => {
+              setAnnotations({
+                ...annotations,
+                [sideIndex]: undefined,
+              });
             }}
           >
             <h3 className="px-4 py-2">Clear</h3>

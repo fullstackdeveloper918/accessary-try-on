@@ -1,4 +1,63 @@
-export const dropPoints = [
+export const dropPointsRight = [
+  {
+    id: "A",
+    x: 150,
+    y: 0,
+    width: 60,
+    height: 60,
+    rotate: 60,
+  },
+  // {
+  //   id: "B",
+  //   x: 270,
+  //   y: 40,
+  //   width: 60,
+  //   height: 60,
+  //   rotate: 60,
+  // },
+  {
+    id: "C",
+    x: 70,
+    y: 170,
+    width: 60,
+    height: 60,
+    rotate: 90,
+  },
+
+  {
+    id: "D",
+    x: 200,
+    y: 290,
+    width: 60,
+    height: 60,
+    rotate: 60,
+  },
+  {
+    id: "E",
+    x: 225,
+    y: 150,
+    width: 60,
+    height: 60,
+    rotate: 60,
+  },
+  {
+    id: "F",
+    x: 150,
+    y: 90,
+    width: 60,
+    height: 60,
+    rotate: 60,
+  },
+  // {
+  //   id: "G",
+  //   x: "0",
+  //   y: "160",
+  // width:60,
+  // height:60
+  // rotate:60,
+  // },
+];
+export const dropPointsLeft = [
   {
     id: "A",
     x: 130,

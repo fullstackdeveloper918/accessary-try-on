@@ -10,7 +10,10 @@ interface IAnnotationStore {
 export const useAnnotationsStore = create<IAnnotationStore>()(
   persist(
     (set) => ({
-      annotations: {},
+      annotations: {
+        left: {},
+        right: {},
+      },
       setAnnotations: (annotation) => {
         set({
           annotations: { ...annotation },

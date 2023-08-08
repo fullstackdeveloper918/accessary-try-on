@@ -1,40 +1,29 @@
+import { callApi } from "@/api/config";
 import { useEar } from "@/store/earDetails";
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const Ear = () => {
+  const [imageUrl, setImageUrl] = useState<string>();
   const { side, colorComplex } = useEar();
-  const sideIndex = useMemo(() => (side === "L" ? "left" : "right"), [side]);
-  const lookup = {
-    left: {
-      light: "ears/leftLight.png",
-      medium: "ears/leftMedium.png",
-      dark: "ears/leftDark.png",
-      darkest: "ears/leftDarkest.png",
+  const sideIndex = useMemo(() => (side === "R" ? 1 : 2), [side]);
+
+  const fetchImage = useCallback(
+    async (colorComplex: string, sideIndex: number) => {
+      const res = await callApi(`earimages/${colorComplex}/${sideIndex}`);
+      if (res.ok) {
+        const data = await res.json();
+        setImageUrl(data?.imageUrl);
+      }
     },
-    right: {
-      light: "ears/rightLight.png",
-      medium: "ears/rightMedium.png",
-      dark: "ears/rightDark.png",
-      darkest: "ears/rightDarkest.png",
-    },
-  };
+    []
+  );
+  useEffect(() => {
+    (async () => fetchImage(colorComplex, sideIndex))();
+  }, [sideIndex, colorComplex, fetchImage]);
   return (
     <>
-      {/* {side === "L" ? (
-        <img
-          //   src="https://clickthemart.com/storage/test.png"
-          src="leftMedium.png"
-          className="absolute top-0 left-0 w-full h-full object-contain"
-        />
-      ) : (
-        <img
-          src="rightMedium.png"
-          className="absolute top-0 left-0 w-full h-full object-contain"
-        />
-      )} */}
       <img
-        //   src="https://clickthemart.com/storage/test.png"
-        src={lookup[sideIndex][colorComplex]}
+        src={imageUrl}
         className="absolute top-0 left-0 w-full h-full object-contain"
       />
     </>

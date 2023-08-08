@@ -137,7 +137,18 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuItem className="cursor-pointer hover:bg-slate-100">
+          <DropdownMenuItem
+            className="cursor-pointer hover:bg-slate-100"
+            onClick={async () => {
+              const image = await exportAsImage(earRef.current!);
+              const link = document.createElement("a");
+              link.href = image ?? "";
+              link.download = "image.png";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+          >
             <h3 className="px-4 py-2">Download</h3>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -169,7 +180,12 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
           >
             <h3 className="px-4 py-2">Save</h3>
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer hover:bg-slate-100">
+          <DropdownMenuItem
+            onClick={() => {
+              window.location.href = window.location.host + "/pages/contact";
+            }}
+            className="cursor-pointer hover:bg-slate-100"
+          >
             <h3 className="px-4 py-2">help</h3>
           </DropdownMenuItem>
         </DropdownMenuContent>

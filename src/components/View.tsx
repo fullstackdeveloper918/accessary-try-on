@@ -69,10 +69,15 @@ const View = () => {
   }
   useEffect(() => {
     if (annotations == undefined) return;
-    const data = Object.values(annotations).map((an) => ({
-      price: an?.[sideIndex]?.price ?? "0",
-      variantId: an?.[sideIndex]?.variantId,
+    const leftData = Object.values(annotations.left)?.map((an) => ({
+      price: an?.price ?? "0",
+      variantId: an?.variantId,
     }));
+    const rightData = Object.values(annotations["right"])?.map((an) => ({
+      price: an?.price ?? "0",
+      variantId: an?.variantId,
+    }));
+    const data = [...leftData, ...rightData];
     setAddedProducts(data);
   }, [annotations, sideIndex]);
 

@@ -6,6 +6,7 @@ const BuyButton = ({
   addedProducts: { price: string; variantId: number | undefined }[];
 }) => {
   const [totalPrice, setTotalPrice] = useState<number>();
+  console.log("totalPrice", addedProducts);
   const callshopifyFunction = () => {
     const allVariants = addedProducts.reduce(
       (

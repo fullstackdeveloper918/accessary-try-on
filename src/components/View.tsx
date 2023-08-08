@@ -1,6 +1,6 @@
 import { callApi } from "@/api/config";
+import { useEar } from "@/store/earDetails";
 import { useProductDetailsStore } from "@/store/productDetails";
-import { useSideOfEar } from "@/store/sideOfEar";
 import { IVariant } from "@/types/variantData.types";
 import {
   DndContext,
@@ -18,6 +18,7 @@ import { dropPointsLeft, dropPointsRight } from "../api/points";
 import { dummyProducts } from "../api/products";
 import { useAnnotationsStore } from "../store/annotations";
 import BuyButton from "./BuyButton";
+import Ear from "./Ear";
 import OptionsMenu from "./OptionsMenu";
 import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
@@ -26,7 +27,7 @@ import { IProduct } from "./tabs/data.type";
 
 const View = () => {
   const { setProductId, setShowDetails } = useProductDetailsStore();
-  const side = useSideOfEar((state) => state.side);
+  const side = useEar((state) => state.side);
   const sideIndex = useMemo(
     () => (side === "L" ? ("left" as const) : ("right" as const)),
     [side]
@@ -231,19 +232,7 @@ const View = () => {
                   </div>
                 </div>
                 {/* Drop Points */}
-                {side === "L" ? (
-                  <img
-                    src="https://clickthemart.com/storage/test.png"
-                    // src="test.png"
-                    className="absolute top-0 left-0 w-full h-full object-contain"
-                  />
-                ) : (
-                  <img
-                    src="rightEar.png"
-                    // src="test.png"
-                    className="absolute top-0 left-0 w-full h-full object-contain"
-                  />
-                )}
+                <Ear />
 
                 {/* Drop area ie: Ear */}
               </div>

@@ -1,11 +1,11 @@
 import { useAnnotationsStore } from "@/store/annotations";
-import DraggbleComp from "../dnd/DraggableComp";
-import { useSideOfEar } from "@/store/sideOfEar";
+import { useEar } from "@/store/earDetails";
 import { useMemo } from "react";
+import DraggbleComp from "../dnd/DraggableComp";
 
 const MySelectionsTab = () => {
   const { annotations } = useAnnotationsStore();
-  const { side } = useSideOfEar();
+  const { side } = useEar();
   const sideIndex = useMemo(() => (side === "R" ? "right" : "left"), [side]);
   const selectedProducts = Object.values(annotations[sideIndex])
     .reduce(

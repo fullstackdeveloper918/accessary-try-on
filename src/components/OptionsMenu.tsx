@@ -6,12 +6,17 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { exportAsImage } from "@/lib/exportAsImage";
+import { cn } from "@/lib/utils";
 import { useAnnotationsStore } from "@/store/annotations";
-import { useSideOfEar } from "@/store/sideOfEar";
+import { useEar } from "@/store/earDetails";
 import { RefObject, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AlertMessage } from "./AlertMessage";
@@ -19,7 +24,7 @@ import { AlertMessage } from "./AlertMessage";
 export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
   const [IsLogInError, setIsLogInError] = useState<boolean>(false);
   const { annotations, setAnnotations } = useAnnotationsStore();
-  const { side, setSide } = useSideOfEar();
+  const { side, setSide, colorComplex, setColorComplex } = useEar();
   const sideIndex = useMemo(
     () => (side === "L" ? ("left" as const) : ("right" as const)),
     [side]
@@ -83,7 +88,55 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel>Options</DropdownMenuLabel>
           <DropdownMenuSeparator />
-
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <h3 className="px-2 py-2">Color Complex</h3>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setColorComplex("light");
+                  }}
+                  className={cn("cursor-pointer hover:bg-slate-100", {
+                    "bg-slate-200": colorComplex === "light",
+                  })}
+                >
+                  <h3 className="p-2">light</h3>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setColorComplex("medium");
+                  }}
+                  className={cn("cursor-pointer hover:bg-slate-100", {
+                    "bg-slate-200": colorComplex === "medium",
+                  })}
+                >
+                  <h3 className="p-2">Medium</h3>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setColorComplex("dark");
+                  }}
+                  className={cn("cursor-pointer hover:bg-slate-100", {
+                    "bg-slate-200": colorComplex === "dark",
+                  })}
+                >
+                  <h3 className="p-2">Dark</h3>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setColorComplex("darkest");
+                  }}
+                  className={cn("cursor-pointer hover:bg-slate-100", {
+                    "bg-slate-200": colorComplex === "darkest",
+                  })}
+                >
+                  <h3 className="p-2">Darkest</h3>
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
           <DropdownMenuItem className="cursor-pointer hover:bg-slate-100">
             <h3 className="px-4 py-2">Download</h3>
           </DropdownMenuItem>

@@ -20,8 +20,14 @@ import { useEar } from "@/store/earDetails";
 import { RefObject, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AlertMessage } from "./AlertMessage";
+import { Loader2 } from "lucide-react";
 
 export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
+  const [showBothEars, setShowBothEars] = useState<boolean>(false);
+  const [bothEarsImages, setBothEarsImages] = useState<{
+    leftImage: string | undefined;
+    rigthImage: string | undefined;
+  }>();
   const [IsLogInError, setIsLogInError] = useState<boolean>(false);
   const { annotations, setAnnotations } = useAnnotationsStore();
   const { side, setSide, colorComplex, setColorComplex } = useEar();
@@ -57,6 +63,19 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
       setIsLogInError(true);
     }
   };
+  const showBothEarsImages = async () => {
+    setShowBothEars(true);
+    const prev = side;
+    setSide("R");
+    const RightEarImage = await exportAsImage(earRef.current!);
+    setSide("L");
+    const LeftEarImage = await exportAsImage(earRef.current!);
+    setBothEarsImages({
+      leftImage: LeftEarImage,
+      rigthImage: RightEarImage,
+    });
+    setSide(prev);
+  };
   return (
     <>
       <AlertMessage
@@ -77,6 +96,44 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
         }
         onCancel={() => {
           setIsLogInError(false);
+        }}
+      />
+      <AlertMessage
+        open={showBothEars}
+        title=""
+        full={true}
+        description={
+          <>
+            <div className="flex gap-2 justify-around flex-wrap w-full h-full">
+              <div className="w-2/5">
+                <p className="text-lg">Left Ear</p>
+                {bothEarsImages?.leftImage !== undefined ? (
+                  <img
+                    className="h-full w-full object-cover"
+                    src={bothEarsImages?.leftImage}
+                    alt=""
+                  />
+                ) : (
+                  <Loader2 size={30} className="animate-spin" />
+                )}
+              </div>
+              <div className="w-2/5">
+                <p className="text-lg">Right Ear</p>
+                {bothEarsImages?.leftImage !== undefined ? (
+                  <img
+                    className="h-full w-full object-cover"
+                    src={bothEarsImages?.rigthImage}
+                    alt=""
+                  />
+                ) : (
+                  <Loader2 size={30} className="animate-spin" />
+                )}
+              </div>
+            </div>
+          </>
+        }
+        onCancel={() => {
+          setShowBothEars(false);
         }}
       />
       <DropdownMenu>
@@ -160,6 +217,14 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
             <h3 className="px-4 py-2">
               Show {side === "R" ? "Left" : "Right"} Ear
             </h3>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer hover:bg-slate-100"
+            onClick={() => {
+              showBothEarsImages();
+            }}
+          >
+            <h3 className="px-4 py-2">Show Both Ears</h3>
           </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer hover:bg-slate-100"

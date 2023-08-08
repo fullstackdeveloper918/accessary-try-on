@@ -6,7 +6,7 @@ export interface IAnnotation {
       side: Side;
       price: string;
       variantId: number;
-      type: ProductType;
+      shape: ProductType;
       image: string;
     };
   };
@@ -17,7 +17,7 @@ export interface IAnnotation {
       side: Side;
       price: string;
       variantId: number;
-      type: ProductType;
+      shape: ProductType;
       image: string;
     };
   };

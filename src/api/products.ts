@@ -3,7 +3,7 @@ import { Image } from "@/components/tabs/data.type";
 export const dummyProducts: {
   id: number;
   price: number;
-  type: "circle" | "dot";
+  shape: "circle" | "dot";
   title: string;
   image: Image;
 }[] = [
@@ -19,10 +19,11 @@ export const dummyProducts: {
   {
     title: "def",
     id: 8631906173201,
-    type: "circle",
+    shape: "circle",
     price: 123,
     image: {
-      src: "https://clickthemart.com/storage/firstRingEdited.png",
+      // src: "https://clickthemart.com/storage/firstRingEdited.png",
+      src: "firstRingEdited.png",
     },
   },
 ];

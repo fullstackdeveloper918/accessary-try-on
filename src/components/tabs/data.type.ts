@@ -26,7 +26,7 @@ export interface IProduct {
   // options: Option[];
   // images: Image[];
   image: Image;
-  type: "circle" | "dot";
+  shape: "circle" | "dot";
   // variants?: {
   //   [position: string]: {
   //     image: string;

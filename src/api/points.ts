@@ -27,7 +27,7 @@ export const dropPointsRight = [
   {
     id: "D",
     x: 200,
-    y: 290,
+    y: 295,
     width: 60,
     height: 60,
     rotate: 60,

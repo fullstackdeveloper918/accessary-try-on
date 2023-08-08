@@ -6,7 +6,7 @@ import { useProductstore } from "@/store/products";
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
   const { products } = useProductstore();
-  console.log("products",products)
+  console.log("products", products);
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,19 +50,13 @@ const ExploreTab = () => {
             key={product.id}
           />
         ))}
-        {/* {products.map((product, idx) => (
-          <div
-            key={idx}
-            className="w-44 h-44 cursor-pointer border border-slate-500 rounded-md p-2"
-          >
-            <img
-              draggable="false"
-              className="w-full h-4/6 object-contain"
-              src={product?.image?.src}
-              alt=""
-            />
-            <p className="h-2/6 text-base truncate">{product?.title}</p>
-          </div>
+        {/* #TODO : changes needed to make dynamic */}
+        {/* {products.map((product) => (
+          <DraggableNested
+            id={product?.id.toString()}
+            data={product}
+            key={product?.id}
+          />
         ))} */}
       </div>
     </>

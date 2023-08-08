@@ -166,7 +166,7 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
             onClick={() => {
               setAnnotations({
                 ...annotations,
-                [sideIndex]: undefined,
+                [sideIndex]: {},
               });
             }}
           >

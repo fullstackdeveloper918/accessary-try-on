@@ -27,6 +27,8 @@ import { IProduct } from "./tabs/data.type";
 
 const View = () => {
   const { setProductId, setShowDetails } = useProductDetailsStore();
+  // #TODO : changes needed to make dynamic
+  // const { products } = useProductstore();
   const side = useEar((state) => state.side);
   const sideIndex = useMemo(
     () => (side === "L" ? ("left" as const) : ("right" as const)),
@@ -55,13 +57,14 @@ const View = () => {
             title: product.title,
             id: product.id,
             price: normalized.price,
-            type: product.type,
+            shape: product.shape,
             variantId: normalized.id,
             side: side,
-            image:
-              normalized.imagesAll[
-                position as "A" | "B" | "C" | "D" | "E" | "F"
-              ],
+            // #TODO : changes needed to make dynamic
+            image: "firstRingEdited.png",
+            // normalized.imagesAll[
+            //   position as "A" | "B" | "C" | "D" | "E" | "F"
+            // ],
           },
         },
       });
@@ -100,7 +103,9 @@ const View = () => {
           },
         });
       } else {
+        // #TODO : changes needed to make dynamic
         const data = dummyProducts.find((p) => p.id == id);
+        // const data = products.find((p) => p.id == id);
 
         if (data) {
           addProducts(over.id, data);
@@ -158,7 +163,7 @@ const View = () => {
                               annotations[sideIndex][p.id] !== undefined && (
                                 <DraggbleComp id={p.id}>
                                   <div className="group relative h-full w-full">
-                                    {annotations[sideIndex][p.id].type ==
+                                    {annotations[sideIndex][p.id].shape ==
                                     "circle" ? (
                                       <img
                                         src={
@@ -243,7 +248,7 @@ const View = () => {
               </div>
               {/* Buy Button */}
               <div className="flex justify-center w-[300px] my-12">
-                <BuyButton addedProducts={addedProducts} />
+                <BuyButton addedProducts={addedProducts} earRef={earRef} />
               </div>
               {/* Buy Button */}
             </div>

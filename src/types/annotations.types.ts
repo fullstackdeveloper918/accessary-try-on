@@ -1,11 +1,26 @@
 export interface IAnnotation {
-  [position: string]:
-    | {
-        title: string;
-        id: number;
-        price: string;
-        type: "circle" | "dot";
-        image: string;
-      }
-    | undefined;
+  left: {
+    [position: string]: {
+      title: string;
+      id: number;
+      side: Side;
+      price: string;
+      variantId: number;
+      shape: ProductType;
+      image: string;
+    };
+  };
+  right: {
+    [position: string]: {
+      title: string;
+      id: number;
+      side: Side;
+      price: string;
+      variantId: number;
+      shape: ProductType;
+      image: string;
+    };
+  };
 }
+type ProductType = "circle" | "dot";
+type Side = "L" | "R";

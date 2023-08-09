@@ -6,18 +6,35 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAnnotationsStore } from "@/store/annotations";
-import { RefObject, useState } from "react";
-import { AlertMessage } from "./AlertMessage";
 import { exportAsImage } from "@/lib/exportAsImage";
+import { cn } from "@/lib/utils";
+import { useAnnotationsStore } from "@/store/annotations";
+import { useEar } from "@/store/earDetails";
+import { RefObject, useMemo, useState } from "react";
 import toast from "react-hot-toast";
+import { AlertMessage } from "./AlertMessage";
+import { Loader2 } from "lucide-react";
 
 export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
+  const [showBothEars, setShowBothEars] = useState<boolean>(false);
+  const [bothEarsImages, setBothEarsImages] = useState<{
+    leftImage: string | undefined;
+    rigthImage: string | undefined;
+  }>();
   const [IsLogInError, setIsLogInError] = useState<boolean>(false);
   const { annotations, setAnnotations } = useAnnotationsStore();
+  const { side, setSide, colorComplex, setColorComplex } = useEar();
+  const sideIndex = useMemo(
+    () => (side === "L" ? ("left" as const) : ("right" as const)),
+    [side]
+  );
   const saveLook = async () => {
     const input = document.querySelector("#customer_id") as HTMLInputElement;
     if (input?.value) {
@@ -46,6 +63,19 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
       setIsLogInError(true);
     }
   };
+  const showBothEarsImages = async () => {
+    setShowBothEars(true);
+    const prev = side;
+    setSide("R");
+    const RightEarImage = await exportAsImage(earRef.current!);
+    setSide("L");
+    const LeftEarImage = await exportAsImage(earRef.current!);
+    setBothEarsImages({
+      leftImage: LeftEarImage,
+      rigthImage: RightEarImage,
+    });
+    setSide(prev);
+  };
   return (
     <>
       <AlertMessage
@@ -56,7 +86,8 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
           <>
             <button
               onClick={() => {
-                window.location.href = window.location.host + "/account/login";
+                window.location.href =
+                  window.location.host + "/account/login?from=custom-look";
               }}
             >
               Login
@@ -65,6 +96,44 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
         }
         onCancel={() => {
           setIsLogInError(false);
+        }}
+      />
+      <AlertMessage
+        open={showBothEars}
+        title=""
+        full={true}
+        description={
+          <>
+            <div className="flex gap-2 justify-around flex-wrap w-full h-full">
+              <div className="w-2/5">
+                <p className="text-lg">Left Ear</p>
+                {bothEarsImages?.leftImage !== undefined ? (
+                  <img
+                    className="h-full w-full object-cover"
+                    src={bothEarsImages?.leftImage}
+                    alt=""
+                  />
+                ) : (
+                  <Loader2 size={30} className="animate-spin" />
+                )}
+              </div>
+              <div className="w-2/5">
+                <p className="text-lg">Right Ear</p>
+                {bothEarsImages?.leftImage !== undefined ? (
+                  <img
+                    className="h-full w-full object-cover"
+                    src={bothEarsImages?.rigthImage}
+                    alt=""
+                  />
+                ) : (
+                  <Loader2 size={30} className="animate-spin" />
+                )}
+              </div>
+            </div>
+          </>
+        }
+        onCancel={() => {
+          setShowBothEars(false);
         }}
       />
       <DropdownMenu>
@@ -76,14 +145,94 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel>Options</DropdownMenuLabel>
           <DropdownMenuSeparator />
-
-          <DropdownMenuItem className="cursor-pointer hover:bg-slate-100">
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <h3 className="px-2 py-2">Color Complex</h3>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setColorComplex("light");
+                  }}
+                  className={cn("cursor-pointer hover:bg-slate-100", {
+                    "bg-slate-200": colorComplex === "light",
+                  })}
+                >
+                  <h3 className="p-2">light</h3>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setColorComplex("medium");
+                  }}
+                  className={cn("cursor-pointer hover:bg-slate-100", {
+                    "bg-slate-200": colorComplex === "medium",
+                  })}
+                >
+                  <h3 className="p-2">Medium</h3>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setColorComplex("dark");
+                  }}
+                  className={cn("cursor-pointer hover:bg-slate-100", {
+                    "bg-slate-200": colorComplex === "dark",
+                  })}
+                >
+                  <h3 className="p-2">Dark</h3>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setColorComplex("darkest");
+                  }}
+                  className={cn("cursor-pointer hover:bg-slate-100", {
+                    "bg-slate-200": colorComplex === "darkest",
+                  })}
+                >
+                  <h3 className="p-2">Darkest</h3>
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+          <DropdownMenuItem
+            className="cursor-pointer hover:bg-slate-100"
+            onClick={async () => {
+              const image = await exportAsImage(earRef.current!);
+              const link = document.createElement("a");
+              link.href = image ?? "";
+              link.download = "image.png";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+          >
             <h3 className="px-4 py-2">Download</h3>
           </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer hover:bg-slate-100"
             onClick={() => {
-              setAnnotations({});
+              setSide(side == "L" ? "R" : "L");
+            }}
+          >
+            <h3 className="px-4 py-2">
+              Show {side === "R" ? "Left" : "Right"} Ear
+            </h3>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer hover:bg-slate-100"
+            onClick={() => {
+              showBothEarsImages();
+            }}
+          >
+            <h3 className="px-4 py-2">Show Both Ears</h3>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer hover:bg-slate-100"
+            onClick={() => {
+              setAnnotations({
+                ...annotations,
+                [sideIndex]: {},
+              });
             }}
           >
             <h3 className="px-4 py-2">Clear</h3>
@@ -96,7 +245,12 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
           >
             <h3 className="px-4 py-2">Save</h3>
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer hover:bg-slate-100">
+          <DropdownMenuItem
+            onClick={() => {
+              window.location.href = window.location.host + "/pages/contact";
+            }}
+            className="cursor-pointer hover:bg-slate-100"
+          >
             <h3 className="px-4 py-2">help</h3>
           </DropdownMenuItem>
         </DropdownMenuContent>

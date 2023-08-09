@@ -18,6 +18,7 @@ const DroppableComp = ({ id, children }: DroppableProps) => {
         width: "60px",
         position: "relative",
         borderColor: isOver ? "#4c9ffe" : "transparent",
+        // borderColor: "#4c9ffe",
       }}
       ref={setNodeRef}
     >

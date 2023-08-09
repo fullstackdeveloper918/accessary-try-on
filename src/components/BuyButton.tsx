@@ -13,7 +13,7 @@ const BuyButton = ({
   const callshopifyFunction = async () => {
     const imageUrl = await exportAsImage(earRef.current!);
     console.log("imageUrl", imageUrl);
-    const response = await callApi("oderimage", {
+    const response = await callApi("orderimage", {
       method: "POST",
       body: JSON.stringify({
         image: imageUrl,

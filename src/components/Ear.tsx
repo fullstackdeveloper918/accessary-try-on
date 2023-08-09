@@ -7,21 +7,21 @@ const Ear = () => {
   console.log("imageUrl", imageUrl);
   const { side, colorComplex } = useEar();
   const sideIndex = useMemo(() => (side === "R" ? 1 : 2), [side]);
-  const leftOrRight = useMemo(() => (side === "R" ? "right" : "left"), [side]);
-  const lookup = {
-    left: {
-      light: "ears/leftLight.png",
-      medium: "ears/leftMedium.png",
-      dark: "ears/leftDark.png",
-      darkest: "ears/leftDarkest.png",
-    },
-    right: {
-      light: "ears/rightLight.png",
-      medium: "ears/rightMedium.png",
-      dark: "ears/rightDark.png",
-      darkest: "ears/rightDarkest.png",
-    },
-  };
+  // const leftOrRight = useMemo(() => (side === "R" ? "right" : "left"), [side]);
+  // const lookup = {
+  //   left: {
+  //     light: "ears/leftLight.png",
+  //     medium: "ears/leftMedium.png",
+  //     dark: "ears/leftDark.png",
+  //     darkest: "ears/leftDarkest.png",
+  //   },
+  //   right: {
+  //     light: "ears/rightLight.png",
+  //     medium: "ears/rightMedium.png",
+  //     dark: "ears/rightDark.png",
+  //     darkest: "ears/rightDarkest.png",
+  //   },
+  // };
 
   const fetchImage = useCallback(
     async (colorComplex: string, sideIndex: number) => {
@@ -40,9 +40,10 @@ const Ear = () => {
     <>
       <img
         // #TODO : changes needed to make dynamic
-        // src={imageUrl}
-        src={lookup[leftOrRight][colorComplex]}
+        src={imageUrl}
+        // src={lookup[leftOrRight][colorComplex]}
         className="absolute top-0 left-0 w-full h-full object-contain"
+        // crossOrigin="anonymous"
       />
     </>
   );

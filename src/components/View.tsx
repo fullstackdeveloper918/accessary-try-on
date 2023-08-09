@@ -26,21 +26,36 @@ import Tabs from "./tabs";
 import { IProduct } from "./tabs/data.type";
 
 const View = () => {
-  const { setProductId, setShowDetails } = useProductDetailsStore();
+  const earRef = useRef<HTMLDivElement>(null);
+  const [addedProducts, setAddedProducts] = useState<
+    { price: string; variantId: number | undefined }[]
+  >([]);
   // #TODO : changes needed to make dynamic
   // const { products } = useProductstore();
+  const annotations = useAnnotationsStore((state) => state.annotations);
+  const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
+  const { setProductId, setShowDetails } = useProductDetailsStore();
   const side = useEar((state) => state.side);
   const sideIndex = useMemo(
     () => (side === "L" ? ("left" as const) : ("right" as const)),
     [side]
   );
-  const earRef = useRef<HTMLDivElement>(null);
-  // const { annotations, setAnnotations } = useAnnotationsStore();
-  const annotations = useAnnotationsStore((state) => state.annotations);
-  const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
-  const [addedProducts, setAddedProducts] = useState<
-    { price: string; variantId: number | undefined }[]
-  >([]);
+
+  useEffect(() => {
+    if (annotations == undefined) return;
+    const leftData = Object.values(annotations.left)?.map((an) => ({
+      price: an?.price ?? "0",
+      variantId: an?.variantId,
+    }));
+    const rightData = Object.values(annotations["right"])?.map((an) => ({
+      price: an?.price ?? "0",
+      variantId: an?.variantId,
+    }));
+    const data = [...leftData, ...rightData];
+    setAddedProducts(data);
+  }, [annotations, sideIndex]);
+
+  // Functions 👇👇👇
   async function addProducts(position: UniqueIdentifier, product: IProduct) {
     const productResponse = await callApi(`singleproducts/${product.id}`);
     if (productResponse.ok) {
@@ -61,29 +76,16 @@ const View = () => {
             variantId: normalized.id,
             side: side,
             // #TODO : changes needed to make dynamic
-            image: "firstRingEdited.png",
-            // normalized.imagesAll[
-            //   position as "A" | "B" | "C" | "D" | "E" | "F"
-            // ],
+            // image: "firstRingEdited.png",
+            image:
+              normalized.imagesAll[
+                position as "A" | "B" | "C" | "D" | "E" | "F"
+              ],
           },
         },
       });
     }
   }
-  useEffect(() => {
-    if (annotations == undefined) return;
-    const leftData = Object.values(annotations.left)?.map((an) => ({
-      price: an?.price ?? "0",
-      variantId: an?.variantId,
-    }));
-    const rightData = Object.values(annotations["right"])?.map((an) => ({
-      price: an?.price ?? "0",
-      variantId: an?.variantId,
-    }));
-    const data = [...leftData, ...rightData];
-    setAddedProducts(data);
-  }, [annotations, sideIndex]);
-
   function handleDragEnd(event: DragEndEvent) {
     const {
       over,
@@ -133,13 +135,17 @@ const View = () => {
         <div className="flex gap-4 flex-wrap m-6">
           <div>
             <div className=" p-2">
+              {/* Options button */}
               <div className="flex justify-between bg-gray-100 rounded-lr-md p-2">
                 <h2 className="text-lg">Lark & Berry</h2>
                 <div className="cursor-pointer">
                   <OptionsMenu earRef={earRef} />
                 </div>
               </div>
-              {/* Drop area ie: Ear */}
+              {/* Options button */}
+              {/* 
+                  Drop area ie: Ear and points 
+              */}
               <div
                 ref={earRef}
                 className="bg-gray-100 rounded-md shadow-lg flex justify-center items-center relative w-[375px] h-[400px]"
@@ -169,6 +175,7 @@ const View = () => {
                                         src={
                                           annotations[sideIndex][p.id]?.image
                                         }
+                                        // crossOrigin="anonymous"
                                         alt=""
                                         style={{
                                           height: "120px",

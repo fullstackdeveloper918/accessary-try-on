@@ -15,7 +15,7 @@ const MySelectionsTab = () => {
               title: string;
               id: number;
               price: string;
-              type: "circle" | "dot";
+              shape: "circle" | "dot";
               image: string;
             }
           | undefined
@@ -25,7 +25,7 @@ const MySelectionsTab = () => {
               title: string;
               id: number;
               price: string;
-              type: "circle" | "dot";
+              shape: "circle" | "dot";
               image: string;
             }
           | undefined

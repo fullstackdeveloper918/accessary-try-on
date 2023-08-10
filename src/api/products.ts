@@ -22,8 +22,8 @@ export const dummyProducts: {
     shape: "circle",
     price: 123,
     image: {
-      // src: "https://clickthemart.com/storage/firstRingEdited.png",
-      src: "firstRingEdited.png",
+      src: "https://clickthemart.com/storage/firstRingEdited.png",
+      // src: "firstRingEdited.png",
     },
   },
 ];

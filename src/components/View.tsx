@@ -24,6 +24,7 @@ import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 import { IProduct } from "./tabs/data.type";
+import { Position } from "@/types/annotations.types";
 
 const View = () => {
   const earRef = useRef<HTMLDivElement>(null);
@@ -33,6 +34,7 @@ const View = () => {
   // #TODO : changes needed to make dynamic
   const { products } = useProductstore();
   const annotations = useAnnotationsStore((state) => state.annotations);
+  // annotations.left["A"].options[0].imagesAll["A"]
   const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
   const { setProductId, setShowDetails } = useProductDetailsStore();
   const side = useEar((state) => state.side);
@@ -82,10 +84,7 @@ const View = () => {
             // image: "firstRingEdited.png",
             // image: "imgs/F.png",
             // image: `imgs/${position}.png`,
-            image:
-              normalized.imagesAll[
-                position as "A" | "B" | "C" | "D" | "E" | "F"
-              ],
+            images: normalized.imagesAll,
           },
         },
       });
@@ -178,21 +177,34 @@ const View = () => {
                                     "circle" ? (
                                       <img
                                         src={
-                                          annotations[sideIndex][p.id]?.image
+                                          // annotations[sideIndex][p.id]?.image
+
+                                          annotations[sideIndex][p.id].images[
+                                            p.id as Position
+                                          ]
                                         }
                                         alt=""
                                         style={{
-                                          height: "90px",
-                                          width: "90px",
+                                          height: "80px",
+                                          width: "80px",
                                           objectFit: "contain",
-                                          clipPath:
-                                            "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
+                                          ...(p.id === "A"
+                                            ? {
+                                                clipPath:
+                                                  "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
+                                              }
+                                            : {
+                                                clipPath:
+                                                  "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
+                                              }),
                                         }}
                                       />
                                     ) : (
                                       <img
                                         src={
-                                          annotations[sideIndex][p.id]?.image
+                                          annotations[sideIndex][p.id]?.images[
+                                            p.id
+                                          ]
                                         }
                                         alt=""
                                         style={{

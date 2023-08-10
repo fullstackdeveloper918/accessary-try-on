@@ -7,7 +7,9 @@ export interface IAnnotation {
       price: string;
       variantId: number;
       shape: ProductType;
-      image: string;
+      images: {
+        [position: string]: string;
+      };
       options: Option[];
     };
   };
@@ -19,7 +21,9 @@ export interface IAnnotation {
       price: string;
       variantId: number;
       shape: ProductType;
-      image: string;
+      images: {
+        [position: string]: string;
+      };
       options: Option[];
     };
   };
@@ -57,7 +61,7 @@ interface Option {
   mainImage: string;
   imagesAll: ImagesAll;
 }
-
+export type Position = "A" | "B" | "C" | "D" | "E" | "F";
 export interface ImagesAll {
   A: string;
   B: string;

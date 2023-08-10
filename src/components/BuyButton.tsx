@@ -23,34 +23,34 @@ const BuyButton = ({
       console.log("response", response);
       const data = await response.json();
       console.log("data", data.order_image);
-      // const allVariants = addedProducts.reduce(
-      //   (
-      //     acc: { id: number; quantity: number }[],
-      //     cur: {
-      //       price: string | undefined;
-      //       variantId: number | undefined;
-      //     }
-      //   ) => {
-      //     const existingIdx = acc.findIndex((p) => p?.id == cur.variantId);
-      //     if (existingIdx != -1) {
-      //       acc = [
-      //         ...acc.slice(0, existingIdx),
-      //         { ...acc[existingIdx], quantity: acc[existingIdx].quantity + 1 },
-      //         ...acc.slice(existingIdx + 1),
-      //       ];
-      //     } else {
-      //       acc = [
-      //         ...acc,
-      //         ...(cur.variantId ? [{ id: cur.variantId, quantity: 1 }] : []),
-      //       ];
-      //     }
-      //     return acc;
-      //   },
-      //   []
-      // );
-      // // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // // @ts-ignore
-      // look_add_to_cart(allVariants);
+      const allVariants = addedProducts.reduce(
+        (
+          acc: { id: number; quantity: number }[],
+          cur: {
+            price: string | undefined;
+            variantId: number | undefined;
+          }
+        ) => {
+          const existingIdx = acc.findIndex((p) => p?.id == cur.variantId);
+          if (existingIdx != -1) {
+            acc = [
+              ...acc.slice(0, existingIdx),
+              { ...acc[existingIdx], quantity: acc[existingIdx].quantity + 1 },
+              ...acc.slice(existingIdx + 1),
+            ];
+          } else {
+            acc = [
+              ...acc,
+              ...(cur.variantId ? [{ id: cur.variantId, quantity: 1 }] : []),
+            ];
+          }
+          return acc;
+        },
+        []
+      );
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      look_add_to_cart(allVariants, data.order_image);
     }
   };
   useEffect(() => {

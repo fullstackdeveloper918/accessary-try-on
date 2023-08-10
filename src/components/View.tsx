@@ -1,6 +1,7 @@
 import { callApi } from "@/api/config";
 import { useEar } from "@/store/earDetails";
 import { useProductDetailsStore } from "@/store/productDetails";
+import { useProductstore } from "@/store/products";
 import { IVariant } from "@/types/variantData.types";
 import {
   DndContext,
@@ -15,7 +16,6 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { dropPointsLeft, dropPointsRight } from "../api/points";
-import { dummyProducts } from "../api/products";
 import { useAnnotationsStore } from "../store/annotations";
 import BuyButton from "./BuyButton";
 import Ear from "./Ear";
@@ -31,7 +31,7 @@ const View = () => {
     { price: string; variantId: number | undefined }[]
   >([]);
   // #TODO : changes needed to make dynamic
-  // const { products } = useProductstore();
+  const { products } = useProductstore();
   const annotations = useAnnotationsStore((state) => state.annotations);
   const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
   const { setProductId, setShowDetails } = useProductDetailsStore();
@@ -63,6 +63,7 @@ const View = () => {
       setProductId(product.id);
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
+      console.log("variantData", variantData);
       const normalized = variantData.data[0].variants[0];
       setAnnotations({
         ...annotations,
@@ -75,8 +76,12 @@ const View = () => {
             shape: product.shape,
             variantId: normalized.id,
             side: side,
+            // #TODO : add options here to get variant options
+            options: variantData.data[0].variants,
             // #TODO : changes needed to make dynamic
             // image: "firstRingEdited.png",
+            // image: "imgs/F.png",
+            // image: `imgs/${position}.png`,
             image:
               normalized.imagesAll[
                 position as "A" | "B" | "C" | "D" | "E" | "F"
@@ -106,8 +111,8 @@ const View = () => {
         });
       } else {
         // #TODO : changes needed to make dynamic
-        const data = dummyProducts.find((p) => p.id == id);
-        // const data = products.find((p) => p.id == id);
+        // const data = dummyProducts.find((p) => p.id == id);
+        const data = products.find((p) => p.id == id);
 
         if (data) {
           addProducts(over.id, data);
@@ -175,34 +180,13 @@ const View = () => {
                                         src={
                                           annotations[sideIndex][p.id]?.image
                                         }
-                                        // crossOrigin="anonymous"
                                         alt=""
                                         style={{
-                                          height: "120px",
-                                          width: "120px",
-                                          objectFit: "cover",
+                                          height: "90px",
+                                          width: "90px",
+                                          objectFit: "contain",
                                           clipPath:
-                                            "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
-                                          ...(p.id == "C"
-                                            ? side === "L"
-                                              ? {
-                                                  transform: "rotate(300deg)",
-                                                }
-                                              : {
-                                                  transform: "rotate(75deg)",
-                                                }
-                                            : {}),
-                                          ...(p.id == "E"
-                                            ? side === "L"
-                                              ? {
-                                                  transform:
-                                                    "rotate(300deg) rotateY(46deg)",
-                                                }
-                                              : {
-                                                  transform:
-                                                    "rotate(90deg) rotateY(20deg)",
-                                                }
-                                            : {}),
+                                            "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
                                         }}
                                       />
                                     ) : (
@@ -214,7 +198,7 @@ const View = () => {
                                         style={{
                                           height: "90px",
                                           width: "90px",
-                                          objectFit: "cover",
+                                          objectFit: "contain",
                                         }}
                                       />
                                     )}

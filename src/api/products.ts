@@ -23,7 +23,8 @@ export const dummyProducts: {
     price: 123,
     image: {
       // src: "https://clickthemart.com/storage/firstRingEdited.png",
-      src: "firstRingEdited.png",
+      // src: "firstRingEdited.png",
+      src: "imgs/F.png",
     },
   },
 ];

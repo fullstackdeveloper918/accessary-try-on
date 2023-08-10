@@ -12,7 +12,7 @@ const ProductDetailsTab = () => {
   useEffect(() => {
     if (productId === undefined) return;
     (async () => {
-      const response = await callApi("singleproducts/" + productId);
+      const response = await callApi("singleproductstest/" + productId);
       if (response.ok) {
         const singleProduct: { data: IProduct[] } = await response.json();
         setProductDetails(singleProduct.data[0]);

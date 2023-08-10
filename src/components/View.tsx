@@ -57,7 +57,7 @@ const View = () => {
 
   // Functions 👇👇👇
   async function addProducts(position: UniqueIdentifier, product: IProduct) {
-    const productResponse = await callApi(`singleproducts/${product.id}`);
+    const productResponse = await callApi(`singleproductstest/${product.id}`);
     if (productResponse.ok) {
       setShowDetails(true);
       setProductId(product.id);

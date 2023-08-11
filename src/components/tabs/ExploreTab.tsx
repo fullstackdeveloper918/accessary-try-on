@@ -53,13 +53,15 @@ const ExploreTab = () => {
           />
         ))} */}
         {/* #TODO : changes needed to make dynamic */}
-        {products.map((product) => (
-          <DraggableNested
-            id={product?.id.toString()}
-            data={product}
-            key={product?.id}
-          />
-        ))}
+        {
+          products.map((product) => (
+            <DraggableNested
+              id={product?.id.toString()}
+              data={product}
+              key={product?.id}
+            />
+          ))[0]
+        }
       </div>
     </>
   );

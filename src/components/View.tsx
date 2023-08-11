@@ -129,6 +129,7 @@ const View = () => {
           [currentPoint as string]: undefined,
         },
       });
+      setCurrentPoint(undefined);
     }
   }
   const mouseSensor = useSensor(MouseSensor, {
@@ -266,14 +267,16 @@ const View = () => {
                 <Ear />
 
                 {/* Drop area ie: Ear */}
-                <button
-                  className="absolute bottom-2 right-6 hover:underline text-white"
-                  onClick={() => {
-                    remove();
-                  }}
-                >
-                  remove
-                </button>
+                {currentPoint ? (
+                  <button
+                    className="absolute bottom-2 right-6 hover:underline text-white  px-1 rounded-sm"
+                    onClick={() => {
+                      remove();
+                    }}
+                  >
+                    Remove
+                  </button>
+                ) : null}
               </div>
               {/* Buy Button */}
               <div className="flex justify-center w-full  btn-prod-view mt-3">

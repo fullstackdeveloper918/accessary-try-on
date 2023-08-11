@@ -20,9 +20,7 @@ const BuyButton = ({
       }),
     });
     if (response.ok) {
-      console.log("response", response);
       const data = await response.json();
-      console.log("data", data.order_image);
       const allVariants = addedProducts.reduce(
         (
           acc: { id: number; quantity: number }[],

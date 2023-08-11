@@ -5,7 +5,6 @@ import DraggableNested from "../dnd/DraggableNested";
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
   const { products } = useProductstore();
-  console.log("products", products);
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

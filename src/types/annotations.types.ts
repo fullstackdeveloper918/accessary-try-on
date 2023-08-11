@@ -28,10 +28,10 @@ export interface IAnnotation {
     };
   };
 }
-type ProductType = "circle" | "dot";
-type Side = "L" | "R";
+export type ProductType = "circle" | "dot";
+export type Side = "L" | "R";
 
-interface Option {
+export interface Option {
   product_id: number;
   id: number;
   title: string;

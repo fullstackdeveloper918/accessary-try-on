@@ -34,7 +34,6 @@ const View = () => {
   // #TODO : changes needed to make dynamic
   const { products } = useProductstore();
   const annotations = useAnnotationsStore((state) => state.annotations);
-  // annotations.left["A"].options[0].imagesAll["A"]
   const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
   const { setProductId, setShowDetails } = useProductDetailsStore();
   const side = useEar((state) => state.side);
@@ -65,7 +64,6 @@ const View = () => {
       setProductId(product.id);
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
-      console.log("variantData", variantData);
       const normalized = variantData.data[0].variants[0];
       setAnnotations({
         ...annotations,
@@ -78,12 +76,9 @@ const View = () => {
             shape: product.shape,
             variantId: normalized.id,
             side: side,
-            // #TODO : add options here to get variant options
             options: variantData.data[0].variants,
             // #TODO : changes needed to make dynamic
             // image: "firstRingEdited.png",
-            // image: "imgs/F.png",
-            // image: `imgs/${position}.png`,
             images: normalized.imagesAll,
           },
         },
@@ -138,7 +133,7 @@ const View = () => {
       C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 55% 100%, 62% 50%, 0 45%)",
       D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
       E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
-      F: "",
+      F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
     },
     right: {
       A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
@@ -146,7 +141,7 @@ const View = () => {
       C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 47% 100%, 52% 50%, 0 45%)",
       D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
       E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
-      F: "",
+      F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
     },
   };
   const keyboardSensor = useSensor(KeyboardSensor, {});
@@ -209,11 +204,15 @@ const View = () => {
                                                 transform: "scaleX(-1)",
                                               }
                                             : {}),
-                                          // ...(p.id === "F"
-                                          //   ? {
-                                          //       transform: "scaleX(1)",
-                                          //     }
-                                          //   : {}),
+                                          ...(p.id === "F"
+                                            ? sideIndex === "right"
+                                              ? {
+                                                  transform: "scaleX(1)",
+                                                }
+                                              : {
+                                                  transform: "scaleX(-1)",
+                                                }
+                                            : {}),
                                           clipPath:
                                             clipPathLookup[sideIndex][
                                               p.id as Position

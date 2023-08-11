@@ -2,6 +2,7 @@ import { callApi } from "@/api/config";
 import { useEar } from "@/store/earDetails";
 import { useProductDetailsStore } from "@/store/productDetails";
 import { useProductstore } from "@/store/products";
+import { Position } from "@/types/annotations.types";
 import { IVariant } from "@/types/variantData.types";
 import {
   DndContext,
@@ -24,7 +25,6 @@ import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 import { IProduct } from "./tabs/data.type";
-import { Position } from "@/types/annotations.types";
 
 const View = () => {
   const earRef = useRef<HTMLDivElement>(null);
@@ -131,6 +131,24 @@ const View = () => {
       tolerance: 5,
     },
   });
+  const clipPathLookup = {
+    left: {
+      A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
+      B: "polygon(30% 0%, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 26% 94%, 40% 64%, 68% 39%)",
+      C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 55% 100%, 62% 50%, 0 45%)",
+      D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
+      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
+      F: "",
+    },
+    right: {
+      A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
+      B: "polygon(30% 0%, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 26% 94%, 40% 64%, 68% 39%)",
+      C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 47% 100%, 52% 50%, 0 45%)",
+      D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
+      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
+      F: "",
+    },
+  };
   const keyboardSensor = useSensor(KeyboardSensor, {});
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
   return (
@@ -177,8 +195,6 @@ const View = () => {
                                     "circle" ? (
                                       <img
                                         src={
-                                          // annotations[sideIndex][p.id]?.image
-
                                           annotations[sideIndex][p.id].images[
                                             p.id as Position
                                           ]
@@ -188,15 +204,20 @@ const View = () => {
                                           height: "80px",
                                           width: "80px",
                                           objectFit: "contain",
-                                          ...(p.id === "A"
+                                          ...(sideIndex === "right"
                                             ? {
-                                                clipPath:
-                                                  "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
+                                                transform: "scaleX(-1)",
                                               }
-                                            : {
-                                                clipPath:
-                                                  "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
-                                              }),
+                                            : {}),
+                                          // ...(p.id === "F"
+                                          //   ? {
+                                          //       transform: "scaleX(1)",
+                                          //     }
+                                          //   : {}),
+                                          clipPath:
+                                            clipPathLookup[sideIndex][
+                                              p.id as Position
+                                            ],
                                         }}
                                       />
                                     ) : (
@@ -208,8 +229,8 @@ const View = () => {
                                         }
                                         alt=""
                                         style={{
-                                          height: "90px",
-                                          width: "90px",
+                                          height: "80px",
+                                          width: "80px",
                                           objectFit: "contain",
                                         }}
                                       />

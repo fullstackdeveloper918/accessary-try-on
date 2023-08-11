@@ -51,8 +51,31 @@ const ProductDetailsTab = () => {
               ))}
             </Carousel>
           </div>
-          <div className="w-[200px]">
-            <p className="text-lg">${productDetails?.variants[0]?.price}</p>
+          <div className="w-[200px] flex flex-col items-start">
+            <h2 className="text-2xl font-semibold">Options</h2>
+            <div className="flex gap-2 flex-wrap w-full">
+              {productDetails?.variants.map((variant) => {
+                // return <div key={variant.id}>{variant?.title}</div>;
+                return (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      console.log("variant", variant.id);
+                    }}
+                  >
+                    <img
+                      src={variant.mainImage}
+                      alt=""
+                      className="h-14 w-full object-cover border rounded-md "
+                    />
+                    <span className="text-sm">{variant?.title}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-lg mt-4">
+              ${productDetails?.variants[0]?.price}
+            </p>
             <p className="text-base">Tax included.</p>
             <button
               className="px-4 py-2 bg-gray-900 text-white text-lg rounded-md"
@@ -116,7 +139,33 @@ interface IProduct {
   type: "circle" | "dot";
   variants: {
     id: number;
+    product_id: number;
+    title: string;
     price: string;
+    sku: string;
+    position: number;
+    inventory_policy: string;
+    compare_at_price: string;
+    fulfillment_service: string;
+    inventory_management: string;
+    option1: string;
+    option2: null;
+    option3: null;
+    created_at: Date;
+    updated_at: Date;
+    taxable: boolean;
+    barcode: string;
+    grams: number;
+    image_id: number;
+    weight: number;
+    weight_unit: string;
+    inventory_item_id: number;
+    inventory_quantity: number;
+    old_inventory_quantity: number;
+    requires_shipping: boolean;
+    admin_graphql_api_id: string;
+    mainImage: string;
+    imagesAll: ImagesAll;
   }[];
 }
 interface Image {
@@ -132,7 +181,14 @@ interface Image {
   // variant_ids: number[];
   // admin_graphql_api_id: string;
 }
-
+interface ImagesAll {
+  A: string;
+  B: string;
+  C: string;
+  D: string;
+  E: string;
+  F: string;
+}
 interface Option {
   id: number;
   product_id: number;

@@ -46,7 +46,6 @@ const MySelectionsTab = () => {
       []
     )
     ?.filter(Boolean);
-  console.log("selectedProducts", selectedProducts);
   return (
     <div className="flex flex-wrap produc-exp-ui">
       {selectedProducts?.map((product) => (

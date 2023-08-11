@@ -1,7 +1,7 @@
 import { callApi } from "@/api/config";
 import { useProductDetailsStore } from "@/store/productDetails";
 import { Carousel } from "flowbite-react";
-import { ChevronLeftCircle, ChevronRightCircle, XSquare } from "lucide-react";
+import { ChevronLeftCircle, ChevronRightCircle, Undo2, X, XSquare } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const ProductDetailsTab = () => {
@@ -25,8 +25,18 @@ const ProductDetailsTab = () => {
   }, [productId, setShowDetails]);
 
   return (
-    <div className="flex justify-between">
+   
+    <div className="flex justify-between prod-detail-grid"> 
+    
       <div>
+      <div className="goback">
+        <button  onClick={() => {
+          setShowDetails(false);
+        }}>
+          <Undo2 className="icon-back"/> Go Back
+        </button>
+    
+    </div>
         <div className="flex flex-col gap-2 justify-start items-start">
           <h2 className="text-2xl leading-6 font-semibold">
             {productDetails?.title}
@@ -35,8 +45,14 @@ const ProductDetailsTab = () => {
             FINE PIERCINGS
           </p>
         </div>
-        <div className="flex flex-wrap items-start w-full">
-          <div className="w-[360px] m-4 h-[300px]">
+        <div className="price-val">
+        <p className="text-lg mt-4">
+              ${productDetails?.variants[0]?.price} <span className="tax-val">Tax included.</span>
+            </p>
+           
+        </div>
+        <div className="flex flex-wrap items-start w-full galley-prod-detail">
+          <div className="w-[360px] h-[300px] my-5">
             <Carousel
               leftControl={<ChevronLeftCircle />}
               rightControl={<ChevronRightCircle />}
@@ -51,34 +67,34 @@ const ProductDetailsTab = () => {
               ))}
             </Carousel>
           </div>
-          <div className="w-[200px] flex flex-col items-start">
-            <h2 className="text-2xl font-semibold">Options</h2>
-            <div className="flex gap-2 flex-wrap w-full">
+          <div className="w-full flex flex-col items-start">
+            <h3 className="text-2xl font-semibold mb-4">Options</h3>
+            <div className="flex gap-2 flex-wrap w-full thumb-prod">
               {productDetails?.variants.map((variant) => {
                 // return <div key={variant.id}>{variant?.title}</div>;
                 return (
                   <div
-                    className="cursor-pointer"
+                    className="cursor-pointer thumb-prod-item"
                     onClick={() => {
                       console.log("variant", variant.id);
                     }}
                   >
-                    <img
+                    <div className="prod-thumb-img">
+                      <img
                       src={variant.mainImage}
                       alt=""
                       className="h-14 w-full object-cover border rounded-md "
                     />
+                      </div>
+                  
                     <span className="text-sm">{variant?.title}</span>
                   </div>
                 );
               })}
             </div>
-            <p className="text-lg mt-4">
-              ${productDetails?.variants[0]?.price}
-            </p>
-            <p className="text-base">Tax included.</p>
+            
             <button
-              className="px-4 py-2 bg-gray-900 text-white text-lg rounded-md"
+              className="px-4 py-2 bg-gray-900 text-white text-lg rounded-md btn-addcart"
               onClick={() => {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
@@ -90,13 +106,13 @@ const ProductDetailsTab = () => {
           </div>
         </div>
 
-        <div className="text-left">
-          <h2
+        <div className="text-left desc-data-bottom">
+          <h3
             className="text-
         xl"
           >
             Description
-          </h2>
+          </h3>
           <p
             className="text-left"
             dangerouslySetInnerHTML={{
@@ -106,14 +122,16 @@ const ProductDetailsTab = () => {
         </div>
       </div>
 
-      <button
+      {/* <button
         className="self-start"
         onClick={() => {
           setShowDetails(false);
         }}
-      >
-        <XSquare size={24} />
-      </button>
+      > */}
+        
+       
+        {/* <XSquare size={24} /> */}
+      {/* </button> */}
     </div>
   );
 };

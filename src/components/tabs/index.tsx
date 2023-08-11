@@ -1,12 +1,13 @@
 import { callApi } from "@/api/config";
+import { cn } from "@/lib/utils";
 import { useProductDetailsStore } from "@/store/productDetails";
 import { useProductstore } from "@/store/products";
 import { useEffect, useState } from "react";
 import ExploreTab from "./ExploreTab";
 import MyLooksTab from "./MyLooksTab";
 import MySelectionsTab from "./MySelections";
-import { IProduct } from "./data.type";
 import ProductDetailsTab from "./ProductDetails";
+import { IProduct } from "./data.type";
 
 const Tabs = () => {
   const { showDetails } = useProductDetailsStore();
@@ -65,8 +66,8 @@ const Tabs = () => {
     }
   }, [showDetails]);
   return (
-    <div style={{ maxWidth: "700px" }}>
-      <ul className="flex gap-6 mb-4">
+    <div className="right-prodview w-full">
+      <ul className="flex gap-2 mb-4 tabsui flex-wrap">
         {tabs
           .filter((el) => el !== "detailed")
           .map((tab) => (
@@ -75,10 +76,12 @@ const Tabs = () => {
               onClick={() => {
                 setCurrentTab(tab);
               }}
-              className="text-base md:text-xl font-semibold cursor-pointer "
-              style={{
-                textDecoration: currentTab === tab ? "underline" : "none",
-              }}
+              className={cn(
+                "text-base md:text-2xl font-semibold cursor-pointer ",
+                {
+                  "active-tab": currentTab === tab,
+                }
+              )}
             >
               {tab}
             </li>

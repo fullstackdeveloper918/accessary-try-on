@@ -40,3 +40,342 @@
 .read-the-docs {
   color: #888;
 }
+
+/** Grid Setting of the Product Preview Page **/
+
+.preview-grid-product {
+  max-width: 375px;
+}
+
+.preview-grid-product .head-prev-prod {
+  background-color: #1c1c1c;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 12px 20px;
+  border-bottom: 2px solid #d3d3d3;
+}
+
+.preview-grid-product .head-prev-prod h2 {
+  font-size: 15px;
+}
+
+.right-prodview {
+  max-width: calc(100% - 391px);
+  padding-top: 8px;
+}
+
+.preview-grid-product .head-prev-prod .options-prodview button {
+  height: 28px;
+}
+
+.preview-grid-product .head-prev-prod .options-prodview button svg {
+  fill: #fff;
+  width: 25px;
+  height: 20px;
+}
+
+/** tabs UI **/
+
+ul.tabsui li.active-tab,
+ul.tabsui li:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+ul.tabsui li {
+  background-color: #e5e5e5;
+  padding: 5px 14px;
+  font-size: 16px;
+  border-radius: 3px;
+}
+
+form.Searchbar-tab .search-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+form.Searchbar-tab .search-field .search-field-input input {
+  border: 1px solid #a9a9a9;
+  border-radius: 4px;
+  height: 45px;
+  background-image: url("assets/search-icon.svg");
+  min-width: 250px;
+  background-repeat: no-repeat;
+  background-position: 9px 9px;
+  padding-left: 45px;
+  background-size: 28px;
+}
+
+form.Searchbar-tab .search-field button[type="submit"] {
+  background-color: #000;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 500;
+  border: 1px solid #000;
+}
+
+form.Searchbar-tab .search-field .search-field-input input:focus {
+  outline: none;
+}
+
+/** product listing on preview - Explorer tab **/
+
+.produc-exp-ui .produc-exp-item {
+  max-width: calc(33.33% - 6px);
+}
+
+.produc-exp-ui .produc-exp-item .img-prodwrap {
+  margin-bottom: 8px;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+  padding: 20px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.produc-exp-ui .produc-exp-item .img-prodwrap img.prod-img-exp {
+  width: 50px;
+  margin: 0 auto;
+}
+
+.produc-exp-ui p.title-prod {
+  font-size: 14px;
+  color: rgb(18 18 18 / 78%);
+  text-align: left;
+}
+
+.produc-exp-ui .produc-exp-item:hover p {
+  text-decoration: underline;
+}
+
+.no-login-looked button {
+  margin-top: 10px;
+}
+
+.btn-prod-view {
+  margin: 25px auto 10px;
+}
+
+.galley-prod-detail {
+  flex-direction: column;
+}
+
+.prod-detail-grid {
+  margin-top: 30px;
+}
+
+.prod-detail-grid h2 {
+  font-size: 30px;
+}
+
+.galley-prod-detail {
+  flex-direction: column-reverse;
+}
+
+.prod-detail-grid {
+  margin-top: 30px;
+}
+
+.prod-detail-grid h2 {
+  font-size: 30px;
+}
+
+.thumb-prod {
+  margin-bottom: 0px;
+}
+
+.thumb-prod .thumb-prod-item img {
+  object-fit: contain;
+}
+
+.thumb-prod .thumb-prod-item .prod-thumb-img {
+  background-color: #f1f1f1;
+}
+
+.thumb-prod .thumb-prod-item span {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.thumb-prod .thumb-prod-item:hover span.text-sm {
+  color: #3f2c2c;
+}
+
+.price-val {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.price-val p {
+  font-size: 23px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  color: #0e0e0e;
+}
+
+.price-val p span.tax-val {
+  font-weight: 400;
+  font-size: 15px;
+  margin-left: 10px;
+  line-height: 1.4;
+  height: 17px;
+}
+
+.galley-prod-detail button.btn-addcart {
+  margin: 15px 0 0 0;
+  width: 100%;
+  max-width: 330px;
+  border-radius: 0px;
+}
+
+.desc-data-bottom h3 {
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+/** Go Back **/
+
+.goback button {
+  width: 101px;
+  margin-bottom: 24px;
+  border-radius: 6px;
+  padding: 6px 6px 6px;
+  font-weight: 500;
+  color: #595959;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+}
+
+.goback svg {
+  margin-right: 8px;
+  width: 18px;
+}
+
+.goback {
+  text-align: left;
+}
+
+.goback button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+/*** MEDIA QUERIES START **/
+
+@media (max-width: 1199px) {
+  .produc-exp-ui .produc-exp-item {
+    max-width: calc(50% - 6px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stick-preview {
+    position: fixed;
+    top: 0px;
+    max-width: 375px;
+    width: 100%;
+  }
+}
+
+/* 
+@media (max-width:991px)
+{
+  .preview-grid-product {
+    max-width: 320px;
+}
+.right-prodview {
+  max-width: calc(100% - 336px);
+}
+ul.tabsui li {
+  font-size: 14px;
+  padding: 2px 9px;
+}
+} */
+
+@media (max-width: 991px) {
+  .mob-flex {
+    flex-direction: column;
+  }
+  .preview-grid-product {
+    max-width: 100%;
+  }
+  .preview-grid-product .grid-prod-view {
+    max-width: 375px;
+    margin: 0 auto;
+  }
+  .right-prodview {
+    max-width: 100%;
+  }
+  ul.tabsui li {
+    font-size: 15px;
+    padding: 6px 14px;
+  }
+  .produc-exp-ui .produc-exp-item {
+    max-width: calc(33.33% - 6px);
+  }
+}
+
+@media (max-width: 767px) {
+  .produc-exp-ui .produc-exp-item {
+    max-width: calc(50% - 6px);
+  }
+}
+
+@media (max-width: 500px) {
+  ul.tabsui li {
+    font-size: 10px;
+    padding: 2px 9px;
+  }
+
+  .mob-flex {
+    margin: 0 !important;
+    padding: 0 10px;
+  }
+
+  form.Searchbar-tab .search-field .search-field-input input {
+    max-width: 205px;
+    min-width: auto;
+    background-size: 22px;
+    background-position: 8px 9px;
+    padding-left: 34px;
+    font-size: 14px;
+    height: 40px;
+    line-height: 1;
+  }
+
+  form.Searchbar-tab .search-field {
+    margin: 0;
+  }
+
+  form.Searchbar-tab .search-field button[type="submit"] {
+    margin-right: 0px;
+    font-size: 13px;
+    line-height: 1.4;
+    height: 40px;
+  }
+
+  .produc-exp-ui .produc-exp-item {
+    max-width: 100%;
+  }
+
+  ul.tabsui {
+    gap: 6px;
+    justify-content: center;
+  }
+
+  form.Searchbar-tab .search-field .search-field-input input::placeholder {
+    font-size: 12px;
+  }
+  form.Searchbar-tab {
+    justify-content: center;
+  }
+}

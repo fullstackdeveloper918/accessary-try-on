@@ -276,7 +276,7 @@ const View = () => {
                 </button>
               </div>
               {/* Buy Button */}
-              <div className="flex justify-center w-[300px] my-12">
+              <div className="flex justify-center w-full  btn-prod-view mt-3">
                 <BuyButton addedProducts={addedProducts} earRef={earRef} />
               </div>
               {/* Buy Button */}

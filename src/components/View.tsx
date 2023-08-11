@@ -282,7 +282,7 @@ const View = () => {
                 {/* Drop area ie: Ear */}
               </div>
               {/* Buy Button */}
-              <div className="flex justify-center w-[300px]  btn-prod-view">
+              <div className="flex justify-center w-full  btn-prod-view mt-3">
                 <BuyButton addedProducts={addedProducts} earRef={earRef} />
               </div>
               {/* Buy Button */}

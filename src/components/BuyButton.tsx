@@ -12,7 +12,6 @@ const BuyButton = ({
   const [totalPrice, setTotalPrice] = useState<number>();
   const callshopifyFunction = async () => {
     const imageUrl = await exportAsImage(earRef.current!);
-    console.log("imageUrl", imageUrl);
     const response = await callApi("orderimage", {
       method: "POST",
       body: JSON.stringify({
@@ -48,7 +47,7 @@ const BuyButton = ({
       );
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      look_add_to_cart(allVariants, data.order_image);
+      look_add_to_cart(allVariants, data.order_Image_id);
     }
   };
   useEffect(() => {

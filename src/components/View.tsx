@@ -92,15 +92,19 @@ const View = () => {
     } = event;
     if (over && over.id) {
       if (["A", "B", "C", "D", "E", "F", "G"].includes(id.toString())) {
+        if (annotations[sideIndex][over.id]) {
+          setShowDetails(true);
+          setProductId(annotations[sideIndex][over.id].id);
+        }
         setAnnotations({
           ...annotations,
           [sideIndex]: {
             ...annotations[sideIndex],
+            [id]: undefined,
             [over.id]:
               annotations && annotations[sideIndex]
                 ? annotations[sideIndex][id]
                 : undefined,
-            [id]: undefined,
           },
         });
       } else {
@@ -185,7 +189,15 @@ const View = () => {
                               annotations[sideIndex] !== undefined &&
                               annotations[sideIndex][p.id] !== undefined && (
                                 <DraggbleComp id={p.id}>
-                                  <div className="group relative h-full w-full">
+                                  <div
+                                    className="group relative h-full w-full"
+                                    onClick={() => {
+                                      setShowDetails(true);
+                                      setProductId(
+                                        annotations[sideIndex][p.id].id
+                                      );
+                                    }}
+                                  >
                                     {annotations[sideIndex][p.id].shape ==
                                     "circle" ? (
                                       <img

@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const Ear = () => {
   const [imageUrl, setImageUrl] = useState<string>();
-  console.log("imageUrl", imageUrl);
   const { side, colorComplex } = useEar();
   const sideIndex = useMemo(() => (side === "R" ? 1 : 2), [side]);
   // const leftOrRight = useMemo(() => (side === "R" ? "right" : "left"), [side]);

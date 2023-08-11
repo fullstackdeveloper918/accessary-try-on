@@ -61,7 +61,7 @@ const BuyButton = ({
 
   return totalPrice ? (
     <button
-      className="w-full bg-black text-white px-6 py-3 rounded-lg text-base"
+      className="w-full mx-3 bg-black text-white px-6 py-3 rounded-lg text-base"
       onClick={() => {
         callshopifyFunction();
       }}

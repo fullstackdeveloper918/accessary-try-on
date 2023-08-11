@@ -41,9 +41,7 @@
   color: #888;
 }
 
-
 /** Grid Setting of the Product Preview Page **/
-
 
 .preview-grid-product {
   max-width: 375px;
@@ -61,7 +59,6 @@
   font-size: 15px;
 }
 
-
 .right-prodview {
   max-width: calc(100% - 391px);
   padding-top: 8px;
@@ -77,70 +74,67 @@
   height: 20px;
 }
 
-
-
-
-
-
 /** tabs UI **/
 
-ul.tabsui li.active-tab,ul.tabsui li:hover {background-color: #000;color:#fff;}
+ul.tabsui li.active-tab,
+ul.tabsui li:hover {
+  background-color: #000;
+  color: #fff;
+}
 
 ul.tabsui li {
-    background-color: #e5e5e5;
-    padding: 5px 14px;
-    font-size: 16px;
-    border-radius: 3px;
+  background-color: #e5e5e5;
+  padding: 5px 14px;
+  font-size: 16px;
+  border-radius: 3px;
 }
-
 
 form.Searchbar-tab .search-field {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-
 form.Searchbar-tab .search-field .search-field-input input {
-    border: 1px solid #a9a9a9;
-    border-radius: 4px;
-    height: 45px;
-    background-image: url('assets/search-icon.svg');
-    min-width: 250px;
-    background-repeat: no-repeat;
-    background-position: 9px 9px;
-    padding-left: 45px;
-    background-size: 28px;
+  border: 1px solid #a9a9a9;
+  border-radius: 4px;
+  height: 45px;
+  background-image: url("assets/search-icon.svg");
+  min-width: 250px;
+  background-repeat: no-repeat;
+  background-position: 9px 9px;
+  padding-left: 45px;
+  background-size: 28px;
 }
 
 form.Searchbar-tab .search-field button[type="submit"] {
-    background-color: #000;
-    border-radius: 3px;
-    color: #fff;
-    font-weight: 500;
-    border: 1px solid #000;
+  background-color: #000;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 500;
+  border: 1px solid #000;
 }
 
 form.Searchbar-tab .search-field .search-field-input input:focus {
-    outline: none;
+  outline: none;
 }
 
 /** product listing on preview - Explorer tab **/
 
 .produc-exp-ui .produc-exp-item {
-    max-width: calc(33.33% - 6px);
+  max-width: calc(33.33% - 6px);
 }
 
 .produc-exp-ui .produc-exp-item .img-prodwrap {
-    margin-bottom: 8px;
-    width: 100%;
-    height: 100%;
-    background-color: #f5f5f5;
-    padding: 20px;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  margin-bottom: 8px;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+  padding: 20px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .produc-exp-ui .produc-exp-item .img-prodwrap img.prod-img-exp {
@@ -149,15 +143,14 @@ form.Searchbar-tab .search-field .search-field-input input:focus {
 }
 
 .produc-exp-ui p.title-prod {
-    font-size: 14px;
-    color: rgb(18 18 18 / 78%);
-    text-align: left;
+  font-size: 14px;
+  color: rgb(18 18 18 / 78%);
+  text-align: left;
 }
 
 .produc-exp-ui .produc-exp-item:hover p {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-
 
 .no-login-looked button {
   margin-top: 10px;
@@ -166,8 +159,6 @@ form.Searchbar-tab .search-field .search-field-input input:focus {
 .btn-prod-view {
   margin: 25px auto 10px;
 }
-
-
 
 .galley-prod-detail {
   flex-direction: column;
@@ -180,7 +171,6 @@ form.Searchbar-tab .search-field .search-field-input input:focus {
 .prod-detail-grid h2 {
   font-size: 30px;
 }
-
 
 .galley-prod-detail {
   flex-direction: column-reverse;
@@ -210,7 +200,6 @@ form.Searchbar-tab .search-field .search-field-input input:focus {
   font-weight: 500;
   font-size: 14px;
 }
-
 
 .thumb-prod .thumb-prod-item:hover span.text-sm {
   color: #3f2c2c;
@@ -244,13 +233,11 @@ form.Searchbar-tab .search-field .search-field-input input:focus {
   border-radius: 0px;
 }
 
-
 .desc-data-bottom h3 {
   font-weight: 500;
   font-size: 18px;
   margin-bottom: 4px;
 }
-
 
 /** Go Back **/
 
@@ -273,7 +260,6 @@ form.Searchbar-tab .search-field .search-field-input input:focus {
   width: 18px;
 }
 
-
 .goback {
   text-align: left;
 }
@@ -283,26 +269,21 @@ form.Searchbar-tab .search-field .search-field-input input:focus {
   color: #fff;
 }
 
-
-
 /*** MEDIA QUERIES START **/
 
-
-@media (max-width:1199px)
-{
+@media (max-width: 1199px) {
   .produc-exp-ui .produc-exp-item {
     max-width: calc(50% - 6px);
-}
+  }
 }
 
-@media (min-width:1024px)
-{
+@media (min-width: 1024px) {
   .stick-preview {
-  position: fixed;
-  top: 0px;
-  max-width: 375px;
-  width: 100%;
-}
+    position: fixed;
+    top: 0px;
+    max-width: 375px;
+    width: 100%;
+  }
 }
 
 /* 
@@ -320,55 +301,47 @@ ul.tabsui li {
 }
 } */
 
-
-@media (max-width:991px)
-{
+@media (max-width: 991px) {
   .mob-flex {
     flex-direction: column;
-}
-.preview-grid-product {
-  max-width: 100%;
-}
-.preview-grid-product .grid-prod-view {
-  max-width: 375px;
-  margin: 0 auto;
-}
-.right-prodview {
-  max-width: 100%;
-}
-ul.tabsui li {
-  font-size: 15px;
-  padding: 6px 14px;
-}
+  }
+  .preview-grid-product {
+    max-width: 100%;
+  }
+  .preview-grid-product .grid-prod-view {
+    max-width: 375px;
+    margin: 0 auto;
+  }
+  .right-prodview {
+    max-width: 100%;
+  }
+  ul.tabsui li {
+    font-size: 15px;
+    padding: 6px 14px;
+  }
   .produc-exp-ui .produc-exp-item {
     max-width: calc(33.33% - 6px);
+  }
 }
 
-}
-
-
-@media (max-width:767px)
-{
+@media (max-width: 767px) {
   .produc-exp-ui .produc-exp-item {
     max-width: calc(50% - 6px);
+  }
 }
 
-}
-
-@media (max-width:500px)
-{
+@media (max-width: 500px) {
   ul.tabsui li {
     font-size: 10px;
     padding: 2px 9px;
-    
-}
+  }
 
-.mob-flex {
+  .mob-flex {
     margin: 0 !important;
     padding: 0 10px;
-}
+  }
 
-form.Searchbar-tab .search-field .search-field-input input {
+  form.Searchbar-tab .search-field .search-field-input input {
     max-width: 205px;
     min-width: auto;
     background-size: 22px;
@@ -376,32 +349,33 @@ form.Searchbar-tab .search-field .search-field-input input {
     padding-left: 34px;
     font-size: 14px;
     height: 40px;
-    line-height: 1.0;
-}
+    line-height: 1;
+  }
 
-form.Searchbar-tab .search-field {margin: 0;}
+  form.Searchbar-tab .search-field {
+    margin: 0;
+  }
 
-form.Searchbar-tab .search-field button[type="submit"] {
+  form.Searchbar-tab .search-field button[type="submit"] {
     margin-right: 0px;
     font-size: 13px;
     line-height: 1.4;
     height: 40px;
-}
+  }
 
-.produc-exp-ui .produc-exp-item {
+  .produc-exp-ui .produc-exp-item {
     max-width: 100%;
-}
+  }
 
-ul.tabsui {
+  ul.tabsui {
     gap: 6px;
     justify-content: center;
-}
+  }
 
-form.Searchbar-tab .search-field .search-field-input input::placeholder {
+  form.Searchbar-tab .search-field .search-field-input input::placeholder {
     font-size: 12px;
-}
-form.Searchbar-tab {
-  justify-content: center;
-}
-
+  }
+  form.Searchbar-tab {
+    justify-content: center;
+  }
 }

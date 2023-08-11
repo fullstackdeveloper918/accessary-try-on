@@ -15,7 +15,6 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { RxCross2 } from "react-icons/rx";
 import { dropPointsLeft, dropPointsRight } from "../api/points";
 import { useAnnotationsStore } from "../store/annotations";
 import BuyButton from "./BuyButton";
@@ -41,6 +40,7 @@ const View = () => {
     () => (side === "L" ? ("left" as const) : ("right" as const)),
     [side]
   );
+  const [currentPoint, setCurrentPoint] = useState<UniqueIdentifier>();
 
   useEffect(() => {
     if (annotations == undefined) return;
@@ -62,6 +62,7 @@ const View = () => {
     if (productResponse.ok) {
       setShowDetails(true);
       setProductId(product.id);
+      setCurrentPoint(position);
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
       const normalized = variantData.data[0].variants[0];
@@ -95,6 +96,7 @@ const View = () => {
         if (annotations[sideIndex][over.id]) {
           setShowDetails(true);
           setProductId(annotations[sideIndex][over.id].id);
+          setCurrentPoint(over.id);
         }
         setAnnotations({
           ...annotations,
@@ -116,6 +118,18 @@ const View = () => {
           addProducts(over.id, data);
         }
       }
+    }
+  }
+  function remove() {
+    if (currentPoint) {
+      setAnnotations({
+        ...annotations,
+        [sideIndex]: {
+          ...annotations[sideIndex],
+          [currentPoint as string]: undefined,
+        },
+      });
+      setCurrentPoint(undefined);
     }
   }
   const mouseSensor = useSensor(MouseSensor, {
@@ -153,13 +167,15 @@ const View = () => {
   return (
     <div>
       <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
-        <div className="flex gap-4 flex-wrap m-6 mob-flex">
-          <div className="preview-grid-product w-full">
-            <div className="grid-prod-view p-2">
+        <div className="flex gap-4 flex-wrap m-6">
+          <div>
+            <div>
               {/* Options button */}
-              <div className="flex justify-between p-2 head-prev-prod w-full">
-                <h2 className="text-lg text-white font-semibold">Lark & Berry</h2>
-                <div className="cursor-pointer options-prodview">
+              <div className="flex justify-between p-2 bg-black mx-[14px] rounded-tr-xl rounded-tl-xl">
+                <h2 className="text-lg text-white font-semibold">
+                  Lark & Berry
+                </h2>
+                <div className="cursor-pointer text-white">
                   <OptionsMenu earRef={earRef} />
                 </div>
               </div>
@@ -169,7 +185,7 @@ const View = () => {
               */}
               <div
                 ref={earRef}
-                className="bg-gray-100 rounded-md shadow-lg flex justify-center items-center relative h-[400px]"
+                className="bg-gray-100 rounded-md shadow-lg flex justify-center items-center relative h-[400px] w-[375px]"
               >
                 {/* Drop Points */}
                 <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
@@ -189,18 +205,10 @@ const View = () => {
                               annotations[sideIndex] !== undefined &&
                               annotations[sideIndex][p.id] !== undefined && (
                                 <DraggbleComp id={p.id}>
-                                  <div
-                                    className="group relative h-full w-full"
-                                    onClick={() => {
-                                      setShowDetails(true);
-                                      setProductId(
-                                        annotations[sideIndex][p.id].id
-                                      );
-                                    }}
-                                  >
+                                  <div className="group relative h-full w-full">
                                     {annotations[sideIndex][p.id].shape ==
                                     "circle" ? (
-                                      <img 
+                                      <img
                                         src={
                                           annotations[sideIndex][p.id].images[
                                             p.id as Position
@@ -246,27 +254,6 @@ const View = () => {
                                         }}
                                       />
                                     )}
-                                    <div
-                                      className="z-10 cursor-pointer absolute top-2 right-0 group-hover:flex hidden transition-all duration-300 ease-in-out"
-                                      onClick={() => {
-                                        setAnnotations({
-                                          ...annotations,
-                                          [sideIndex]: {
-                                            ...annotations[sideIndex],
-                                            [p.id]: undefined,
-                                          },
-                                        });
-                                      }}
-                                    >
-                                      <span
-                                        style={{
-                                          height: "100%",
-                                          width: "100%",
-                                        }}
-                                      >
-                                        <RxCross2 color="red" />
-                                      </span>
-                                    </div>
                                   </div>
                                 </DraggbleComp>
                               )}
@@ -280,6 +267,16 @@ const View = () => {
                 <Ear />
 
                 {/* Drop area ie: Ear */}
+                {currentPoint ? (
+                  <button
+                    className="absolute bottom-2 right-6 hover:underline text-white  px-1 rounded-sm"
+                    onClick={() => {
+                      remove();
+                    }}
+                  >
+                    Remove
+                  </button>
+                ) : null}
               </div>
               {/* Buy Button */}
               <div className="flex justify-center w-full  btn-prod-view mt-3">

@@ -2,6 +2,7 @@ import { callApi } from "@/api/config";
 import { useAnnotationsStore } from "@/store/annotations";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import { useEar } from "@/store/earDetails";
 const MyLooksTab = () => {
   const [myLooks, setMyLooks] = useState<
     {
@@ -11,12 +12,13 @@ const MyLooksTab = () => {
     }[]
   >([]);
   const { setAnnotations } = useAnnotationsStore();
-  // const customer_id = document.querySelector(
-  //   "#customer_id"
-  // ) as HTMLInputElement;
-  const customer_id = {
-    value: "7113628778769",
-  };
+  const { setColorComplex } = useEar();
+  const customer_id = document.querySelector(
+    "#customer_id"
+  ) as HTMLInputElement;
+  // const customer_id = {
+  //   value: "7113628778769",
+  // };
   useEffect(() => {
     if (!customer_id?.value) return;
     (async () => {
@@ -28,11 +30,13 @@ const MyLooksTab = () => {
     })();
   }, [customer_id?.value]);
   const displayLook = (idx: number) => {
-    setAnnotations(JSON.parse(myLooks[idx]?.mylook_data));
+    const details = JSON.parse(myLooks[idx]?.mylook_data);
+    setAnnotations(details.annotations);
+    setColorComplex(details.colorComplex);
   };
   if (!customer_id?.value) {
     return (
-      <div className="flex flex-col items-start no-login-looked">
+      <div className="flex flex-col items-start">
         <div>Oops, you are not logged In.</div>
         <Button
           onClick={() => {

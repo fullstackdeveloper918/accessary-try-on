@@ -67,7 +67,7 @@ const Tabs = () => {
   }, [showDetails]);
   return (
     <div className="right-prodview w-full">
-      <ul className="flex gap-2 mb-4 tabsui">
+      <ul className="flex gap-2 mb-4 tabsui flex-wrap">
         {tabs
           .filter((el) => el !== "detailed")
           .map((tab) => (
@@ -76,10 +76,12 @@ const Tabs = () => {
               onClick={() => {
                 setCurrentTab(tab);
               }}
-              className={cn("text-base md:text-2xl font-semibold cursor-pointer ", {
-                "active-tab": currentTab === tab
-              })}
-
+              className={cn(
+                "text-base md:text-2xl font-semibold cursor-pointer ",
+                {
+                  "active-tab": currentTab === tab,
+                }
+              )}
             >
               {tab}
             </li>

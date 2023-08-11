@@ -21,6 +21,7 @@ import { RefObject, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AlertMessage } from "./AlertMessage";
 import { Loader2 } from "lucide-react";
+import { wait } from "@/lib/wait";
 
 export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
   const [showBothEars, setShowBothEars] = useState<boolean>(false);
@@ -67,8 +68,11 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
     setShowBothEars(true);
     const prev = side;
     setSide("R");
+    await wait();
     const RightEarImage = await exportAsImage(earRef.current!);
+    await wait();
     setSide("L");
+    await wait();
     const LeftEarImage = await exportAsImage(earRef.current!);
     setBothEarsImages({
       leftImage: LeftEarImage,

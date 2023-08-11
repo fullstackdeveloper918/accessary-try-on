@@ -1,6 +1,8 @@
 import { callApi } from "@/api/config";
 import { useEar } from "@/store/earDetails";
 import { useProductDetailsStore } from "@/store/productDetails";
+import { useProductstore } from "@/store/products";
+import { Position } from "@/types/annotations.types";
 import { IVariant } from "@/types/variantData.types";
 import {
   DndContext,
@@ -15,7 +17,6 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { dropPointsLeft, dropPointsRight } from "../api/points";
-import { dummyProducts } from "../api/products";
 import { useAnnotationsStore } from "../store/annotations";
 import BuyButton from "./BuyButton";
 import Ear from "./Ear";
@@ -31,7 +32,7 @@ const View = () => {
     { price: string; variantId: number | undefined }[]
   >([]);
   // #TODO : changes needed to make dynamic
-  // const { products } = useProductstore();
+  const { products } = useProductstore();
   const annotations = useAnnotationsStore((state) => state.annotations);
   const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
   const { setProductId, setShowDetails } = useProductDetailsStore();
@@ -75,12 +76,10 @@ const View = () => {
             shape: product.shape,
             variantId: normalized.id,
             side: side,
+            options: variantData.data[0].variants,
             // #TODO : changes needed to make dynamic
             // image: "firstRingEdited.png",
-            image:
-              normalized.imagesAll[
-                position as "A" | "B" | "C" | "D" | "E" | "F"
-              ],
+            images: normalized.imagesAll,
           },
         },
       });
@@ -106,8 +105,8 @@ const View = () => {
         });
       } else {
         // #TODO : changes needed to make dynamic
-        const data = dummyProducts.find((p) => p.id == id);
-        // const data = products.find((p) => p.id == id);
+        // const data = dummyProducts.find((p) => p.id == id);
+        const data = products.find((p) => p.id == id);
 
         if (data) {
           addProducts(over.id, data);
@@ -127,6 +126,24 @@ const View = () => {
       tolerance: 5,
     },
   });
+  const clipPathLookup = {
+    left: {
+      A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
+      B: "polygon(30% 0%, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 26% 94%, 40% 64%, 68% 39%)",
+      C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 55% 100%, 62% 50%, 0 45%)",
+      D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
+      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
+      F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
+    },
+    right: {
+      A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
+      B: "polygon(30% 0%, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 26% 94%, 40% 64%, 68% 39%)",
+      C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 47% 100%, 52% 50%, 0 45%)",
+      D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
+      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
+      F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
+    },
+  };
   const keyboardSensor = useSensor(KeyboardSensor, {});
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
   return (
@@ -173,48 +190,47 @@ const View = () => {
                                     "circle" ? (
                                       <img
                                         src={
-                                          annotations[sideIndex][p.id]?.image
+                                          annotations[sideIndex][p.id].images[
+                                            p.id as Position
+                                          ]
                                         }
-                                        // crossOrigin="anonymous"
                                         alt=""
                                         style={{
-                                          height: "120px",
-                                          width: "120px",
-                                          objectFit: "cover",
+                                          height: "80px",
+                                          width: "80px",
+                                          objectFit: "contain",
+                                          ...(sideIndex === "right"
+                                            ? {
+                                                transform: "scaleX(-1)",
+                                              }
+                                            : {}),
+                                          ...(p.id === "F"
+                                            ? sideIndex === "right"
+                                              ? {
+                                                  transform: "scaleX(1)",
+                                                }
+                                              : {
+                                                  transform: "scaleX(-1)",
+                                                }
+                                            : {}),
                                           clipPath:
-                                            "polygon(0 0, 45% 0, 55% 48%, 100% 46%, 100% 100%, 0 100%, 0% 70%, 0% 30%)",
-                                          ...(p.id == "C"
-                                            ? side === "L"
-                                              ? {
-                                                  transform: "rotate(300deg)",
-                                                }
-                                              : {
-                                                  transform: "rotate(75deg)",
-                                                }
-                                            : {}),
-                                          ...(p.id == "E"
-                                            ? side === "L"
-                                              ? {
-                                                  transform:
-                                                    "rotate(300deg) rotateY(46deg)",
-                                                }
-                                              : {
-                                                  transform:
-                                                    "rotate(90deg) rotateY(20deg)",
-                                                }
-                                            : {}),
+                                            clipPathLookup[sideIndex][
+                                              p.id as Position
+                                            ],
                                         }}
                                       />
                                     ) : (
                                       <img
                                         src={
-                                          annotations[sideIndex][p.id]?.image
+                                          annotations[sideIndex][p.id]?.images[
+                                            p.id
+                                          ]
                                         }
                                         alt=""
                                         style={{
-                                          height: "90px",
-                                          width: "90px",
-                                          objectFit: "cover",
+                                          height: "80px",
+                                          width: "80px",
+                                          objectFit: "contain",
                                         }}
                                       />
                                     )}

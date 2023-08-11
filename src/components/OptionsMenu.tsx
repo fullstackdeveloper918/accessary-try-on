@@ -37,33 +37,33 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
     [side]
   );
   const saveLook = async () => {
-    // const input = document.querySelector("#customer_id") as HTMLInputElement;
-    // if (input?.value) {
-    const image = await exportAsImage(earRef.current!);
-    // const response = await callApi(`mylooks/${input.value}`, {
-    const response = await callApi(`mylooks/${7113628778769}`, {
-      method: "POST",
-      body: JSON.stringify({
-        // customer_id: input.value,
-        customer_id: "7113628778769",
-        mylook_data: JSON.stringify(annotations),
-        mylook_image: image,
-      }),
-    });
-    const data = await response.json();
-    if (data.status === 201) {
-      toast.success("look saved successfully.");
-    } else {
-      let errorMsg = "";
-      Object.values(data.message).forEach((msg) => {
-        errorMsg += msg + "\n";
+    const input = document.querySelector("#customer_id") as HTMLInputElement;
+    if (input?.value) {
+      const image = await exportAsImage(earRef.current!);
+      const response = await callApi(`mylooks/${input.value}`, {
+        // const response = await callApi(`mylooks/${7113628778769}`, {
+        method: "POST",
+        body: JSON.stringify({
+          customer_id: input.value,
+          // customer_id: "7113628778769",
+          mylook_data: JSON.stringify(annotations),
+          mylook_image: image,
+        }),
       });
-      toast.error(errorMsg);
+      const data = await response.json();
+      if (data.status === 201) {
+        toast.success("look saved successfully.");
+      } else {
+        let errorMsg = "";
+        Object.values(data.message).forEach((msg) => {
+          errorMsg += msg + "\n";
+        });
+        toast.error(errorMsg);
+      }
+    } else {
+      toast("you need to login first");
+      setIsLogInError(true);
     }
-    // } else {
-    //   toast("you need to login first");
-    //   setIsLogInError(true);
-    // }
   };
   const showBothEarsImages = async () => {
     setShowBothEars(true);

@@ -7,10 +7,9 @@ const DraggableNested = ({ id, data }: { id: string; data: IProduct }) => {
     id: id.toString(),
   });
   return (
-    <div className="w-full cursor-pointer  produc-exp-item">
-      <div className="w-full p-2">
-        <div className="img-prodwrap">
-          <img
+    <div className="w-44 h-48 cursor-pointer border border-slate-500 rounded-md">
+      <div className="h-40 w-full p-2">
+        <img
           draggable="false"
           ref={setNodeRef}
           style={{
@@ -18,13 +17,11 @@ const DraggableNested = ({ id, data }: { id: string; data: IProduct }) => {
           }}
           {...attributes}
           {...listeners}
-          className="w-full prod-img-exp"
+          className="w-full h-5/6 object-contain"
           src={data?.image?.src}
           alt=""
         />
-        </div>
-        
-        <p className="h-2/6 text-base truncate title-prod">{data?.title}</p>
+        <p className="h-2/6 text-base truncate">{data?.title}</p>
       </div>
     </div>
   );

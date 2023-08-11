@@ -32,7 +32,7 @@ const MyLooksTab = () => {
   };
   if (!customer_id?.value) {
     return (
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col items-start no-login-looked">
         <div>Oops, you are not logged In.</div>
         <Button
           onClick={() => {

@@ -46,7 +46,7 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
       body: JSON.stringify({
         // customer_id: input.value,
         customer_id: "7113628778769",
-        mylook_data: JSON.stringify({ annotations, colorComplex }),
+        mylook_data: JSON.stringify(annotations),
         mylook_image: image,
       }),
     });

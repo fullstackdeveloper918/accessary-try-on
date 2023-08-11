@@ -153,13 +153,13 @@ const View = () => {
   return (
     <div>
       <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
-        <div className="flex gap-4 flex-wrap m-6">
-          <div>
-            <div className=" p-2">
+        <div className="flex gap-4 flex-wrap m-6 mob-flex">
+          <div className="preview-grid-product w-full">
+            <div className="grid-prod-view p-2">
               {/* Options button */}
-              <div className="flex justify-between bg-gray-100 rounded-lr-md p-2">
-                <h2 className="text-lg">Lark & Berry</h2>
-                <div className="cursor-pointer">
+              <div className="flex justify-between p-2 head-prev-prod w-full">
+                <h2 className="text-lg text-white font-semibold">Lark & Berry</h2>
+                <div className="cursor-pointer options-prodview">
                   <OptionsMenu earRef={earRef} />
                 </div>
               </div>
@@ -169,7 +169,7 @@ const View = () => {
               */}
               <div
                 ref={earRef}
-                className="bg-gray-100 rounded-md shadow-lg flex justify-center items-center relative w-[375px] h-[400px]"
+                className="bg-gray-100 rounded-md shadow-lg flex justify-center items-center relative h-[400px]"
               >
                 {/* Drop Points */}
                 <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
@@ -200,7 +200,7 @@ const View = () => {
                                   >
                                     {annotations[sideIndex][p.id].shape ==
                                     "circle" ? (
-                                      <img
+                                      <img 
                                         src={
                                           annotations[sideIndex][p.id].images[
                                             p.id as Position
@@ -282,7 +282,7 @@ const View = () => {
                 {/* Drop area ie: Ear */}
               </div>
               {/* Buy Button */}
-              <div className="flex justify-center w-[300px] my-12">
+              <div className="flex justify-center w-[300px]  btn-prod-view">
                 <BuyButton addedProducts={addedProducts} earRef={earRef} />
               </div>
               {/* Buy Button */}

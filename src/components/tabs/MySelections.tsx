@@ -47,21 +47,21 @@ const MySelectionsTab = () => {
     )
     ?.filter(Boolean);
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap produc-exp-ui">
       {selectedProducts?.map((product) => (
-        <div className="border shadow-md w-44 h-44 p-4" key={product?.id}>
-          <div className="h-4/6" key={product?.id}>
+        <div className="produc-exp-item w-full" key={product?.id}>
+          <div className="w-full p-2" key={product?.id}>
+          <div className="img-prodwrap">
             <DraggbleComp id={product!.id.toString()}>
-              <img
-                src={product?.images["D"]}
-                alt=""
-                className="h-20 object-contain w-20 m-auto"
-              />
-            </DraggbleComp>
+             
+                 <img src={product?.images["D"]} alt="" className="w-full prod-img-exp"/>
+              
+            </DraggbleComp></div>
+            <p className="h-2/6 text-base truncate title-prod">{product?.title}</p>
           </div>
-          <div className="h-2/6">
-            <h2>{product?.title}</h2>
-          </div>
+          
+            
+          
         </div>
       ))}
     </div>

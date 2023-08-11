@@ -41,7 +41,7 @@ const Ear = () => {
         // #TODO : changes needed to make dynamic
         src={imageUrl}
         // src={lookup[leftOrRight][colorComplex]}
-        className="absolute top-0 left-0 w-full h-full object-contain"
+        className="absolute top-0 left-0 w-full h-full "
         // crossOrigin="anonymous"
       />
     </>

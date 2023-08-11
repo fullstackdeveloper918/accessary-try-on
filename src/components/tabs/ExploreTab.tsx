@@ -21,30 +21,26 @@ const ExploreTab = () => {
   return (
     <>
       <form
-        className="flex items-center justify-start my-4 Searchbar-tab"
+        className="flex items-center justify-start my-4"
         onSubmit={(e) => handleSearch(e)}
       >
-        <div className="search-field flex">
-           <div className="search-field-input">
-           <input
+        <input
           type="search"
           className="px-4 py-2 rounded-md bg-white text-black"
-          placeholder="Search"
+          placeholder="search"
           onChange={(e) => {
             setSearchValue(e.target.value);
           }}
         />
-        </div>
-        <button className="mx-1 border border-slate-500 px-4 py-2 rounded-md" type="submit">
+        <button
+          className="mx-1 border border-slate-500 px-4 py-2 rounded-md"
+          type="submit"
+        >
           Search
         </button>
-        </div>
-       
-       
-        
       </form>
       {/* These are the products that will be dragged */}
-      <div className="flex gap-2 flex-wrap produc-exp-ui">
+      <div className="flex gap-3 flex-wrap">
         {/* {dummyProducts?.map((product) => (
           <DraggableNested
             id={product.id.toString()}

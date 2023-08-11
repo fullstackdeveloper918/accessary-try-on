@@ -2,6 +2,7 @@ import { callApi } from "@/api/config";
 import { useAnnotationsStore } from "@/store/annotations";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import { useEar } from "@/store/earDetails";
 const MyLooksTab = () => {
   const [myLooks, setMyLooks] = useState<
     {
@@ -11,6 +12,7 @@ const MyLooksTab = () => {
     }[]
   >([]);
   const { setAnnotations } = useAnnotationsStore();
+  const { setColorComplex } = useEar();
   const customer_id = document.querySelector(
     "#customer_id"
   ) as HTMLInputElement;
@@ -28,7 +30,9 @@ const MyLooksTab = () => {
     })();
   }, [customer_id?.value]);
   const displayLook = (idx: number) => {
-    setAnnotations(JSON.parse(myLooks[idx]?.mylook_data));
+    const details = JSON.parse(myLooks[idx]?.mylook_data);
+    setAnnotations(details.annotations);
+    setColorComplex(details.colorComplex);
   };
   if (!customer_id?.value) {
     return (

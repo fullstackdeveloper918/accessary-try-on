@@ -1,5 +1,5 @@
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { MoreVertical } from "lucide-react";
 
 import { callApi } from "@/api/config";
 import {
@@ -15,13 +15,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { exportAsImage } from "@/lib/exportAsImage";
 import { cn } from "@/lib/utils";
+import { wait } from "@/lib/wait";
 import { useAnnotationsStore } from "@/store/annotations";
 import { useEar } from "@/store/earDetails";
+import { Loader2 } from "lucide-react";
 import { RefObject, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AlertMessage } from "./AlertMessage";
-import { Loader2 } from "lucide-react";
-import { wait } from "@/lib/wait";
 
 export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
   const [showBothEars, setShowBothEars] = useState<boolean>(false);
@@ -41,6 +41,7 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
     if (input?.value) {
       const image = await exportAsImage(earRef.current!);
       const response = await callApi(`mylooks/${input.value}`, {
+        // const response = await callApi(`mylooks/${7113628778769}`, {
         method: "POST",
         body: JSON.stringify({
           customer_id: input.value,
@@ -143,7 +144,7 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button>
-            <BsThreeDotsVertical />
+            <MoreVertical />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">

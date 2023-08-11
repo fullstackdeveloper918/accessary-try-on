@@ -1,70 +1,67 @@
-import { useAnnotationsStore } from "@/store/annotations";
-import { useEar } from "@/store/earDetails";
-import { Option, ProductType, Side } from "@/types/annotations.types";
-import { useMemo } from "react";
-import DraggbleComp from "../dnd/DraggableComp";
+import { useProductstore } from "@/store/products";
+import { FormEvent, useState } from "react";
+import DraggableNested from "../dnd/DraggableNested";
 
-const MySelectionsTab = () => {
-  const { annotations } = useAnnotationsStore();
-  const { side } = useEar();
-  const sideIndex = useMemo(() => (side === "R" ? "right" : "left"), [side]);
-  const selectedProducts = Object.values(annotations[sideIndex])
-    .reduce(
-      (
-        acc: (
-          | {
-              title: string;
-              id: number;
-              side: Side;
-              price: string;
-              variantId: number;
-              shape: ProductType;
-              images: { [position: string]: string };
-              options: Option[];
-            }
-          | undefined
-        )[],
-        cur:
-          | {
-              title: string;
-              id: number;
-              side: Side;
-              price: string;
-              variantId: number;
-              shape: ProductType;
-              images: { [position: string]: string };
-              options: Option[];
-            }
-          | undefined
-      ) => {
-        const exists = acc?.findIndex((p) => p?.id == cur?.id);
-        if (exists === -1) {
-          acc.push(cur);
-        }
-        return acc;
-      },
-      []
-    )
-    ?.filter(Boolean);
+const ExploreTab = () => {
+  const [searchValue, setSearchValue] = useState<string>();
+  const { products } = useProductstore();
+
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      searchValue === "" ||
+      searchValue === undefined ||
+      searchValue === null
+    ) {
+      return;
+    } else {
+      console.log("seachValue", searchValue);
+    }
+  };
   return (
-    <div className="flex flex-wrap">
-      {selectedProducts?.map((product) => (
-        <div className="border shadow-md w-44 h-44 p-4" key={product?.id}>
-          <div className="h-4/6" key={product?.id}>
-            <DraggbleComp id={product!.id.toString()}>
-              <img
-                src={product?.images["D"]}
-                alt=""
-                className="h-20 object-contain w-20 m-auto"
-              />
-            </DraggbleComp>
+    <>
+      <form
+        className="flex items-center justify-start my-4 Searchbar-tab"
+        onSubmit={(e) => handleSearch(e)}
+      >
+        <div className="search-field flex">
+          <div className="search-field-input">
+            <input
+              type="search"
+              className="px-4 py-2 rounded-md bg-white text-black"
+              placeholder="Search"
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+            />
           </div>
-          <div className="h-2/6">
-            <h2>{product?.title}</h2>
-          </div>
+          <button
+            className="mx-1 border border-slate-500 px-4 py-2 rounded-md"
+            type="submit"
+          >
+            Search
+          </button>
         </div>
-      ))}
-    </div>
+      </form>
+      {/* These are the products that will be dragged */}
+      <div className="flex gap-2 flex-wrap produc-exp-ui">
+        {/* {dummyProducts?.map((product) => (
+          <DraggableNested
+            id={product.id.toString()}
+            data={product}
+            key={product.id}
+          />
+        ))} */}
+        {/* #TODO : changes needed to make dynamic */}
+        {products.map((product) => (
+          <DraggableNested
+            id={product?.id.toString()}
+            data={product}
+            key={product?.id}
+          />
+        ))}
+      </div>
+    </>
   );
 };
-export default MySelectionsTab;
+export default ExploreTab;

@@ -59,7 +59,7 @@ export interface IProduct {
     imagesAll: ImagesAll;
   }[];
 }
-interface Image {
+export interface Image {
   // id: number;
   // product_id: number;
   // position: number;

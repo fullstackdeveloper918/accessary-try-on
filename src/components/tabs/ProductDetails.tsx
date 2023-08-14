@@ -5,6 +5,7 @@ import { useProductDetailsStore } from "@/store/productDetails";
 import { Carousel } from "flowbite-react";
 import { ChevronLeftCircle, ChevronRightCircle, Undo2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { IProduct } from "./data.type";
 
 const ProductDetailsTab = () => {
   const product = useProductDetailsStore((state) => state.product);
@@ -152,105 +153,3 @@ const ProductDetailsTab = () => {
   );
 };
 export default ProductDetailsTab;
-interface IProduct {
-  id: number;
-  title: string;
-  body_html: string;
-  vendor: Vendor;
-  product_type: ProductType;
-  created_at: Date;
-  handle: string;
-  updated_at: Date;
-  published_at: Date | null;
-  template_suffix: null;
-  status: Status;
-  published_scope: PublishedScope;
-  tags: string;
-  admin_graphql_api_id: string;
-  options: Option[];
-  images: Image[];
-  image: Image;
-  type: "circle" | "dot";
-  variants: {
-    id: number;
-    product_id: number;
-    title: string;
-    price: string;
-    sku: string;
-    position: number;
-    inventory_policy: string;
-    compare_at_price: string;
-    fulfillment_service: string;
-    inventory_management: string;
-    option1: string;
-    option2: null;
-    option3: null;
-    created_at: Date;
-    updated_at: Date;
-    taxable: boolean;
-    barcode: string;
-    grams: number;
-    image_id: number;
-    weight: number;
-    weight_unit: string;
-    inventory_item_id: number;
-    inventory_quantity: number;
-    old_inventory_quantity: number;
-    requires_shipping: boolean;
-    admin_graphql_api_id: string;
-    mainImage: string;
-    imagesAll: ImagesAll;
-  }[];
-}
-interface Image {
-  // id: number;
-  // product_id: number;
-  // position: number;
-  // created_at: Date;
-  // updated_at: Date;
-  // alt: null | string;
-  // width: number;
-  // height: number;
-  src: string;
-  // variant_ids: number[];
-  // admin_graphql_api_id: string;
-}
-interface ImagesAll {
-  A: string;
-  B: string;
-  C: string;
-  D: string;
-  E: string;
-  F: string;
-}
-interface Option {
-  id: number;
-  product_id: number;
-  name: Name;
-  position: number;
-}
-
-type Name =
-  | "Size"
-  | "Color"
-  | "Gold Colour"
-  | "Stone"
-  | "Title"
-  | "Side"
-  | "Size of Hoop"
-  | "Gold";
-
-type ProductType =
-  | "Fine Piercings"
-  | "Piercing Charm"
-  | ""
-  | "Rings"
-  | "Necklaces"
-  | "Earrings"
-  | "Bracelets";
-
-type PublishedScope = "global" | "web";
-
-type Status = "active" | "draft";
-
-type Vendor = "Ear Envy" | "Lark & Berry";

@@ -22,8 +22,10 @@ import Ear from "./Ear";
 import OptionsMenu from "./OptionsMenu";
 import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
+import Rotatable from "./dnd/Rotateble";
 import Tabs from "./tabs";
 import { IProduct } from "./tabs/data.type";
+import { dummyProducts } from "@/api/products";
 
 const View = () => {
   const earRef = useRef<HTMLDivElement>(null);
@@ -111,8 +113,8 @@ const View = () => {
         });
       } else {
         // #TODO : changes needed to make dynamic
-        // const data = dummyProducts.find((p) => p.id == id);
-        const data = products.find((p) => p.id == id);
+        const data = dummyProducts.find((p) => p.id == id);
+        // const data = products.find((p) => p.id == id);
 
         if (data) {
           addProducts(over.id, data);
@@ -240,26 +242,28 @@ const View = () => {
                                         }}
                                       />
                                     ) : (
-                                      <img
-                                        src={
-                                          // #Important : for dot shape the image will always be placed at "A" position as discussed
-                                          annotations[sideIndex][p.id]?.images[
-                                            "A"
-                                          ]
-                                        }
-                                        alt=""
-                                        style={{
-                                          height: "80px",
-                                          width: "80px",
-                                          objectFit: "contain",
-                                          // #Important : for left and right i am rotating the image left and right
-                                          ...(sideIndex === "right"
-                                            ? {
-                                                transform: "scaleX(1)",
-                                              }
-                                            : {}),
-                                        }}
-                                      />
+                                      <Rotatable>
+                                        <img
+                                          src={
+                                            // #Important : for dot shape the image will always be placed at "A" position as discussed
+                                            // annotations[sideIndex][p.id]
+                                            //   ?.images["A"]
+                                            "imgs/dot.png"
+                                          }
+                                          alt=""
+                                          style={{
+                                            height: "100%",
+                                            width: "100%",
+                                            objectFit: "contain",
+                                            // #Important : for left and right i am rotating the image left and right
+                                            ...(sideIndex === "right"
+                                              ? {
+                                                  transform: "scaleX(1)",
+                                                }
+                                              : {}),
+                                          }}
+                                        />
+                                      </Rotatable>
                                     )}
                                   </div>
                                 </DraggbleComp>

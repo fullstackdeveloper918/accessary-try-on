@@ -18,7 +18,7 @@ export const dummyProducts: {
   // },
   {
     title: "def",
-    id: 8631906173201,
+    id: 8631906173200,
     shape: "circle",
     price: 123,
     image: {
@@ -29,7 +29,7 @@ export const dummyProducts: {
   },
   {
     title: "ghi",
-    id: 8631906173200,
+    id: 8631906173201,
     shape: "dot",
     price: 123,
     image: {

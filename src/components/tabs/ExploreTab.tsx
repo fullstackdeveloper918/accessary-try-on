@@ -1,6 +1,7 @@
 import { useProductstore } from "@/store/products";
 import { FormEvent, useState } from "react";
 import DraggableNested from "../dnd/DraggableNested";
+import { dummyProducts } from "@/api/products";
 
 const ExploreTab = () => {
   const [searchValue, setSearchValue] = useState<string>();
@@ -45,15 +46,15 @@ const ExploreTab = () => {
       </form>
       {/* These are the products that will be dragged */}
       <div className="flex gap-2 flex-wrap produc-exp-ui">
-        {/* {dummyProducts?.map((product) => (
+        {dummyProducts?.map((product) => (
           <DraggableNested
             id={product.id.toString()}
             data={product}
             key={product.id}
           />
-        ))} */}
+        ))}
         {/* #TODO : changes needed to make dynamic */}
-        {
+        {/* {
           products.map((product) => (
             <DraggableNested
               id={product?.id.toString()}
@@ -61,7 +62,7 @@ const ExploreTab = () => {
               key={product?.id}
             />
           ))[0]
-        }
+        } */}
       </div>
     </>
   );

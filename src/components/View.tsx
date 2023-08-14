@@ -248,9 +248,9 @@ const View = () => {
                                     ) : (
                                       <img
                                         src={
-                                          // #Important : for dot shape the image will always be placed at "A" position as discussed
+                                          // #Important : for dot shape the image will always be placed at "dotImage" position as discussed
                                           annotations[sideIndex][p.id]?.images[
-                                            "A"
+                                            "dotsImage"
                                           ]
                                         }
                                         alt=""

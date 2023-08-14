@@ -18,6 +18,9 @@ const ExploreTab = () => {
       console.log("seachValue", searchValue);
     }
   };
+  if (products.length == 0) {
+    return <div>loading</div>;
+  }
   return (
     <>
       <form
@@ -53,15 +56,13 @@ const ExploreTab = () => {
           />
         ))} */}
         {/* #TODO : changes needed to make dynamic */}
-        {
-          products.map((product) => (
-            <DraggableNested
-              id={product?.id.toString()}
-              data={product}
-              key={product?.id}
-            />
-          ))[0]
-        }
+        {products.map((product) => (
+          <DraggableNested
+            id={product?.id.toString()}
+            data={product}
+            key={product?.id}
+          />
+        ))}
       </div>
     </>
   );

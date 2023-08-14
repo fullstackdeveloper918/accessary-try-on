@@ -1,23 +1,43 @@
+import { Position } from "@/types/annotations.types";
 import { create } from "zustand";
 
 interface IProductDetailStore {
   showDetails: boolean;
-  productId: number | string | undefined;
+  product:
+    | {
+        id: number | string;
+        position: Position | undefined;
+      }
+    | undefined;
   setShowDetails: (state: boolean) => void;
-  setProductId: (productId: string | number) => void;
+  setProduct: (
+    productId:
+      | {
+          id: number | string;
+          position: Position | undefined;
+        }
+      | undefined
+  ) => void;
 }
 
 export const useProductDetailsStore = create<IProductDetailStore>((set) => ({
   showDetails: false,
-  productId: undefined,
+  product: undefined,
   setShowDetails: (state: boolean) => {
     set({
       showDetails: state,
     });
   },
-  setProductId: (productId: number | string) => {
+  setProduct: (
+    product:
+      | {
+          id: number | string;
+          position: Position | undefined;
+        }
+      | undefined
+  ) => {
     set({
-      productId: productId,
+      product: product,
     });
   },
 }));

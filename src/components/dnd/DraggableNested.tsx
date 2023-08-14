@@ -18,7 +18,8 @@ const DraggableNested = ({ id, data }: { id: string; data: IProduct }) => {
           {...attributes}
           {...listeners}
           className="w-full h-5/6 object-contain"
-          src={data?.image?.src}
+          // src={data?.image?.src}
+          src={data?.imageTransparent}
           alt=""
         />
         <p className="h-2/6 text-base truncate">{data?.title}</p>

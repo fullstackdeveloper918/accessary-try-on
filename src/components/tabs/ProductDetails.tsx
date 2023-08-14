@@ -1,19 +1,27 @@
 import { callApi } from "@/api/config";
+import { useAnnotationsStore } from "@/store/annotations";
+import { useEar } from "@/store/earDetails";
 import { useProductDetailsStore } from "@/store/productDetails";
 import { Carousel } from "flowbite-react";
 import { ChevronLeftCircle, ChevronRightCircle, Undo2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const ProductDetailsTab = () => {
-  const productId = useProductDetailsStore((state) => state.productId);
+  const product = useProductDetailsStore((state) => state.product);
+  const { annotations, setAnnotations } = useAnnotationsStore();
   const [productDetails, setProductDetails] = useState<IProduct>();
+  const side = useEar((state) => state.side);
   const setShowDetails = useProductDetailsStore(
     (state) => state.setShowDetails
   );
+  const sideIndex = useMemo(
+    () => (side === "L" ? ("left" as const) : ("right" as const)),
+    [side]
+  );
   useEffect(() => {
-    if (productId === undefined) return;
+    if (product?.id === undefined) return;
     (async () => {
-      const response = await callApi("singleproducts/" + productId);
+      const response = await callApi("singleproducts/" + product?.id);
       if (response.ok) {
         const singleProduct: { data: IProduct[] } = await response.json();
         setProductDetails(singleProduct.data[0]);
@@ -22,7 +30,24 @@ const ProductDetailsTab = () => {
     return () => {
       setShowDetails(false);
     };
-  }, [productId, setShowDetails]);
+  }, [product?.id, setShowDetails]);
+
+  const changeVariantColor = async (idx: number) => {
+    if (product?.position) {
+      const images =
+        annotations[sideIndex][product.position].options[idx].imagesAll;
+      setAnnotations({
+        ...annotations,
+        [sideIndex]: {
+          ...annotations[sideIndex],
+          [product.position]: {
+            ...annotations[sideIndex][product.position],
+            images,
+          },
+        },
+      });
+    }
+  };
 
   return (
     <div className="flex justify-between prod-detail-grid">
@@ -69,13 +94,13 @@ const ProductDetailsTab = () => {
           <div className="w-full flex flex-col items-start">
             <h3 className="text-2xl font-semibold mb-4">Options</h3>
             <div className="flex gap-2 flex-wrap w-full thumb-prod">
-              {productDetails?.variants.map((variant) => {
+              {productDetails?.variants.map((variant, idx) => {
                 // return <div key={variant.id}>{variant?.title}</div>;
                 return (
                   <div
                     className="cursor-pointer thumb-prod-item"
                     onClick={() => {
-                      console.log("variant", variant.id);
+                      changeVariantColor(idx);
                     }}
                   >
                     <div className="prod-thumb-img">
@@ -120,16 +145,6 @@ const ProductDetailsTab = () => {
           ></p>
         </div>
       </div>
-
-      {/* <button
-        className="self-start"
-        onClick={() => {
-          setShowDetails(false);
-        }}
-      > */}
-
-      {/* <XSquare size={24} /> */}
-      {/* </button> */}
     </div>
   );
 };

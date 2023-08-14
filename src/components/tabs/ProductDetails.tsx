@@ -108,7 +108,7 @@ const ProductDetailsTab = () => {
                         >
                           <div className="prod-thumb-img">
                             <img
-                              src={variant.mainImage}
+                              src={variant.imagesAll["D"]}
                               alt=""
                               className="h-14 w-full object-cover border rounded-md "
                             />

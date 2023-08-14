@@ -27,4 +27,13 @@ export const dummyProducts: {
       src: "imgs/F.png",
     },
   },
+  {
+    title: "ghi",
+    id: 8631906173200,
+    shape: "dot",
+    price: 123,
+    image: {
+      src: "imgs/dot.png",
+    },
+  },
 ];

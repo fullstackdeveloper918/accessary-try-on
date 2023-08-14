@@ -1,7 +1,7 @@
 import { callApi } from "@/api/config";
 import { useProductDetailsStore } from "@/store/productDetails";
 import { Carousel } from "flowbite-react";
-import { ChevronLeftCircle, ChevronRightCircle, Undo2, X, XSquare } from "lucide-react";
+import { ChevronLeftCircle, ChevronRightCircle, Undo2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const ProductDetailsTab = () => {
@@ -25,18 +25,17 @@ const ProductDetailsTab = () => {
   }, [productId, setShowDetails]);
 
   return (
-   
-    <div className="flex justify-between prod-detail-grid"> 
-    
+    <div className="flex justify-between prod-detail-grid">
       <div>
-      <div className="goback">
-        <button  onClick={() => {
-          setShowDetails(false);
-        }}>
-          <Undo2 className="icon-back"/> Go Back
-        </button>
-    
-    </div>
+        <div className="goback">
+          <button
+            onClick={() => {
+              setShowDetails(false);
+            }}
+          >
+            <Undo2 className="icon-back" /> Go Back
+          </button>
+        </div>
         <div className="flex flex-col gap-2 justify-start items-start">
           <h2 className="text-2xl leading-6 font-semibold">
             {productDetails?.title}
@@ -46,10 +45,10 @@ const ProductDetailsTab = () => {
           </p>
         </div>
         <div className="price-val">
-        <p className="text-lg mt-4">
-              ${productDetails?.variants[0]?.price} <span className="tax-val">Tax included.</span>
-            </p>
-           
+          <p className="text-lg mt-4">
+            ${productDetails?.variants[0]?.price}{" "}
+            <span className="tax-val">Tax included.</span>
+          </p>
         </div>
         <div className="flex flex-wrap items-start w-full galley-prod-detail">
           <div className="w-[360px] h-[300px] my-5">
@@ -81,18 +80,18 @@ const ProductDetailsTab = () => {
                   >
                     <div className="prod-thumb-img">
                       <img
-                      src={variant.mainImage}
-                      alt=""
-                      className="h-14 w-full object-cover border rounded-md "
-                    />
-                      </div>
-                  
+                        src={variant.mainImage}
+                        alt=""
+                        className="h-14 w-full object-cover border rounded-md "
+                      />
+                    </div>
+
                     <span className="text-sm">{variant?.title}</span>
                   </div>
                 );
               })}
             </div>
-            
+
             <button
               className="px-4 py-2 bg-gray-900 text-white text-lg rounded-md btn-addcart"
               onClick={() => {
@@ -128,9 +127,8 @@ const ProductDetailsTab = () => {
           setShowDetails(false);
         }}
       > */}
-        
-       
-        {/* <XSquare size={24} /> */}
+
+      {/* <XSquare size={24} /> */}
       {/* </button> */}
     </div>
   );

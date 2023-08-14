@@ -242,8 +242,9 @@ const View = () => {
                                     ) : (
                                       <img
                                         src={
+                                          // #Important : for dot shape the image will always be placed at "A" position as discussed
                                           annotations[sideIndex][p.id]?.images[
-                                            p.id
+                                            "A"
                                           ]
                                         }
                                         alt=""
@@ -251,6 +252,12 @@ const View = () => {
                                           height: "80px",
                                           width: "80px",
                                           objectFit: "contain",
+                                          // #Important : for left and right i am rotating the image left and right
+                                          ...(sideIndex === "right"
+                                            ? {
+                                                transform: "scaleX(1)",
+                                              }
+                                            : {}),
                                         }}
                                       />
                                     )}

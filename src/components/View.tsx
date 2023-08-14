@@ -34,7 +34,7 @@ const View = () => {
   const { products } = useProductstore();
   const annotations = useAnnotationsStore((state) => state.annotations);
   const setAnnotations = useAnnotationsStore((state) => state.setAnnotations);
-  const { setProductId, setShowDetails } = useProductDetailsStore();
+  const { setProduct, setShowDetails } = useProductDetailsStore();
   const side = useEar((state) => state.side);
   const sideIndex = useMemo(
     () => (side === "L" ? ("left" as const) : ("right" as const)),
@@ -61,7 +61,10 @@ const View = () => {
     const productResponse = await callApi(`singleproducts/${product.id}`);
     if (productResponse.ok) {
       setShowDetails(true);
-      setProductId(product.id);
+      setProduct({
+        id: product.id,
+        position: position as Position,
+      });
       setCurrentPoint(position);
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
@@ -95,8 +98,11 @@ const View = () => {
       if (["A", "B", "C", "D", "E", "F", "G"].includes(id.toString())) {
         if (annotations[sideIndex][over.id]) {
           setShowDetails(true);
-          setProductId(annotations[sideIndex][over.id].id);
-          setCurrentPoint(over.id);
+          setProduct({
+            id: annotations[sideIndex][id].id,
+            position: over.id as Position,
+          });
+          setCurrentPoint(id);
         }
         setAnnotations({
           ...annotations,
@@ -242,8 +248,9 @@ const View = () => {
                                     ) : (
                                       <img
                                         src={
+                                          // #Important : for dot shape the image will always be placed at "A" position as discussed
                                           annotations[sideIndex][p.id]?.images[
-                                            p.id
+                                            "A"
                                           ]
                                         }
                                         alt=""
@@ -251,6 +258,12 @@ const View = () => {
                                           height: "80px",
                                           width: "80px",
                                           objectFit: "contain",
+                                          // #Important : for left and right i am rotating the image left and right
+                                          ...(sideIndex === "right"
+                                            ? {
+                                                transform: "scaleX(1)",
+                                              }
+                                            : {}),
                                         }}
                                       />
                                     )}

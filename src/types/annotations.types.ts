@@ -28,7 +28,7 @@ export interface IAnnotation {
     };
   };
 }
-export type ProductType = "circle" | "dot";
+export type ProductType = "circle" | "dot" | "addon";
 export type Side = "L" | "R";
 
 export interface Option {

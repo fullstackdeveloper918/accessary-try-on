@@ -66,15 +66,20 @@ const View = () => {
         position: position as Position,
       });
       setCurrentPoint(position);
+    
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
       const normalized = variantData.data[0].variants[0];
-      setAnnotations({
-        ...annotations,
-        [sideIndex]: {
-          ...annotations[sideIndex],
-          [position]: {
-            title: product.title,
+      
+        // if(product.shape === 'addon' ){
+        //   setProduct(undefined)
+        // }else{
+        setAnnotations({
+          ...annotations,
+          [sideIndex]: {
+            ...annotations[sideIndex],
+            [position]: {
+              title: product.title,
             id: product.id,
             price: normalized.price,
             shape: product.shape,
@@ -88,6 +93,7 @@ const View = () => {
         },
       });
     }
+    // }
   }
   function handleDragEnd(event: DragEndEvent) {
     const {
@@ -119,7 +125,6 @@ const View = () => {
         // #TODO : changes needed to make dynamic
         // const data = dummyProducts.find((p) => p.id == id);
         const data = products.find((p) => p.id == id);
-
         if (data) {
           addProducts(over.id, data);
         }
@@ -127,6 +132,7 @@ const View = () => {
     }
   }
   function remove() {
+    setShowDetails(false)
     if (currentPoint) {
       setAnnotations({
         ...annotations,
@@ -150,6 +156,7 @@ const View = () => {
       tolerance: 5,
     },
   });
+
   const clipPathLookup = {
     left: {
       A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
@@ -168,6 +175,7 @@ const View = () => {
       F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
     },
   };
+
   const keyboardSensor = useSensor(KeyboardSensor, {});
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
   return (

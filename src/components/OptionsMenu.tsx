@@ -1,7 +1,7 @@
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { MoreVertical } from "lucide-react";
-
 import { callApi } from "@/api/config";
+import { useProductDetailsStore } from "@/store/productDetails";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,6 +35,9 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
   const sideIndex = useMemo(
     () => (side === "L" ? ("left" as const) : ("right" as const)),
     [side]
+  );
+  const setShowDetails = useProductDetailsStore(
+    (state) => state.setShowDetails
   );
   const saveLook = async () => {
     const input = document.querySelector("#customer_id") as HTMLInputElement;
@@ -92,7 +95,7 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
             <button
               onClick={() => {
                 window.location.href =
-                  window.location.host + "/account/login?from=custom-look";
+                  window.location.host + "/account?from=custom-look";
               }}
             >
               Login
@@ -234,6 +237,7 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
           <DropdownMenuItem
             className="cursor-pointer hover:bg-slate-100"
             onClick={() => {
+              setShowDetails(false)
               setAnnotations({
                 ...annotations,
                 [sideIndex]: {},

@@ -26,7 +26,7 @@ export interface IProduct {
   options: Option[];
   images: Image[];
   image: Image;
-  shape: "circle" | "dot";
+  shape: "circle" | "dot" | "addon";
   imageTransparent: string;
   variants: {
     id: number;

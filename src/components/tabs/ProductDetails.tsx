@@ -26,6 +26,7 @@ const ProductDetailsTab = () => {
       if (response.ok) {
         const singleProduct: { data: IProduct[] } = await response.json();
         setProductDetails(singleProduct.data[0]);
+       
       }
     })();
     return () => {
@@ -36,7 +37,7 @@ const ProductDetailsTab = () => {
   const changeVariantColor = async (idx: number) => {
     if (product?.position) {
       const images =
-        annotations[sideIndex][product.position].options[idx].imagesAll;
+        annotations[sideIndex][product.position].options[idx].imagesAll
       setAnnotations({
         ...annotations,
         [sideIndex]: {
@@ -111,7 +112,7 @@ const ProductDetailsTab = () => {
                               src={variant.imagesAll["D"]}
                               alt=""
                               className="h-14 w-full object-cover border rounded-md "
-                            />
+                            /> 
                           </div>
 
                           <span className="text-sm">{variant?.title}</span>

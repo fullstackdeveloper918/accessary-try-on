@@ -2,7 +2,7 @@ export const dropPointsRight = [
   {
     id: "A",
     x: 150,
-    y: 0,
+    y: 15,
   },
   {
     id: "B",
@@ -17,7 +17,7 @@ export const dropPointsRight = [
 
   {
     id: "D",
-    x: 200,
+    x: 220,
     y: 310,
   },
   {
@@ -34,12 +34,12 @@ export const dropPointsRight = [
 export const dropPointsLeft = [
   {
     id: "A",
-    x: 140,
-    y: 10,
+    x: 155,
+    y: 15,
   },
   {
     id: "B",
-    x: 250,
+    x: 240,
     y: 40,
   },
   {
@@ -60,6 +60,6 @@ export const dropPointsLeft = [
   {
     id: "F",
     x: 150,
-    y: 100,
+    y: 130,
   },
 ];

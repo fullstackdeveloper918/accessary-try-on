@@ -66,20 +66,20 @@ const View = () => {
         position: position as Position,
       });
       setCurrentPoint(position);
-    
+
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
       const normalized = variantData.data[0].variants[0];
-      
-        // if(product.shape === 'addon' ){
-        //   setProduct(undefined)
-        // }else{
-        setAnnotations({
-          ...annotations,
-          [sideIndex]: {
-            ...annotations[sideIndex],
-            [position]: {
-              title: product.title,
+
+      // if(product.shape === 'addon' ){
+      //   setProduct(undefined)
+      // }else{
+      setAnnotations({
+        ...annotations,
+        [sideIndex]: {
+          ...annotations[sideIndex],
+          [position]: {
+            title: product.title,
             id: product.id,
             price: normalized.price,
             shape: product.shape,
@@ -159,20 +159,20 @@ const View = () => {
 
   const clipPathLookup = {
     left: {
-      A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
-      B: "polygon(30% 0%, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 26% 94%, 40% 64%, 68% 39%)",
+      A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 64% 83%, 47% 90%, 0 100%, 0% 30%)",
+      B: "polygon(30% 0%, 70% 0%, 100% 0%, 100% 100%, 100% 100%, 25% 80%, 44% 64%, 58% 35%)",
       C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 55% 100%, 62% 50%, 0 45%)",
-      D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
-      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
-      F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
+      D: "polygon(60% 0%, 100% 0, 100% 41%, 100% 100%, 0 100%, 14px 30%, 51% 57%)",
+      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 16% 66%)",
+      F: "polygon(0px 29px, 54% -12px, 44% 50%, 73% 24%, 80% 100%, 0px 100%, 0px 100%, 0px 100%)",
     },
     right: {
       A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
-      B: "polygon(30% 0%, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 26% 94%, 40% 64%, 68% 39%)",
+      B: "polygon(10% 0%, 70% 0%, 100% 0%, 100% 100%, 100% 100%, 36% 88%, 48% 57%, 68% 35%)",
       C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 47% 100%, 52% 50%, 0 45%)",
       D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
-      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
-      F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
+      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 16% 66%)",
+      F: "polygon(0px 29px, 54% -12px, 44% 50%, 73% 24%, 80% 100%, 0px 100%, 0px 100%, 0px 100%)",
     },
   };
 
@@ -221,11 +221,11 @@ const View = () => {
                                 <DraggbleComp id={p.id}>
                                   <div className="group relative h-full w-full">
                                     {annotations[sideIndex][p.id].shape ==
-                                    "circle" ? (
+                                      "circle" ? (
                                       <img
                                         src={
                                           annotations[sideIndex][p.id].images[
-                                            p.id as Position
+                                          p.id as Position
                                           ]
                                         }
                                         alt=""
@@ -235,21 +235,21 @@ const View = () => {
                                           objectFit: "contain",
                                           ...(sideIndex === "right"
                                             ? {
-                                                transform: "scaleX(-1)",
-                                              }
+                                              transform: "scaleX(-1)",
+                                            }
                                             : {}),
                                           ...(p.id === "F"
                                             ? sideIndex === "right"
                                               ? {
-                                                  transform: "scaleX(1)",
-                                                }
+                                                transform: "scaleX(1)",
+                                              }
                                               : {
-                                                  transform: "scaleX(-1)",
-                                                }
+                                                transform: "scaleX(-1)",
+                                              }
                                             : {}),
                                           clipPath:
                                             clipPathLookup[sideIndex][
-                                              p.id as Position
+                                            p.id as Position
                                             ],
                                         }}
                                       />
@@ -258,7 +258,7 @@ const View = () => {
                                         src={
                                           // #Important : for dot shape the image will always be placed at "dotImage" position as discussed
                                           annotations[sideIndex][p.id]?.images[
-                                            "dotsImage"
+                                          "dotsImage"
                                           ]
                                         }
                                         alt=""
@@ -269,8 +269,8 @@ const View = () => {
                                           // #Important : for left and right i am rotating the image left and right
                                           ...(sideIndex === "right"
                                             ? {
-                                                transform: "scaleX(1)",
-                                              }
+                                              transform: "scaleX(1)",
+                                            }
                                             : {}),
                                         }}
                                       />

@@ -47,7 +47,7 @@ const MySelectionsTab = () => {
     )
     ?.filter(Boolean);
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap gap-5">
       {selectedProducts?.map((product) => (
         <div className="border shadow-md w-44 h-44 p-4" key={product?.id}>
           <div className="h-4/6" key={product?.id}>

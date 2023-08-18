@@ -38,7 +38,7 @@ const MyLooksTab = () => {
     return (
       <div className="flex flex-col items-start">
         <div>Oops, you are not logged In.</div>
-        <Button
+        <Button className="mt-4"
           onClick={() => {
             window.location.href =
             "/account/?from=custom-look";

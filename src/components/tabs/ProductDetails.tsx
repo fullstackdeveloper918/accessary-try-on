@@ -78,8 +78,8 @@ const ProductDetailsTab = () => {
             <span className="tax-val">Tax included.</span>
           </p>
         </div>
-        <div className="flex flex-wrap items-start w-full galley-prod-detail">
-          <div className="w-[360px] h-[300px] my-5">
+        <div className="flex flex-row-reverse items-start w-full galley-prod-detail">
+          <div className="w-[522px] h-[250px] my-5">
             <Carousel
               leftControl={<ChevronLeftCircle />}
               rightControl={<ChevronRightCircle />}

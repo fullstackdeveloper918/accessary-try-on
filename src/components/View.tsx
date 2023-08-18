@@ -13,6 +13,7 @@ import {
   UniqueIdentifier,
   useSensor,
   useSensors,
+  
 } from "@dnd-kit/core";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { dropPointsLeft, dropPointsRight } from "../api/points";
@@ -24,6 +25,8 @@ import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 import { IProduct } from "./tabs/data.type";
+// import { float } from "html2canvas/dist/types/css/property-descriptors/float";
+// import { position } from "html2canvas/dist/types/css/property-descriptors/position";
 
 const View = () => {
   const earRef = useRef<HTMLDivElement>(null);
@@ -41,7 +44,6 @@ const View = () => {
     [side]
   );
   const [currentPoint, setCurrentPoint] = useState<UniqueIdentifier>();
-
   useEffect(() => {
     if (annotations == undefined) return;
     const leftData = Object.values(annotations.left)?.map((an) => ({
@@ -66,34 +68,35 @@ const View = () => {
         position: position as Position,
       });
       setCurrentPoint(position);
-    
+
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
       const normalized = variantData.data[0].variants[0];
-      
-        // if(product.shape === 'addon' ){
-        //   setProduct(undefined)
-        // }else{
+      if (product.shape === 'addon') {
+        // setCurrentPoint(undefined)
+        // setShowDetails(false)
+        setProduct(undefined)
+      } else {
         setAnnotations({
           ...annotations,
           [sideIndex]: {
             ...annotations[sideIndex],
             [position]: {
               title: product.title,
-            id: product.id,
-            price: normalized.price,
-            shape: product.shape,
-            variantId: normalized.id,
-            side: side,
-            options: variantData.data[0].variants,
-            // #TODO : changes needed to make dynamic
-            // image: "firstRingEdited.png",
-            images: normalized.imagesAll,
+              id: product.id,
+              price: normalized.price,
+              shape: product.shape,
+              variantId: normalized.id,
+              side: side,
+              options: variantData.data[0].variants,
+              // #TODO : changes needed to make dynamic
+              // image: "firstRingEdited.png",
+              images: normalized.imagesAll,
+            },
           },
-        },
-      });
+        });
+      }
     }
-    // }
   }
   function handleDragEnd(event: DragEndEvent) {
     const {
@@ -108,6 +111,7 @@ const View = () => {
             id: annotations[sideIndex][id].id,
             position: over.id as Position,
           });
+
           setCurrentPoint(id);
         }
         setAnnotations({
@@ -131,6 +135,7 @@ const View = () => {
       }
     }
   }
+
   function remove() {
     setShowDetails(false)
     if (currentPoint) {
@@ -221,11 +226,11 @@ const View = () => {
                                 <DraggbleComp id={p.id}>
                                   <div className="group relative h-full w-full">
                                     {annotations[sideIndex][p.id].shape ==
-                                    "circle" ? (
+                                      "circle" ? (
                                       <img
                                         src={
                                           annotations[sideIndex][p.id].images[
-                                            p.id as Position
+                                          p.id as Position
                                           ]
                                         }
                                         alt=""
@@ -235,21 +240,21 @@ const View = () => {
                                           objectFit: "contain",
                                           ...(sideIndex === "right"
                                             ? {
-                                                transform: "scaleX(-1)",
-                                              }
+                                              transform: "scaleX(-1)",
+                                            }
                                             : {}),
                                           ...(p.id === "F"
                                             ? sideIndex === "right"
                                               ? {
-                                                  transform: "scaleX(1)",
-                                                }
+                                                transform: "scaleX(1)",
+                                              }
                                               : {
-                                                  transform: "scaleX(-1)",
-                                                }
+                                                transform: "scaleX(-1)",
+                                              }
                                             : {}),
                                           clipPath:
                                             clipPathLookup[sideIndex][
-                                              p.id as Position
+                                            p.id as Position
                                             ],
                                         }}
                                       />
@@ -258,7 +263,7 @@ const View = () => {
                                         src={
                                           // #Important : for dot shape the image will always be placed at "dotImage" position as discussed
                                           annotations[sideIndex][p.id]?.images[
-                                            "dotsImage"
+                                          "dotsImage"
                                           ]
                                         }
                                         alt=""
@@ -269,21 +274,26 @@ const View = () => {
                                           // #Important : for left and right i am rotating the image left and right
                                           ...(sideIndex === "right"
                                             ? {
-                                                transform: "scaleX(1)",
-                                              }
+                                              transform: "scaleX(1)",
+                                            }
                                             : {}),
                                         }}
                                       />
                                     )}
+
                                   </div>
                                 </DraggbleComp>
                               )}
+                           
                           </DroppableComp>
+
+                      
                         </div>
                       )
                     )}
                   </div>
                 </div>
+
                 {/* Drop Points */}
                 <Ear />
 

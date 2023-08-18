@@ -3,7 +3,7 @@ import { Image } from "@/components/tabs/data.type";
 export const dummyProducts: {
   id: number;
   price: number;
-  shape: "circle" | "dot";
+  shape: "circle" | "dot" ;
   title: string;
   image: Image;
 }[] = [

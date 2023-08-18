@@ -1,4 +1,4 @@
-import { useDroppable } from "@dnd-kit/core";
+import { useDroppable  } from "@dnd-kit/core";
 
 interface DroppableProps {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ const DroppableComp = ({ id, children }: DroppableProps) => {
   const { isOver, setNodeRef } = useDroppable({
     id,
   });
-
+  
   return (
     <div
       style={{

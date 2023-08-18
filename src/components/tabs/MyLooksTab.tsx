@@ -22,7 +22,7 @@ const MyLooksTab = () => {
   useEffect(() => {
     if (!customer_id?.value) return;
     (async () => {
-      const response = await callApi(`mylooks/${customer_id?.value}`);
+      const response = await callApi(`s/${customer_id?.value}`);
       if (response.ok) {
         const looks = await response.json();
         setMyLooks(looks?.data);
@@ -41,7 +41,7 @@ const MyLooksTab = () => {
         <Button
           onClick={() => {
             window.location.href =
-              window.location.host + "/account/login?from=custom-look";
+            "/account/?from=custom-look";
           }}
         >
           Login

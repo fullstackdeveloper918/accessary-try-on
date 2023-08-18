@@ -6,11 +6,11 @@ import { Carousel } from "flowbite-react";
 import { ChevronLeftCircle, ChevronRightCircle, Undo2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { IProduct } from "./data.type";
-
 const ProductDetailsTab = () => {
   const product = useProductDetailsStore((state) => state.product);
   const { annotations, setAnnotations } = useAnnotationsStore();
   const [productDetails, setProductDetails] = useState<IProduct>();
+
   const side = useEar((state) => state.side);
   const setShowDetails = useProductDetailsStore(
     (state) => state.setShowDetails
@@ -26,9 +26,10 @@ const ProductDetailsTab = () => {
       if (response.ok) {
         const singleProduct: { data: IProduct[] } = await response.json();
         setProductDetails(singleProduct.data[0]);
-       
+
       }
     })();
+    
     return () => {
       setShowDetails(false);
     };
@@ -99,6 +100,7 @@ const ProductDetailsTab = () => {
                 <>
                   <h3 className="text-2xl font-semibold mb-4">Options</h3>
                   <div className="flex gap-2 flex-wrap w-full thumb-prod">
+
                     {productDetails?.variants.map((variant, idx) => {
                       return (
                         <div
@@ -107,14 +109,25 @@ const ProductDetailsTab = () => {
                             changeVariantColor(idx);
                           }}
                         >
+                          { productDetails.productShap === "addon" ? 
+                          
                           <div className="prod-thumb-img">
                             <img
-                              src={variant.imagesAll["D"]}
-                              alt=""
-                              className="h-14 w-full object-cover border rounded-md "
+                            
+                              src={variant.imagesAll.dotsImage}
+                              alt="Image"
+                              className="h-14 w-full object-cover border rounded-md"
                             /> 
                           </div>
-
+                          :
+                          <div className="prod-thumb-img">
+                          <img
+                            src={variant.imagesAll["D"]}
+                            alt=""
+                            className="h-14 w-full object-cover border rounded-md"
+                          /> 
+                        </div>
+                    }
                           <span className="text-sm">{variant?.title}</span>
                         </div>
                       );

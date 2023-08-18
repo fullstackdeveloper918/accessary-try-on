@@ -6,6 +6,7 @@ const DraggbleComp = ({ id, children }: { id: string } & PropsWithChildren) => {
   const { attributes, transform, setNodeRef, listeners } = useDraggable({
     id: id.toString(),
   });
+
   return (
     <div
       {...attributes}

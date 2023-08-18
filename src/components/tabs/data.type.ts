@@ -14,6 +14,7 @@ export interface IProduct {
   body_html: string;
   vendor: Vendor;
   product_type: ProductType;
+  productShap:string;
   created_at: Date;
   handle: string;
   updated_at: Date;
@@ -79,7 +80,8 @@ interface ImagesAll {
   D: string;
   E: string;
   F: string;
-}
+  dotsImage : string;
+  }
 interface Option {
   id: number;
   product_id: number;

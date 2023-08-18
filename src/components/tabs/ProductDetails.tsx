@@ -77,8 +77,8 @@ const ProductDetailsTab = () => {
             <span className="tax-val">Tax included.</span>
           </p>
         </div>
-        <div className="flex flex-wrap items-start w-full galley-prod-detail">
-          <div className="w-[360px] h-[300px] my-5">
+        <div className="flex flex-row-reverse items-start w-full galley-prod-detail">
+          <div className="w-[522px] h-[250px] my-5">
             <Carousel
               leftControl={<ChevronLeftCircle />}
               rightControl={<ChevronRightCircle />}
@@ -111,7 +111,7 @@ const ProductDetailsTab = () => {
                             <img
                               src={variant.imagesAll["D"]}
                               alt=""
-                              className="h-14 w-full object-cover border rounded-md "
+                              className="h-24 w-full object-cover rounded-md "
                             /> 
                           </div>
 

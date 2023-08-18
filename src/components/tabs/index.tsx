@@ -46,7 +46,7 @@ const Tabs = () => {
       component: <ExploreTab />,
     },
     "Curated Looks": {
-      component: <div>Curated Looks</div>,
+      component: <div className="text-left	mt-2">Curated Looks</div>,
     },
     "My Selections": {
       component: <MySelectionsTab />,

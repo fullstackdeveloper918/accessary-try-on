@@ -61,7 +61,7 @@ export interface Option {
   mainImage: string;
   imagesAll: ImagesAll;
 }
-export type Position = "A" | "B" | "C" | "D" | "E" | "F";
+export type Position = "A" | "B" | "C" | "D" | "E" | "F"  ;
 export interface ImagesAll {
   A: string;
   B: string;
@@ -69,4 +69,18 @@ export interface ImagesAll {
   D: string;
   E: string;
   F: string;
+ 
+
+}
+
+export type Positions = "A1" | "B1" | "C1" | "D1" | "E1" | "F1"  ;
+export interface ImagesAll {
+  A1: string;
+  B1: string;
+  C1: string;
+  D1: string;
+  E1: string;
+  F1: string;
+ 
+
 }

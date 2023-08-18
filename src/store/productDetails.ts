@@ -1,4 +1,4 @@
-import { Position } from "@/types/annotations.types";
+import { Position,Positions } from "@/types/annotations.types";
 import { create } from "zustand";
 
 interface IProductDetailStore {
@@ -15,6 +15,7 @@ interface IProductDetailStore {
       | {
           id: number | string;
           position: Position | undefined;
+          positions : Positions | undefined
         }
       | undefined
   ) => void;

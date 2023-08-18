@@ -2,7 +2,7 @@ import { callApi } from "@/api/config";
 import { useEar } from "@/store/earDetails";
 import { useProductDetailsStore } from "@/store/productDetails";
 import { useProductstore } from "@/store/products";
-import { Position } from "@/types/annotations.types";
+import { Position , Positions} from "@/types/annotations.types";
 import { IVariant } from "@/types/variantData.types";
 import {
   DndContext,
@@ -13,16 +13,16 @@ import {
   UniqueIdentifier,
   useSensor,
   useSensors,
-  
+
 } from "@dnd-kit/core";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { dropPointsLeft, dropPointsRight } from "../api/points";
+import { dropPointsLeft, dropPointsRight, dropPointsLeftAddOnLeft } from "../api/points";
 import { useAnnotationsStore } from "../store/annotations";
 import BuyButton from "./BuyButton";
 import Ear from "./Ear";
 import OptionsMenu from "./OptionsMenu";
 import DraggbleComp from "./dnd/DraggableComp";
-import DroppableComp from "./dnd/DroppableComp";
+import DroppableComp, { DroppableAddOnComp } from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 import { IProduct } from "./tabs/data.type";
 // import { float } from "html2canvas/dist/types/css/property-descriptors/float";
@@ -66,50 +66,54 @@ const View = () => {
       setProduct({
         id: product.id,
         position: position as Position,
+        positions : position as Positions
       });
       setCurrentPoint(position);
 
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
+
       const normalized = variantData.data[0].variants[0];
-      if (product.shape === 'addon') {
-        // setCurrentPoint(undefined)
-        // setShowDetails(false)
-        setProduct(undefined)
-      } else {
-        setAnnotations({
-          ...annotations,
-          [sideIndex]: {
-            ...annotations[sideIndex],
-            [position]: {
-              title: product.title,
-              id: product.id,
-              price: normalized.price,
-              shape: product.shape,
-              variantId: normalized.id,
-              side: side,
-              options: variantData.data[0].variants,
-              // #TODO : changes needed to make dynamic
-              // image: "firstRingEdited.png",
-              images: normalized.imagesAll,
-            },
+      // if (product.shape === 'addon') {
+      //   // setCurrentPoint(undefined)
+      //   // setShowDetails(false)
+      //   setProduct(undefined)
+      // } else {
+      setAnnotations({
+        ...annotations,
+        [sideIndex]: {
+          ...annotations[sideIndex],
+          [position]: {
+            title: product.title,
+            id: product.id,
+            price: normalized.price,
+            shape: product.shape,
+            variantId: normalized.id,
+            side: side,
+            options: variantData.data[0].variants,
+            // #TODO : changes needed to make dynamic
+            // image: "firstRingEdited.png",
+            images: normalized.imagesAll,
           },
-        });
-      }
+        },
+      });
+      // }
     }
   }
+
   function handleDragEnd(event: DragEndEvent) {
     const {
       over,
       active: { id },
     } = event;
     if (over && over.id) {
-      if (["A", "B", "C", "D", "E", "F", "G"].includes(id.toString())) {
+      if (["A", "B", "C", "D", "E", "F", "G","A1","B1","C1","D1","E1","F1"].includes(id.toString())) {
         if (annotations[sideIndex][over.id]) {
           setShowDetails(true);
           setProduct({
             id: annotations[sideIndex][id].id,
             position: over.id as Position,
+            positions : over.id as Positions
           });
 
           setCurrentPoint(id);
@@ -164,20 +168,21 @@ const View = () => {
 
   const clipPathLookup = {
     left: {
-      A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
-      B: "polygon(30% 0%, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 26% 94%, 40% 64%, 68% 39%)",
+      A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 64% 83%, 47% 90%, 0 100%, 0% 30%)",
+      B: "polygon(30% 0%, 70% 0%, 100% 0%, 100% 100%, 100% 100%, 25% 80%, 44% 64%, 58% 35%)",
       C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 55% 100%, 62% 50%, 0 45%)",
-      D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
-      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
-      F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
+      D: "polygon(60% 0%, 100% 0, 100% 41%, 100% 100%, 0 100%, 14px 30%, 51% 57%)",
+      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 16% 66%)",
+      F: "polygon(0px 29px, 54% -12px, 44% 50%, 73% 24%, 80% 100%, 0px 100%, 0px 100%, 0px 100%)",
+      // A1 : "polygon(50% 14%, 100% 0, 100% 60%, 99% 99%, 0 97%, 0% 60%, 0 0)"
     },
     right: {
       A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
-      B: "polygon(30% 0%, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 26% 94%, 40% 64%, 68% 39%)",
+      B: "polygon(10% 0%, 70% 0%, 100% 0%, 100% 100%, 100% 100%, 36% 88%, 48% 57%, 68% 35%)",
       C: "polygon(0 0, 70% 0%, 100% 1%, 100% 100%, 70% 100%, 47% 100%, 52% 50%, 0 45%)",
       D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
-      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 0 66%)",
-      F: "polygon(0 0, 51% 0, 51% 45%, 100% 37%, 100% 100%, 47% 100%, 0 100%, 0 66%)",
+      E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 16% 66%)",
+      F: "polygon(0px 29px, 54% -12px, 44% 50%, 73% 24%, 80% 100%, 0px 100%, 0px 100%, 0px 100%)",
     },
   };
 
@@ -210,7 +215,9 @@ const View = () => {
                 <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
                   <div className="h-full w-full">
                     {(side === "R" ? dropPointsRight : dropPointsLeft).map(
-                      (p) => (
+                      (p) =>{ 
+                        return (
+
                         <div
                           key={p.id}
                           style={{
@@ -283,46 +290,128 @@ const View = () => {
 
                                   </div>
                                 </DraggbleComp>
-                              )}
-                           
-                          </DroppableComp>
 
-                      
+                              )}
+                          </DroppableComp>           
                         </div>
-                      )
+                       )}
                     )}
-                  </div>
+                </div>
+                <div className="h-full w-full">
+                {(side === "R" ? dropPointsRight : dropPointsLeftAddOnLeft).map(
+                      (p) =>{ 
+                        return (
+
+                        <div
+                          key={p.id}
+                          style={{
+                            position: "absolute",
+                            top: `${p.y}px`,
+                            left: `${p.x}px`,
+                          }}
+                        >
+                          <DroppableAddOnComp id={p.id} key={p.id}>
+                            {annotations !== undefined &&
+                              annotations[sideIndex] !== undefined &&
+                              annotations[sideIndex][p.id] !== undefined && (
+                                <DraggbleComp id={p.id}>
+                                  <div className="group relative h-full w-full">
+                                    {annotations[sideIndex][p.id].shape ==
+                                      "circle" ? (
+                                      <img
+                                        src={
+                                          annotations[sideIndex][p.id].images[
+                                          p.id as Position
+                                          ]
+                                        }
+                                        alt=""
+                                        style={{
+                                          height: "80px",
+                                          width: "80px",
+                                          objectFit: "contain",
+                                          ...(sideIndex === "right"
+                                            ? {
+                                              transform: "scaleX(-1)",
+                                            }
+                                            : {}),
+                                          ...(p.id === "F"
+                                            ? sideIndex === "right"
+                                              ? {
+                                                transform: "scaleX(1)",
+                                              }
+                                              : {
+                                                transform: "scaleX(-1)",
+                                              }
+                                            : {}),
+                                          clipPath:
+                                            clipPathLookup[sideIndex][
+                                            p.id as Position
+                                            ],
+                                        }}
+                                      />
+                                    ) : (
+                                      <img
+                                        src={
+                                          // #Important : for dot shape the image will always be placed at "dotImage" position as discussed
+                                          annotations[sideIndex][p.id]?.images[
+                                          "dotsImage"
+                                          ]
+                                        }
+                                        alt=""
+                                        style={{
+                                          height: "80px",
+                                          width: "80px",
+                                          objectFit: "contain",
+                                          // #Important : for left and right i am rotating the image left and right
+                                          ...(sideIndex === "right"
+                                            ? {
+                                              transform: "scaleX(1)",
+                                            }
+                                            : {}),
+                                        }}
+                                      />
+                                    )}
+
+                                  </div>
+                                </DraggbleComp>
+
+                              )}
+                          </DroppableAddOnComp>           
+                        </div>
+                       )}
+                    )}
+                </div>
                 </div>
 
-                {/* Drop Points */}
-                <Ear />
+              {/* Drop Points */}
+              <Ear />
 
-                {/* Drop area ie: Ear */}
-                {currentPoint ? (
-                  <button
-                    className="absolute bottom-2 right-6 hover:underline text-white  px-1 rounded-sm"
-                    onClick={() => {
-                      remove();
-                    }}
-                  >
-                    Remove
-                  </button>
-                ) : null}
-              </div>
-              {/* Buy Button */}
-              <div className="flex justify-center w-full  btn-prod-view mt-3">
-                <BuyButton addedProducts={addedProducts} earRef={earRef} />
-              </div>
-              {/* Buy Button */}
+              {/* Drop area ie: Ear */}
+              {currentPoint ? (
+                <button
+                  className="absolute bottom-2 right-6 hover:underline text-white  px-1 rounded-sm"
+                  onClick={() => {
+                    remove();
+                  }}
+                >
+                  Remove
+                </button>
+              ) : null}
             </div>
+            {/* Buy Button */}
+            <div className="flex justify-center w-full  btn-prod-view mt-3">
+              <BuyButton addedProducts={addedProducts} earRef={earRef} />
+            </div>
+            {/* Buy Button */}
           </div>
-
-          {/* Tabs */}
-          <Tabs />
-          {/* Tabs */}
         </div>
-      </DndContext>
+
+        {/* Tabs */}
+        <Tabs />
+        {/* Tabs */}
     </div>
+      </DndContext >
+    </div >
   );
 };
 export default View;

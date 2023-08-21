@@ -102,6 +102,7 @@ const ProductDetailsTab = () => {
                   <div className="flex gap-2 flex-wrap w-full thumb-prod">
 
                     {productDetails?.variants.map((variant, idx) => {
+                      console.log(productDetails.productShape)
                       return (
                         <div
                           className="cursor-pointer thumb-prod-item"
@@ -109,7 +110,7 @@ const ProductDetailsTab = () => {
                             changeVariantColor(idx);
                           }}
                         >
-                          { productDetails.productShap === "addon" ? 
+                          { productDetails.productShape === "addon" ? 
                           
                           <div className="prod-thumb-img">
                             <img

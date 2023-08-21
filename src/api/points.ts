@@ -69,8 +69,8 @@ export const dropPointsLeft = [
 export const dropPointsLeftAddOnLeft = [
   {
     id: "A1",
-    x: 153,
-    y: 62,
+    x: 156,
+    y: 65,
   },
   {
     id: "B1",
@@ -86,6 +86,7 @@ export const dropPointsLeftAddOnLeft = [
     id: "D1",
     x: 82 ,
     y: 370,
+    
   },
   {
     id: "E1",
@@ -95,6 +96,6 @@ export const dropPointsLeftAddOnLeft = [
   {
     id: "F1",
     x: 150,
-    y: 130,
+    y: 190,
   },
 ];

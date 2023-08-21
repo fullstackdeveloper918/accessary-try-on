@@ -1,4 +1,4 @@
-import { Position,Positions } from "@/types/annotations.types";
+import { Position } from "@/types/annotations.types";
 import { create } from "zustand";
 
 interface IProductDetailStore {
@@ -15,7 +15,7 @@ interface IProductDetailStore {
       | {
           id: number | string;
           position: Position | undefined;
-          positions : Positions | undefined
+         
         }
       | undefined
   ) => void;
@@ -34,6 +34,8 @@ export const useProductDetailsStore = create<IProductDetailStore>((set) => ({
       | {
           id: number | string;
           position: Position | undefined;
+        
+
         }
       | undefined
   ) => {

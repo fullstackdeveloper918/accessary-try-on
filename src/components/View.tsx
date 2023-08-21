@@ -2,7 +2,7 @@ import { callApi } from "@/api/config";
 import { useEar } from "@/store/earDetails";
 import { useProductDetailsStore } from "@/store/productDetails";
 import { useProductstore } from "@/store/products";
-import { Position , Positions} from "@/types/annotations.types";
+import { Position } from "@/types/annotations.types";
 import { IVariant } from "@/types/variantData.types";
 import {
   DndContext,
@@ -25,6 +25,7 @@ import DraggbleComp from "./dnd/DraggableComp";
 import DroppableComp, { DroppableAddOnComp } from "./dnd/DroppableComp";
 import Tabs from "./tabs";
 import { IProduct } from "./tabs/data.type";
+// import { position } from "html2canvas/dist/types/css/property-descriptors/position";
 // import { float } from "html2canvas/dist/types/css/property-descriptors/float";
 // import { position } from "html2canvas/dist/types/css/property-descriptors/position";
 
@@ -66,12 +67,14 @@ const View = () => {
       setProduct({
         id: product.id,
         position: position as Position,
-        positions : position as Positions
+
       });
       setCurrentPoint(position);
 
       const variantData: { data: [{ variants: IVariant[] }] } =
         await productResponse.json();
+
+      
 
       const normalized = variantData.data[0].variants[0];
       // if (product.shape === 'addon') {
@@ -109,11 +112,12 @@ const View = () => {
     if (over && over.id) {
       if (["A", "B", "C", "D", "E", "F", "G","A1","B1","C1","D1","E1","F1"].includes(id.toString())) {
         if (annotations[sideIndex][over.id]) {
+          // console.log(annotations,"annonations")
           setShowDetails(true);
           setProduct({
             id: annotations[sideIndex][id].id,
             position: over.id as Position,
-            positions : over.id as Positions
+
           });
 
           setCurrentPoint(id);
@@ -139,6 +143,7 @@ const View = () => {
       }
     }
   }
+ 
 
   function remove() {
     setShowDetails(false)
@@ -165,7 +170,7 @@ const View = () => {
       tolerance: 5,
     },
   });
- 
+
   const clipPathLookup = {
     left: {
       A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 64% 83%, 47% 90%, 0 100%, 0% 30%)",
@@ -174,7 +179,7 @@ const View = () => {
       D: "polygon( 48% 22%, 100% 0px, 100% 41%, 100% 100%, 0px 100%, 0px 100%, 58% 44%)",
       E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 16% 66%)",
       F: "polygon(0px 29px, 54% -12px, 44% 50%, 73% 24%, 80% 100%, 0px 100%, 0px 100%, 0px 100%)",
-      // A1 : "polygon(50% 14%, 100% 0, 100% 60%, 99% 99%, 0 97%, 0% 60%, 0 0)"
+      A1: "polygon(41% 11%, 90% 22%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%)"
     },
     right: {
       A: "polygon(0 0, 100% 0, 100% 20%, 41% 25%, 67% 81%, 50% 90%, 0 100%, 0% 30%)",
@@ -183,8 +188,13 @@ const View = () => {
       D: "polygon(44% 15%, 100% 0, 100% 41%, 100% 100%, 0 100%, 0 41%, 51% 57%)",
       E: "polygon(35% 52%, 25% 0, 100% 0, 100% 100%, 70% 100%, 47% 100%, 0 100%, 16% 66%)",
       F: "polygon(0px 29px, 54% -12px, 44% 50%, 73% 24%, 80% 100%, 0px 100%, 0px 100%, 0px 100%)",
+      A1: "polygon(41% 11%, 90% 22%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%)"
     },
   };
+
+  console.log(annotations,"annotations")
+   
+  
 
   const keyboardSensor = useSensor(KeyboardSensor, {});
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
@@ -215,201 +225,198 @@ const View = () => {
                 <div className="flex gap-2 flex-col absolute top-0 left-0 z-10">
                   <div className="h-full w-full">
                     {(side === "R" ? dropPointsRight : dropPointsLeft).map(
-                      (p) =>{ 
+                      (p) => {
                         return (
 
-                        <div
-                          key={p.id}
-                          style={{
-                            position: "absolute",
-                            top: `${p.y}px`,
-                            left: `${p.x}px`,
-                          }}
-                        >
-                          <DroppableComp id={p.id} key={p.id}>
-                            {annotations !== undefined &&
-                              annotations[sideIndex] !== undefined &&
-                              annotations[sideIndex][p.id] !== undefined && (
-                                <DraggbleComp id={p.id}>
-                                  <div className="group relative h-full w-full">
-                                    {annotations[sideIndex][p.id].shape ==
-                                      "circle" ? (
-                                      <img
-                                        src={
-                                          annotations[sideIndex][p.id].images[
-                                          p.id as Position
-                                          ]
-                                        }
-                                        alt=""
-                                        style={{
-                                          height: "80px",
-                                          width: "80px",
-                                          objectFit: "contain",
-                                          ...(sideIndex === "right"
-                                            ? {
-                                              transform: "scaleX(-1)",
-                                            }
-                                            : {}),
-                                          ...(p.id === "F"
-                                            ? sideIndex === "right"
+                          <div
+                            key={p.id}
+                            style={{
+                              position: "absolute",
+                              top: `${p.y}px`,
+                              left: `${p.x}px`,
+                            }}
+                          >
+                            <DroppableComp id={p.id} key={p.id}>
+                              {annotations !== undefined &&
+                                annotations[sideIndex] !== undefined &&
+                                annotations[sideIndex][p.id] !== undefined && (
+                                  <DraggbleComp id={p.id}>
+                                    <div className="group relative h-full w-full">
+                                      {annotations[sideIndex][p.id].shape ==
+                                        "circle" ? (
+                                        <img
+                                          src={
+                                            annotations[sideIndex][p.id].images[
+                                            p.id as Position
+                                            ]
+                                          }
+                                          alt=""
+                                          style={{
+                                            height: "80px",
+                                            width: "80px",
+                                            objectFit: "contain",
+                                            ...(sideIndex === "right"
+                                              ? {
+                                                transform: "scaleX(-1)",
+                                              }
+                                              : {}),
+                                            ...(p.id === "F"
+                                              ? sideIndex === "right"
+                                                ? {
+                                                  transform: "scaleX(1)",
+                                                }
+                                                : {
+                                                  transform: "scaleX(-1)",
+                                                }
+                                              : {}),
+                                            clipPath:
+                                              clipPathLookup[sideIndex][
+                                              p.id as Position
+                                              ],
+                                          }}
+                                        />
+                                      ) : (
+                                        <img
+                                          src={
+                                            // #Important : for dot shape the image will always be placed at "dotImage" position as discussed
+                                            annotations[sideIndex][p.id]?.images[
+                                            "dotsImage"
+                                            ]
+                                          }
+                                          alt=""
+                                          style={{
+                                            height: "80px",
+                                            width: "80px",
+                                            objectFit: "contain",
+                                            // #Important : for left and right i am rotating the image left and right
+                                            ...(sideIndex === "right"
                                               ? {
                                                 transform: "scaleX(1)",
                                               }
-                                              : {
-                                                transform: "scaleX(-1)",
-                                              }
-                                            : {}),
-                                          clipPath:
-                                            clipPathLookup[sideIndex][
-                                            p.id as Position
-                                            ],
-                                        }}
-                                      />
-                                    ) : (
-                                      <img
-                                        src={
-                                          // #Important : for dot shape the image will always be placed at "dotImage" position as discussed
-                                          annotations[sideIndex][p.id]?.images[
-                                          "dotsImage"
-                                          ]
-                                        }
-                                        alt=""
-                                        style={{
-                                          height: "80px",
-                                          width: "80px",
-                                          objectFit: "contain",
-                                          // #Important : for left and right i am rotating the image left and right
-                                          ...(sideIndex === "right"
-                                            ? {
-                                              transform: "scaleX(1)",
-                                            }
-                                            : {}),
-                                        }}
-                                      />
-                                    )}
+                                              : {}),
+                                          }}
+                                        />
+                                      )}
 
-                                  </div>
-                                </DraggbleComp>
+                                    </div>
+                                  </DraggbleComp>
 
-                              )}
-                          </DroppableComp>           
-                        </div>
-                       )}
+                                )}
+                            </DroppableComp>
+                          </div>
+                        )
+                      }
                     )}
-                </div>
-                <div className="h-full w-full">
-                {(side === "R" ? dropPointsRight : dropPointsLeftAddOnLeft).map(
-                      (p) =>{ 
+                  </div>
+                  <div className="h-full w-full">
+                    {(side === "R" ? dropPointsRight : dropPointsLeftAddOnLeft).map(
+                      (p) => {
                         return (
 
-                        <div
-                          key={p.id}
-                          style={{
-                            position: "absolute",
-                            top: `${p.y}px`,
-                            left: `${p.x}px`,
-                          }}
-                        >
-                          <DroppableAddOnComp id={p.id} key={p.id}>
-                            {annotations !== undefined &&
-                              annotations[sideIndex] !== undefined &&
-                              annotations[sideIndex][p.id] !== undefined && (
-                                <DraggbleComp id={p.id}>
-                                  <div className="group relative h-full w-full">
-                                    {annotations[sideIndex][p.id].shape ==
-                                      "circle" ? (
-                                      <img
-                                        src={
-                                          annotations[sideIndex][p.id].images[
-                                          p.id as Position
-                                          ]
-                                        }
-                                        alt=""
-                                        style={{
-                                          height: "80px",
-                                          width: "80px",
-                                          objectFit: "contain",
-                                          ...(sideIndex === "right"
-                                            ? {
-                                              transform: "scaleX(-1)",
-                                            }
-                                            : {}),
-                                          ...(p.id === "F"
-                                            ? sideIndex === "right"
+                          <div
+                            key={p.id}
+                            style={{
+                              position: "absolute",
+                              top: `${p.y}px`,
+                              left: `${p.x}px`,
+                            }}
+                          >
+                          
+
+                            <DroppableAddOnComp id={p.id} key={p.id}>
+                              {annotations !== undefined &&
+                                annotations[sideIndex] !== undefined &&
+                                annotations[sideIndex][p.id] !== undefined && (
+                                  <DraggbleComp id={p.id}>
+                                    <div className="group relative h-full w-full">
+                                      {annotations[sideIndex][p.id].shape === "addon" && (
+                                        <img
+                                          src={
+                                            annotations[sideIndex][p.id]?.images.dotsImage
+                                          }
+                                          alt=""
+                                          style={{
+                                            height: "80px",
+                                            width: "80px",
+                                            objectFit: "contain",
+                                            ...(sideIndex === "right"
+                                              ? {
+                                                transform: "scaleX(-1)",
+                                              }
+                                              : {}),
+                                            ...(p.id === "F"
+                                              ? sideIndex === "right"
+                                                ? {
+                                                  transform: "scaleX(1)",
+                                                }
+                                                : {
+                                                  transform: "scaleX(-1)",
+                                                }
+                                              : {}),
+                                            clipPath:
+                                              clipPathLookup[sideIndex][p.id as Position],
+                                          }}
+                                        />
+                                      )}
+                                      {/* {annotations[sideIndex][p.id].shape !== "circle" && (
+                                        <img
+                                          src={
+                                            // #Important : for dot shape the image will always be placed at "dotImage" position as discussed
+                                            annotations[sideIndex][p.id]?.images["dotsImage"]
+                                          }
+                                          alt=""
+                                          style={{
+                                            height: "80px",
+                                            width: "80px",
+                                            objectFit: "contain",
+                                            // #Important : for left and right i am rotating the image left and right
+                                            ...(sideIndex === "right"
                                               ? {
                                                 transform: "scaleX(1)",
                                               }
-                                              : {
-                                                transform: "scaleX(-1)",
-                                              }
-                                            : {}),
-                                          clipPath:
-                                            clipPathLookup[sideIndex][
-                                            p.id as Position
-                                            ],
-                                        }}
-                                      />
-                                    ) : (
-                                      <img
-                                        src={
-                                          // #Important : for dot shape the image will always be placed at "dotImage" position as discussed
-                                          annotations[sideIndex][p.id]?.images[
-                                          "dotsImage"
-                                          ]
-                                        }
-                                        alt=""
-                                        style={{
-                                          height: "80px",
-                                          width: "80px",
-                                          objectFit: "contain",
-                                          // #Important : for left and right i am rotating the image left and right
-                                          ...(sideIndex === "right"
-                                            ? {
-                                              transform: "scaleX(1)",
-                                            }
-                                            : {}),
-                                        }}
-                                      />
-                                    )}
+                                              : {}),
+                                          }}
+                                        />
+                                      )} */}
+                                    </div>
+                                  </DraggbleComp>
+                                )}
+                            </DroppableAddOnComp>
 
-                                  </div>
-                                </DraggbleComp>
-
-                              )}
-                          </DroppableAddOnComp>           
-                        </div>
-                       )}
+                          </div>
+                        )
+                      }
                     )}
-                </div>
+                  </div>
                 </div>
 
-              {/* Drop Points */}
-              <Ear />
+                {/* Drop Points */}
+                <Ear />
 
-              {/* Drop area ie: Ear */}
-              {currentPoint ? (
-                <button
-                  className="absolute bottom-2 right-6 hover:underline text-white  px-1 rounded-sm"
-                  onClick={() => {
-                    remove();
-                  }}
-                >
-                  Remove
-                </button>
-              ) : null}
+                {/* Drop area ie: Ear */}
+                {currentPoint ? (
+                  <button
+                    className="absolute bottom-2 right-6 hover:underline text-white  px-1 rounded-sm"
+                    onClick={() => {
+                      remove();
+                    }}
+                  >
+                    Remove
+                  </button>
+                ) : null}
+              </div>
+              {/* Buy Button */}
+              <div className="flex justify-center w-full  btn-prod-view mt-3">
+                <BuyButton addedProducts={addedProducts} earRef={earRef} />
+              </div>
+              {/* Buy Button */}
             </div>
-            {/* Buy Button */}
-            <div className="flex justify-center w-full  btn-prod-view mt-3">
-              <BuyButton addedProducts={addedProducts} earRef={earRef} />
-            </div>
-            {/* Buy Button */}
           </div>
-        </div>
 
-        {/* Tabs */}
-        <Tabs />
-        {/* Tabs */}
-    </div>
+          {/* Tabs */}
+          <Tabs />
+          {/* Tabs */}
+        </div>
       </DndContext >
     </div >
   );

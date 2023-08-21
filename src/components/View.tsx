@@ -310,6 +310,7 @@ const View = () => {
                             left: `${p.x}px`,
                           }}
                         >
+                          
                           <DroppableAddOnComp id={p.id} key={p.id}>
                             {annotations !== undefined &&
                               annotations[sideIndex] !== undefined &&

@@ -116,7 +116,7 @@ const ProductDetailsTab = () => {
                             
                               src={variant.imagesAll.dotsImage}
                               alt="Image"
-                              className="h-14 w-full object-cover border rounded-md"
+                              className="h-24 w-full object-cover border rounded-md"
                             /> 
                           </div>
                           :
@@ -124,7 +124,7 @@ const ProductDetailsTab = () => {
                           <img
                             src={variant.imagesAll["D"]}
                             alt=""
-                            className="h-14 w-full object-cover border rounded-md"
+                            className="h-24 w-full object-cover border rounded-md"
                           /> 
                         </div>
                     }

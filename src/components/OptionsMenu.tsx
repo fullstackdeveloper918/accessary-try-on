@@ -23,6 +23,7 @@ import { RefObject, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { AlertMessage } from "./AlertMessage";
 
+
 export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
   const [showBothEars, setShowBothEars] = useState<boolean>(false);
   const [bothEarsImages, setBothEarsImages] = useState<{
@@ -42,29 +43,34 @@ export function OptionsMenu({ earRef }: { earRef: RefObject<HTMLDivElement> }) {
   const saveLook = async () => {
     const input = document.querySelector("#customer_id") as HTMLInputElement;
     if (input?.value) {
-      const image = await exportAsImage(earRef.current!);
+      const base64Image = await exportAsImage(earRef.current!);
+      const formData = new FormData();
+      formData.append("customer_id", input.value);
+      formData.append("mylook_image", base64Image);
+      formData.append("mylook_data", JSON.stringify(annotations));
       const response = await callApi(`mylooks/${input.value}`, {
         // const response = await callApi(`mylooks/${7113628778769}`, {
         method: "POST",
-        body: JSON.stringify({
-          customer_id: input.value,
-          // customer_id: "7113628778769",
-          mylook_data: JSON.stringify(annotations),
-          mylook_image: image,
-        }),
+        body: formData,
       });
       const data = await response.json();
       if (data.status === 201) {
-        toast.success("look saved successfully.");
+        toast.success("look saved successfully.",{
+          position: "top-right"
+        });
       } else {
         let errorMsg = "";
         Object.values(data.message).forEach((msg) => {
           errorMsg += msg + "\n";
         });
-        toast.error(errorMsg);
+        toast.error(errorMsg, {
+          position: "top-right"
+        });
       }
     } else {
-      toast("you need to login first");
+      toast.error("you need to login first", {
+        position: "top-right"
+      });
       setIsLogInError(true);
     }
   };

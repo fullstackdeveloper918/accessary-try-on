@@ -80,6 +80,7 @@ interface ImagesAll {
   D: string;
   E: string;
   F: string;
+  dotsImage: string;
   A1 : string;
   D1: string;
 }
